@@ -59,9 +59,18 @@ def analyse_a1(models: list[str], b: Battery, kb) -> dict:
         rows.append({
             "model": m, "n_cases": r.n_cases,
             "jsd_permutation": r.jsd_permutation, "jsd_retest_floor": r.jsd_retest,
-            "jsd_shuffled_ceiling": r.jsd_shuffled,
+            "jsd_shuffled_diagnostic": r.jsd_shuffled,
+            "jsd_between_case_ceiling": r.jsd_between_case,
             "order_effect": r.order_effect,
             "ci_lo": r.order_effect_ci[0], "ci_hi": r.order_effect_ci[1],
+            "informative_rate": r.informative_rate,
+            "informative_perm": r.informative_rate_by_arm.get("permutation"),
+            "informative_retest": r.informative_rate_by_arm.get("retest"),
+            "informative_shuffled": r.informative_rate_by_arm.get("shuffled"),
+            "n_cases_informative": r.n_cases_informative,
+            "order_effect_informative": r.order_effect_informative,
+            "oei_ci_lo": r.order_effect_informative_ci[0],
+            "oei_ci_hi": r.order_effect_informative_ci[1],
             "normalised_order_effect": r.normalised_order_effect,
             "top1_flip_rate": r.top1_flip_rate, "top5_jaccard": r.top5_jaccard,
             "mean_entropy_bits": r.mean_entropy,
@@ -93,27 +102,34 @@ def analyse_a2(models: list[str], b: Battery) -> dict:
                      "beta": r.beta, "beta_lo": r.beta_ci[0], "beta_hi": r.beta_ci[1],
                      "intercept": r.intercept, "r2": r.r2, "spearman": r.spearman,
                      "mean_abs_error": r.mean_abs_error,
-                     "direction_agreement": r.direction_agreement})
+                     "direction_agreement": r.direction_agreement,
+                     "tie_rate": r.tie_rate})
         s = a2_update.by_stratum(pts, "context_size").with_columns(pl.lit(m).alias("model"))
         strata.append(s)
     return {"main": pl.DataFrame(rows),
             "by_context_size": pl.concat(strata) if strata else pl.DataFrame()}
 
 
-def analyse_a3(models: list[str], b: Battery) -> pl.DataFrame:
+def analyse_a3(models: list[str], b: Battery,
+               floors: dict[str, float] | None = None) -> pl.DataFrame:
+    floors = floors or {}
     rows = []
     for m in models:
         d = load_task(m, "a3_posterior")
         if d is None:
             continue
         P, _ = posterior_matrix(d)
-        r = a3_redundancy.analyse(m, d, P, b.a3)
+        r = a3_redundancy.analyse(m, d, P, b.a3,
+                                  retest_floor=floors.get(m, float("nan")))
         rows.append({"model": m, "n_items": r.n_items,
                      "mean_spurious_jsd": r.mean_spurious_jsd,
                      "median_spurious_jsd": r.median_spurious_jsd,
                      "p90_spurious_jsd": r.p90_spurious_jsd,
                      "certified_true_jsd": r.certified_true_jsd,
                      "ratio_to_truth": r.ratio_to_truth,
+                     "retest_floor": r.retest_floor,
+                     "excess_over_floor": r.excess_over_floor,
+                     "frac_above_floor": r.frac_above_floor,
                      "top1_flip_rate": r.top1_flip_rate,
                      "mean_entropy_change": r.mean_entropy_change,
                      "confidence_inflation_rate": r.confidence_inflation_rate})
@@ -224,7 +240,9 @@ def main() -> None:
     out["a1_severity"] = a1["severity"]
     a1["per_case"].write_parquet(ANALYSED / "a1_per_case.parquet")
     out["a2_main"] = analyse_a2(models, b)["main"]
-    out["a3_main"] = analyse_a3(models, b)
+    floors = {r["model"]: r["jsd_retest_floor"]
+              for r in out["a1_main"].iter_rows(named=True)} if out["a1_main"].height else {}
+    out["a3_main"] = analyse_a3(models, b, floors)
     out["a4_main"] = analyse_a4(models, b)
     out["methods"] = analyse_methods(models, b, oracle)
     out["schema_validity"] = pl.DataFrame(

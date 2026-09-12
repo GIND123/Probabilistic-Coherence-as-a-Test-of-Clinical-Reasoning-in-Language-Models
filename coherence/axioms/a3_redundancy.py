@@ -27,6 +27,9 @@ class A3Result:
     p90_spurious_jsd: float
     certified_true_jsd: float
     ratio_to_truth: float
+    retest_floor: float          # the model's own sampling noise, from A1
+    excess_over_floor: float     # mean_spurious_jsd - retest_floor
+    frac_above_floor: float      # share of items exceeding that floor
     top1_flip_rate: float
     mean_entropy_change: float
     confidence_inflation_rate: float   # fraction where entropy DROPPED
@@ -34,7 +37,17 @@ class A3Result:
 
 
 def analyse(model_key: str, d: pl.DataFrame, posteriors: np.ndarray,
-            a3_items: list) -> A3Result:
+            a3_items: list, retest_floor: float = float("nan")) -> A3Result:
+    """Spurious movement on a certified-null finding.
+
+    The raw spurious divergence is not interpretable on its own. A model whose
+    posterior is noisy under resampling will show movement here for reasons
+    that have nothing to do with the redundant finding, so the quantity that
+    matters is the EXCESS over that model's own test-retest floor, measured in
+    A1 on the same battery. Reporting only the ratio to the certified true
+    update (which is ~1e-5 by construction) produces impressive-looking
+    multipliers that are entirely sampling noise.
+    """
     d = d.with_row_index("row")
     idx = {(r["a3_id"], r["phase"]): r["row"] for r in d.iter_rows(named=True) if r["valid"]}
     cert = {it.item_id: it.certified_jsd for it in a3_items}
@@ -53,12 +66,16 @@ def analyse(model_key: str, d: pl.DataFrame, posteriors: np.ndarray,
     t = pl.DataFrame(rows)
     s = t["spurious_jsd"].to_numpy()
     ct = float(t["certified_jsd"].mean())
+    floor = float(retest_floor)
     return A3Result(
         model_key=model_key, n_items=t.height,
         mean_spurious_jsd=float(s.mean()), median_spurious_jsd=float(np.median(s)),
         p90_spurious_jsd=float(np.percentile(s, 90)),
         certified_true_jsd=ct,
         ratio_to_truth=float(s.mean() / ct) if ct > 0 else np.inf,
+        retest_floor=floor,
+        excess_over_floor=float(s.mean() - floor),
+        frac_above_floor=float((s > floor).mean()) if np.isfinite(floor) else float("nan"),
         top1_flip_rate=float(t["top1_flip"].mean()),
         mean_entropy_change=float(t["entropy_change"].mean()),
         confidence_inflation_rate=float((t["entropy_change"] < 0).mean()),

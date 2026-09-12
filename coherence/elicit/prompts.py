@@ -70,17 +70,21 @@ def posterior_prompt(kb: DDXPlusKB, pathologies: list[str], tokens: list[str],
         "",
         render_findings(kb, tokens, fmt),
         "",
-        "Give the probability of each candidate diagnosis for this patient. "
-        "Return a JSON object with a single key \"probabilities\" holding an array "
-        f"of {len(pathologies)} numbers in the same order as the list above. "
-        # Without the positivity clause, models collapse to an all-zero array
-        # on 7-20% of items -- and at a rate that differs between evidence
-        # orderings, which would have contaminated the order effect itself.
-        # Instrument calibration (see reports/instrument_calibration.md) puts
-        # schema validity at 100% in every arm with it.
-        "Every diagnosis must receive a strictly positive probability: use a "
-        "small value such as 0.001 for diagnoses you consider very unlikely, "
-        "never 0. The numbers must sum to 1.",
+        # Elicit relative plausibility on a 0-100 scale rather than a
+        # normalised distribution, then normalise afterwards. Calibration C6
+        # measured the difference: asking for probabilities that sum to 1 made
+        # qwen3-4b-nothink return an exactly-uniform posterior on 68.8% of
+        # items and qwen3-8b-nothink on 51.2%, because a flat answer is the
+        # easiest way to satisfy the sum constraint. Plausibility scoring cuts
+        # that to 39.6% and 23.4%. Normalisation is monotone, so it does not
+        # change the ranking the model expressed.
+        "Score each candidate diagnosis from 0 to 100 for how plausible it is "
+        "for this patient, where 100 means highly likely and 1 means very "
+        "unlikely. The scores do NOT need to sum to anything. Use the full "
+        "range: the findings above discriminate between these diagnoses, so "
+        "the scores must differ. Return a JSON object with a single key "
+        f"\"probabilities\" holding an array of {len(pathologies)} numbers in "
+        "the same order as the list above.",
     ]
     return [{"role": "system", "content": SYSTEM},
             {"role": "user", "content": "\n".join(head + body)}]
@@ -91,9 +95,9 @@ def cot_posterior_prompt(kb: DDXPlusKB, pathologies: list[str], tokens: list[str
     """Free-text reasoning first, posterior second (the CoT baseline)."""
     msgs = posterior_prompt(kb, pathologies, tokens, age, sex, fmt)
     msgs[1]["content"] = msgs[1]["content"].replace(
-        "Give the probability of each candidate diagnosis",
+        "Score each candidate diagnosis",
         "Think step by step about which diagnoses the findings support and which "
-        "they argue against, then give the probability of each candidate diagnosis")
+        "they argue against, then score each candidate diagnosis")
     return msgs
 
 

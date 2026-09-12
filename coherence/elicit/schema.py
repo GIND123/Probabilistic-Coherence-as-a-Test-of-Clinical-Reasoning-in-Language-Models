@@ -9,13 +9,18 @@ from __future__ import annotations
 
 
 def posterior_schema(n_pathologies: int) -> dict:
-    """A probability for every candidate, in the fixed presented order."""
+    """A plausibility score for every candidate, in the fixed presented order.
+
+    The range is 0-100, not 0-1: see calibration C6. Scores are normalised to
+    a posterior at parse time, which is a monotone transform and preserves the
+    ordering the model expressed.
+    """
     return {
         "type": "object",
         "properties": {
             "probabilities": {
                 "type": "array",
-                "items": {"type": "number", "minimum": 0, "maximum": 1},
+                "items": {"type": "number", "minimum": 0, "maximum": 100},
                 "minItems": n_pathologies,
                 "maxItems": n_pathologies,
             }

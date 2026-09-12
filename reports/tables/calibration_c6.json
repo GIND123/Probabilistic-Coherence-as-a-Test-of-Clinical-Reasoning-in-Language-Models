@@ -1,0 +1,54 @@
+{
+  "qwen3-4b-nothink": {
+    "positivity": {
+      "valid_rate": 1.0,
+      "uniform_rate": 0.688,
+      "informative_rate": 0.312,
+      "mean_entropy_bits": 4.936,
+      "mean_max_prob": 0.1253,
+      "mean_distinct_values": 1.5
+    },
+    "positivity_anti_uniform": {
+      "valid_rate": 1.0,
+      "uniform_rate": 0.676,
+      "informative_rate": 0.324,
+      "mean_entropy_bits": 5.0,
+      "mean_max_prob": 0.1135,
+      "mean_distinct_values": 1.5
+    },
+    "plausibility_0_100": {
+      "valid_rate": 1.0,
+      "uniform_rate": 0.396,
+      "informative_rate": 0.604,
+      "mean_entropy_bits": 4.481,
+      "mean_max_prob": 0.1813,
+      "mean_distinct_values": 3.2
+    }
+  },
+  "qwen3-8b-nothink": {
+    "positivity": {
+      "valid_rate": 1.0,
+      "uniform_rate": 0.512,
+      "informative_rate": 0.488,
+      "mean_entropy_bits": 4.437,
+      "mean_max_prob": 0.2569,
+      "mean_distinct_values": 1.9
+    },
+    "positivity_anti_uniform": {
+      "valid_rate": 1.0,
+      "uniform_rate": 0.506,
+      "informative_rate": 0.494,
+      "mean_entropy_bits": 4.393,
+      "mean_max_prob": 0.266,
+      "mean_distinct_values": 2.0
+    },
+    "plausibility_0_100": {
+      "valid_rate": 1.0,
+      "uniform_rate": 0.234,
+      "informative_rate": 0.766,
+      "mean_entropy_bits": 4.508,
+      "mean_max_prob": 0.2456,
+      "mean_distinct_values": 3.5
+    }
+  }
+}

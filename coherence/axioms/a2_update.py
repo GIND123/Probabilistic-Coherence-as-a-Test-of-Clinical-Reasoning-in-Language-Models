@@ -38,7 +38,8 @@ class A2Result:
     r2: float
     spearman: float
     mean_abs_error: float
-    direction_agreement: float
+    direction_agreement: float      # ties excluded; see `tie_rate`
+    tie_rate: float                 # model delta exactly 0
 
 
 def _wls(x: np.ndarray, y: np.ndarray, w: np.ndarray) -> tuple[float, float, float]:
@@ -57,13 +58,25 @@ def _wls(x: np.ndarray, y: np.ndarray, w: np.ndarray) -> tuple[float, float, flo
 
 def build_points(d: pl.DataFrame, posteriors: np.ndarray,
                  a2_items: list, pathologies: list[str],
-                 min_true_delta: float = 0.05) -> pl.DataFrame:
+                 min_true_delta: float = 0.05,
+                 min_count: int = 10) -> pl.DataFrame:
     """One row per (item, pathology): true vs model implied delta log-odds.
 
-    Pathologies whose true update is essentially nil are dropped: they carry
-    no signal about update *magnitude* and would drag the slope towards zero
-    while inflating n. A3 is the axiom that tests null updates, on items
-    constructed for it.
+    Two filters, both load-bearing.
+
+    `min_true_delta` drops pathologies whose true update is essentially nil:
+    they carry no signal about update *magnitude* and would drag the slope
+    towards zero while inflating n. A3 is the axiom that tests null updates,
+    on items built for it.
+
+    `min_count` drops pathologies that the oracle cannot actually estimate in
+    both the before and after conditioning sets. Without it the target is
+    dominated by a floor artefact: a pathology with zero matching patients
+    after conditioning clips to log-odds -9.2, so "true" updates of -9 appear
+    that encode "the corpus has no example" rather than "the evidence argues
+    against this". Those saturated points made the true deltas average -3.4
+    with sd 4.2 against a model sd of 0.43, and the slope was measuring the
+    floor rather than the model.
     """
     d = d.with_row_index("row")
     by_id = {it.item_id: it for it in a2_items}
@@ -85,7 +98,10 @@ def build_points(d: pl.DataFrame, posteriors: np.ndarray,
         pa = np.clip(np.asarray(it.true_posterior_after), LOGIT_FLOOR, 1 - LOGIT_FLOOR)
         # Delta-method SE of the difference of two log-odds.
         se_lo = np.sqrt((se_b / (pb * (1 - pb))) ** 2 + (se_a / (pa * (1 - pa))) ** 2)
-        keep = np.abs(true_delta) >= min_true_delta
+        cb = np.asarray(it.true_posterior_before) * it.support_before
+        ca = np.asarray(it.true_posterior_after) * it.support_after
+        estimable = (cb >= min_count) & (ca >= min_count)
+        keep = (np.abs(true_delta) >= min_true_delta) & estimable
         for j in np.flatnonzero(keep):
             rows.append({
                 "a2_id": a2_id, "pathology": pathologies[j],
@@ -109,6 +125,8 @@ def analyse(model_key: str, points: pl.DataFrame, seed: int = 0,
     ok = np.isfinite(x) & np.isfinite(y) & np.isfinite(w)
     x, y, w = x[ok], y[ok], w[ok]
     b, a, r2 = _wls(x, y, w)
+    tie = np.isclose(y, 0.0)
+    nz = ~tie
     rng = np.random.default_rng(seed)
     bs = []
     for _ in range(n_boot):
@@ -121,7 +139,13 @@ def analyse(model_key: str, points: pl.DataFrame, seed: int = 0,
         intercept=a, r2=r2,
         spearman=float(spearmanr(x, y).statistic),
         mean_abs_error=float(np.mean(np.abs(y - x))),
-        direction_agreement=float(np.mean(np.sign(x) == np.sign(y))))
+        # Ties are excluded rather than counted as disagreement: a model that
+        # returns a quantised posterior leaves many pathologies bit-identical
+        # between the before and after elicitations, and scoring those as
+        # wrong direction would report anti-correlation where there is none.
+        direction_agreement=float(np.mean(np.sign(x[nz]) == np.sign(y[nz])))
+        if nz.any() else float("nan"),
+        tie_rate=float(tie.mean()))
 
 
 def by_stratum(points: pl.DataFrame, col: str) -> pl.DataFrame:

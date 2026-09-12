@@ -47,8 +47,8 @@ def fig_a1_main() -> None:
             label="test–retest floor (same order, resampled)")
     a1.barh(y, t["jsd_permutation"], height=h, color=ACCENT,
             label="across permutations")
-    a1.barh(y + h, t["jsd_shuffled_ceiling"], height=h, color=CEIL_C,
-            label="shuffled-evidence ceiling")
+    a1.barh(y + h, t["jsd_between_case_ceiling"], height=h, color=CEIL_C,
+            label="between-patient ceiling")
     nf = _noise_floor()
     if np.isfinite(nf):
         a1.axvline(nf, color=WARN, ls="--", lw=1.1)
