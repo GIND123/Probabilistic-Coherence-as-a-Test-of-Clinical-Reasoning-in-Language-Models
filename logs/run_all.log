@@ -1,0 +1,19 @@
+### STAGE 1  model sweep  2026-09-12T11:11:59+05:30
+==============================================================
+MODEL qwen3-4b-nothink   2026-09-12T11:11:59+05:30
+==============================================================
+model qwen3-4b-nothink  (Qwen/Qwen3-4B, native, non-thinking)
+  a1_posterior: 33,252 jobs
+  a4_posterior: 5,400 jobs
+  a2_posterior: 5,858 jobs
+  a3_posterior: 2,990 jobs
+  elr_prior: 14 jobs
+  elr_weights_numeric: 483 jobs
+  elr_weights_logodds: 483 jobs
+  elr_weights_ordinal: 483 jobs
+  a1_answer: 29,340 jobs
+  cot_posterior: 5,868 jobs
+  a1_narrative: 4,000 jobs
+  [a1_posterior] 33,252 jobs in 17 chunks (0 already done)
+    chunk 1/17  2000 jobs  84.3s  (23.7/s)  valid 100.0%
+    chunk 2/17  2000 jobs  87.1s  (23.0/s)  valid 100.0%

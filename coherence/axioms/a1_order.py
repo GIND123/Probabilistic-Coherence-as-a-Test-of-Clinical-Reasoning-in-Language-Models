@@ -121,7 +121,7 @@ def per_case_table(d: pl.DataFrame, posteriors: np.ndarray,
     for case_id, sub in d.group_by("case_id", maintain_order=True):
         case_id = case_id[0] if isinstance(case_id, tuple) else case_id
         arms = {}
-        for arm in ("permutation", "retest", "shuffled"):
+        for arm in ("permutation", "retest", "shuffled", "canonical"):
             s = sub.filter((pl.col("arm") == arm) & pl.col("valid"))
             if arm == "permutation" and k_perms is not None:
                 s = s.filter(pl.col("perm_index") < k_perms)
@@ -142,9 +142,14 @@ def per_case_table(d: pl.DataFrame, posteriors: np.ndarray,
                 informative["permutation"] == 1.0 and informative["retest"] == 1.0),
             "n_perm": len(perm), "n_retest": len(arms["retest"]),
             "n_shuffled": len(arms["shuffled"]),
+            "n_canonical": len(arms["canonical"]),
             "jsd_permutation": _pairwise(perm),
             "jsd_retest": _pairwise(arms["retest"]),
             "jsd_shuffled": _pairwise(arms["shuffled"]),
+            "jsd_canonical_retest": _pairwise(arms["canonical"]),
+            "jsd_canonical_vs_random": float(np.mean(
+                [jsd(a, q) for a in arms["canonical"] for q in perm]))
+            if len(arms["canonical"]) and len(perm) else np.nan,
             "top1_flips": int(len(set(top.tolist())) > 1),
             "top1_modal_share": float(np.bincount(top).max() / len(top)),
             "top5_jaccard": float(jac),
@@ -163,7 +168,7 @@ def _informative_rate_by_arm(d: pl.DataFrame, posteriors: np.ndarray) -> dict:
     estimand is selection-biased and only the unconditional one is reportable."""
     d = d.with_row_index("row")
     out = {}
-    for arm in ("permutation", "retest", "shuffled"):
+    for arm in ("permutation", "retest", "shuffled", "canonical"):
         rows = d.filter((pl.col("arm") == arm) & pl.col("valid"))["row"].to_numpy()
         if not len(rows):
             continue

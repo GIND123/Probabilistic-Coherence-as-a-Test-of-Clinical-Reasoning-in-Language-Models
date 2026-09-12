@@ -134,3 +134,31 @@ rate**, and the A1 estimand is reported three ways:
 The between-patient ceiling is likewise computed over informative responses
 only; uniform anchors would drag it towards zero and inflate the normalised
 order effect.
+
+## C7 — The canonical order was contaminating the test–retest floor
+
+With the C6 fix in place, informativeness still differed **by arm**:
+permutation 60.2%, retest 67.5%, shuffled 36.4%. Since the conditional
+estimand is only reportable when informativeness is arm-independent, this
+had to be explained before the sweep could proceed.
+
+The cause was a design asymmetry, not a model property. DDXPlus releases each
+patient's findings **code-sorted** (`E_38, E_52, E_65, …`), which groups
+related questions — all the pain items together, then the antecedents. That
+is a systematically more coherent presentation than a random ordering, and
+models are measurably more willing to commit to a belief under it. The
+battery used that canonical order as `perms[0]`, and the test–retest arm
+replicated `perms[0]`. So the floor was measured under a *more coherent*
+presentation than the permutation arm it is subtracted from, and part of the
+headline order effect was canonical-versus-random rather than
+order-versus-order.
+
+**Fix.** The permutation arm is now K *random* orderings with the canonical
+order excluded; the retest arm resamples one of those same random orderings,
+so floor and numerator sit under matched conditions; and the released order
+becomes its own `canonical` arm with 2 replicates. That arm answers "does the
+released grouping help?" directly — `jsd_canonical_vs_random` and
+`jsd_canonical_retest` — instead of contaminating the estimand.
+
+Battery A1 grows from 33,252 to 39,120 items (K=10 permutations, 6 retests,
+2 canonical, 2 shuffled per case).
