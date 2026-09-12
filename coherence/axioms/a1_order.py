@@ -134,6 +134,16 @@ def per_case_table(d: pl.DataFrame, posteriors: np.ndarray,
                        for i in range(len(perm)) for j in range(i + 1, len(perm))])
         informative = {a: float(np.mean([is_informative(p) for p in M])) if len(M) else np.nan
                        for a, M in arms.items()}
+        # Conditional estimand: recompute the divergences over the responses
+        # that actually expressed a belief, rather than requiring every
+        # response in the case to be informative. The conjunction over 10
+        # permutations and 6 retests is far too strict -- at a 55% per-response
+        # informative rate it retained 52 of 1,956 cases -- and the cases it
+        # kept were exactly the ones the model found easiest, which is a
+        # selection effect, not a cleaner measurement.
+        inf_arms = {a: M[[is_informative(p) for p in M]] if len(M) else M
+                    for a, M in arms.items()}
+        enough = len(inf_arms["permutation"]) >= 2 and len(inf_arms["retest"]) >= 2
         rows.append({
             "case_id": case_id,
             "informative_perm": informative["permutation"],
@@ -141,6 +151,11 @@ def per_case_table(d: pl.DataFrame, posteriors: np.ndarray,
             "all_informative": bool(
                 informative["permutation"] == 1.0 and informative["retest"] == 1.0),
             "n_perm": len(perm), "n_retest": len(arms["retest"]),
+            "n_perm_informative": len(inf_arms["permutation"]),
+            "n_retest_informative": len(inf_arms["retest"]),
+            "conditional_usable": bool(enough),
+            "jsd_permutation_inf": _pairwise(inf_arms["permutation"]) if enough else np.nan,
+            "jsd_retest_inf": _pairwise(inf_arms["retest"]) if enough else np.nan,
             "n_shuffled": len(arms["shuffled"]),
             "n_canonical": len(arms["canonical"]),
             "jsd_permutation": _pairwise(perm),
@@ -160,7 +175,8 @@ def per_case_table(d: pl.DataFrame, posteriors: np.ndarray,
         })
     t = pl.DataFrame(rows)
     return t.with_columns(
-        (pl.col("jsd_permutation") - pl.col("jsd_retest")).alias("order_effect"))
+        (pl.col("jsd_permutation") - pl.col("jsd_retest")).alias("order_effect"),
+        (pl.col("jsd_permutation_inf") - pl.col("jsd_retest_inf")).alias("order_effect_inf"))
 
 
 def _informative_rate_by_arm(d: pl.DataFrame, posteriors: np.ndarray) -> dict:
@@ -185,8 +201,9 @@ def analyse(model_key: str, d: pl.DataFrame, posteriors: np.ndarray,
     shuf = float(np.nanmean(t["jsd_shuffled"].to_numpy()))
     btw = between_case_ceiling(d, posteriors, seed=seed)
     denom = btw - ret
-    ti = t.filter(pl.col("all_informative"))
-    oei = ti["order_effect"].to_numpy() if ti.height else np.array([])
+    ti = t.filter(pl.col("conditional_usable"))
+    oei = ti["order_effect_inf"].to_numpy() if ti.height else np.array([])
+    oei = oei[np.isfinite(oei)]
     by_arm = _informative_rate_by_arm(d, posteriors)
     return A1Result(
         model_key=model_key, n_cases=t.height,

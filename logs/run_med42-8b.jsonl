@@ -1,0 +1,11 @@
+{"model": "med42-8b", "task": "a1_posterior", "n": 39120, "seconds": 1765.46235704422}
+{"model": "med42-8b", "task": "a4_posterior", "n": 5400, "seconds": 297.1257517337799}
+{"model": "med42-8b", "task": "a2_posterior", "n": 5858, "seconds": 206.85650610923767}
+{"model": "med42-8b", "task": "a3_posterior", "n": 2990, "seconds": 97.43341779708862}
+{"model": "med42-8b", "task": "elr_prior", "n": 14, "seconds": 2.562364339828491}
+{"model": "med42-8b", "task": "elr_weights_numeric", "n": 483, "seconds": 21.20890974998474}
+{"model": "med42-8b", "task": "elr_weights_logodds", "n": 483, "seconds": 19.5117609500885}
+{"model": "med42-8b", "task": "elr_weights_ordinal", "n": 483, "seconds": 24.20688819885254}
+{"model": "med42-8b", "task": "a1_answer", "n": 35208, "seconds": 516.8300724029541}
+{"model": "med42-8b", "task": "cot_posterior", "n": 5868, "seconds": 335.36378836631775}
+{"model": "med42-8b", "task": "a1_narrative", "n": 4400, "seconds": 179.65843415260315}

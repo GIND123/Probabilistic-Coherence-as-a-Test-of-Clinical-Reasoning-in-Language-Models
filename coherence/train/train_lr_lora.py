@@ -55,10 +55,15 @@ def main() -> None:
     ap.add_argument("--rank", type=int, default=32)
     ap.add_argument("--alpha", type=int, default=64)
     ap.add_argument("--dropout", type=float, default=0.05)
-    ap.add_argument("--batch", type=int, default=1)
-    ap.add_argument("--accum", type=int, default=16)
-    ap.add_argument("--max-len", type=int, default=3072)
+    ap.add_argument("--batch", type=int, default=8)
+    ap.add_argument("--accum", type=int, default=2)
+    # Measured: prompts are ~584 tokens and answers ~321, so p95 total is 937
+    # and the longest example is 950. 3072 was padding the batch to three
+    # times what any example needs.
+    ap.add_argument("--max-len", type=int, default=1024)
+    ap.add_argument("--eval-subset", type=int, default=400)
     ap.add_argument("--load-4bit", action="store_true")
+    ap.add_argument("--warmup-steps", type=int, default=40)
     args = ap.parse_args()
 
     tok = AutoTokenizer.from_pretrained(args.base, trust_remote_code=True)
@@ -70,6 +75,13 @@ def main() -> None:
         "test": str(DATA / "lr_sft_test.jsonl")})
     fn = build_tokenise_fn(tok, args.max_len)
     ds = ds.map(fn, remove_columns=ds["train"].column_names, num_proc=8)
+    # Full-eval on 4,074 held-out examples took 8 minutes and ran every 100
+    # steps. A fixed random subset is enough to track generalisation during
+    # training; the final number is computed on the whole held-out set.
+    eval_full = ds["test"]
+    eval_small = (eval_full.shuffle(seed=SEED).select(range(min(args.eval_subset,
+                                                               len(eval_full))))
+                  if args.eval_subset else eval_full)
 
     kwargs = dict(dtype=torch.bfloat16, device_map={"": 0}, trust_remote_code=True,
                   attn_implementation="sdpa")
@@ -97,21 +109,23 @@ def main() -> None:
         per_device_train_batch_size=args.batch,
         per_device_eval_batch_size=args.batch,
         gradient_accumulation_steps=args.accum,
-        learning_rate=args.lr, lr_scheduler_type="cosine", warmup_ratio=0.03,
-        logging_steps=10, eval_strategy="steps", eval_steps=100,
-        save_strategy="steps", save_steps=200, save_total_limit=3,
+        learning_rate=args.lr, lr_scheduler_type="cosine",
+        # transformers 5.x dropped `warmup_ratio`; compute the step count.
+        warmup_steps=args.warmup_steps,
+        logging_steps=10, eval_strategy="steps", eval_steps=50,
+        save_strategy="steps", save_steps=150, save_total_limit=3,
         bf16=True, gradient_checkpointing=True,
         report_to=[], seed=SEED, dataloader_num_workers=4,
         remove_unused_columns=False,
     )
     trainer = Trainer(
-        model=model, args=targs, train_dataset=ds["train"], eval_dataset=ds["test"],
+        model=model, args=targs, train_dataset=ds["train"], eval_dataset=eval_small,
         data_collator=DataCollatorForSeq2Seq(tok, padding=True, label_pad_token_id=IGNORE),
     )
     trainer.train()
     trainer.save_model(args.out)
     tok.save_pretrained(args.out)
-    metrics = trainer.evaluate()
+    metrics = trainer.evaluate(eval_dataset=eval_full)   # full held-out set
     Path(args.out, "final_metrics.json").write_text(json.dumps(metrics, indent=2))
     print(json.dumps(metrics, indent=2))
 

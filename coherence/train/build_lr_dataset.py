@@ -58,7 +58,17 @@ def _target(log_lr: np.ndarray, fmt: str) -> dict:
     return {"weights": [_to_ordinal(float(x)) for x in v]}
 
 
-def build(seed: int = SEED, holdout_frac: float = 0.2) -> dict:
+def build(seed: int = SEED, holdout_frac: float = 0.2,
+          n_demo_variants: int = 4) -> dict:
+    """Build the SFT set.
+
+    `n_demo_variants` controls how many (age, sex) framings each
+    (finding, format) pair gets. The point of varying demographics is to stop
+    the adapter latching onto one surface framing, and a handful of variants
+    does that; the original 14 produced 16,212 examples over only 413 train
+    findings -- a 39x redundancy that tripled training time without adding
+    signal.
+    """
     kb = load_kb()
     tbl = LikelihoodTable.load()
     log_lr = tbl.log_lr()                       # (D, T)
@@ -80,8 +90,11 @@ def build(seed: int = SEED, holdout_frac: float = 0.2) -> dict:
             continue
         for fmt in FORMATS:
             tgt = json.dumps(_target(col, fmt), separators=(",", ":"))
-            for lo, hi in AGE_BANDS:
-                for sex in ("M", "F"):
+            bands = [AGE_BANDS[i] for i in
+                     rng.choice(len(AGE_BANDS), size=min(n_demo_variants, len(AGE_BANDS)),
+                                replace=False)]
+            for bi, (lo, hi) in enumerate(bands):
+                for sex in (("M", "F")[bi % 2],):
                     age = int(rng.integers(lo, hi + 1))
                     msgs = likelihood_ratio_prompt(kb, pathologies, tok, age, sex, fmt)
                     splits[which].append({
@@ -95,6 +108,7 @@ def build(seed: int = SEED, holdout_frac: float = 0.2) -> dict:
             for r in v:
                 fh.write(json.dumps(r) + "\n")
     meta = {"n_train": len(splits["train"]), "n_test": len(splits["test"]),
+            "n_demo_variants": n_demo_variants,
             "n_findings_total": len(tokens), "n_findings_held_out": len(hold),
             "held_out_findings": sorted(hold), "formats": list(FORMATS),
             "split_unit": "finding", "seed": seed}

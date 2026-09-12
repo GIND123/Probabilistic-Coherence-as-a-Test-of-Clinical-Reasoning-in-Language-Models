@@ -197,3 +197,38 @@ happened to produce: `perm_ensemble_5` on 1,113 cases against `direct` on
 1,955. A method that fails on hard cases is then scored on an easier subset
 and looks better for it. Every method is now restricted to the intersection
 of cases all of them produced.
+
+## C10 — The conditional estimand was over-restricted
+
+`order_effect_informative` originally required *every* response in a case to
+express a belief. Across 10 permutations and 6 retests, at a 55% per-response
+informative rate, that conjunction retained **52 of 1,956 cases** for
+`qwen3-4b-think` — and the cases it kept were the ones the model found
+easiest, which is a selection effect rather than a cleaner measurement.
+
+The divergences are now recomputed over whichever responses within each arm
+were informative, requiring at least 2 per arm. Usable cases rise to
+1,280–1,956 across the model set. The conditional estimand comes out
+*higher* than the unconditional one for several models (qwen3-4b-think 0.0292
+vs 0.0173; qwen3-8b-nothink 0.0387 vs 0.0331), which is the expected
+direction: uniform responses contribute zero divergence and dilute the
+unconditional average.
+
+## Informativeness is a model property, not an instrument defect
+
+The C6 worry was that the uniform collapse might be an artefact of asking for
+a 49-way posterior. Across five completed models it tracks capability:
+
+| model | informative rate |
+|---|---|
+| qwen3-4b-think | 53.4% |
+| qwen3-4b-nothink | 55.3% |
+| qwen3-8b-think | 72.5% |
+| qwen3-8b-nothink | 75.5% |
+| **med42-8b** | **99.8%** |
+
+A medically tuned 8B model expresses a belief on essentially every item under
+the same prompt that makes a general 4B model shrug on half of them. The
+instrument is not the binding constraint; willingness to commit to a
+differential is a capability the models differ on, and it is reported as a
+first-class result.

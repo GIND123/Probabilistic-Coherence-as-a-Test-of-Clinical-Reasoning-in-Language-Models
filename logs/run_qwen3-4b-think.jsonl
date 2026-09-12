@@ -3,3 +3,11 @@
 {"model": "qwen3-4b-think", "task": "a1_posterior", "n": 39120, "seconds": 9.441375732421875e-05}
 {"model": "qwen3-4b-think", "task": "a4_posterior", "n": 5400, "seconds": 3.409385681152344e-05}
 {"model": "qwen3-4b-think", "task": "a2_posterior", "n": 5858, "seconds": 171.47738003730774}
+{"model": "qwen3-4b-think", "task": "a3_posterior", "n": 2990, "seconds": 79.85165023803711}
+{"model": "qwen3-4b-think", "task": "elr_prior", "n": 14, "seconds": 1.9522736072540283}
+{"model": "qwen3-4b-think", "task": "elr_weights_numeric", "n": 483, "seconds": 19.542698860168457}
+{"model": "qwen3-4b-think", "task": "elr_weights_logodds", "n": 483, "seconds": 13.510873079299927}
+{"model": "qwen3-4b-think", "task": "elr_weights_ordinal", "n": 483, "seconds": 19.058237552642822}
+{"model": "qwen3-4b-think", "task": "a1_answer", "n": 35208, "seconds": 308.5179018974304}
+{"model": "qwen3-4b-think", "task": "cot_posterior", "n": 5868, "seconds": 261.64894556999207}
+{"model": "qwen3-4b-think", "task": "a1_narrative", "n": 4400, "seconds": 140.30891060829163}
