@@ -1,0 +1,50 @@
+pathology,test,validate,train
+Boerhaave,2083,2075,15080
+Localized edema,3734,3694,27825
+SLE,1564,1579,11867
+Bronchospasm / acute asthma exacerbation,2222,2209,19875
+Scombroid food poisoning,2486,2250,18535
+HIV (initial infection),3919,3852,29013
+Bronchitis,3594,3543,26400
+Guillain-Barré syndrome,2601,2557,22867
+Unstable angina,2880,2748,21244
+Influenza,3554,3590,26812
+Stable angina,2386,2340,16995
+Possible NSTEMI / STEMI,2911,2943,21260
+Acute pulmonary edema,2598,2500,19018
+Myasthenia gravis,2215,2159,18566
+Acute laryngitis,3217,3407,24129
+Pneumonia,3542,3484,25761
+Epiglottitis,2364,2248,17209
+Acute otitis media,3516,3474,25917
+Spontaneous pneumothorax,1343,1405,10162
+Anemia,6842,6903,50665
+Acute rhinosinusitis,1829,1866,13578
+Allergic sinusitis,2411,2136,26203
+Anaphylaxis,3799,3754,27718
+Pulmonary neoplasm,1918,1891,14457
+Spontaneous rib fracture,778,782,5712
+Acute dystonic reactions,3302,3281,25982
+Whooping cough,549,545,6070
+Tuberculosis,2080,2007,16245
+URTI,8743,8656,64368
+GERD,3543,3426,25979
+Bronchiectasis,2454,2319,18795
+Panic attack,3387,3237,25019
+Viral pharyngitis,8334,8246,61642
+Pulmonary embolism,3679,3725,27468
+Pericarditis,3095,3032,22785
+Atrial fibrillation,2831,2609,21036
+Acute COPD exacerbation / infection,2153,2076,17661
+Ebola,100,90,718
+Croup,344,267,2852
+Cluster headache,2825,2841,20804
+Chronic rhinosinusitis,2747,2717,20579
+Pancreatic neoplasm,2585,2582,18846
+Sarcoidosis,2902,3028,21285
+Inguinal hernia,2751,2632,20235
+Bronchiolitis,36,28,261
+Chagas,1077,1124,9252
+Myocarditis,1478,1547,11073
+Larygospasm,785,668,10998
+PSVT,2443,2376,18781

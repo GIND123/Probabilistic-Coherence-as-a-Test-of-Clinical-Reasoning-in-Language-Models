@@ -1,0 +1,35 @@
+[project]
+name = "codx"
+version = "0.1.0"
+description = "CoDx: Probabilistic Coherence as a Test of Clinical Reasoning in LLMs (+ ELR-Fusion)"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+  "numpy>=2.1",
+  "pandas>=2.2",
+  "scipy>=1.14",
+  "pyarrow>=17",
+  "polars>=1.12",
+  "scikit-learn>=1.5",
+  "statsmodels>=0.14",
+  "matplotlib>=3.9",
+  "seaborn>=0.13",
+  "tqdm>=4.66",
+  "orjson>=3.10",
+  "pydantic>=2.9",
+  "python-dotenv>=1.0",
+  "huggingface-hub>=0.26",
+  "datasets>=3.0",
+  "transformers>=4.51",
+  "rich>=13.9",
+  "typer>=0.12",
+  "pyyaml>=6.0",
+  "tenacity>=9.0",
+  "jsonschema>=4.23",
+]
+
+[project.optional-dependencies]
+serve = ["vllm>=0.9", "openai>=1.50"]
+train = ["peft>=0.13", "trl>=0.12", "accelerate>=1.0", "bitsandbytes>=0.44", "deepspeed>=0.15"]
+
+[tool.setuptools.packages.find]
+include = ["coherence*"]

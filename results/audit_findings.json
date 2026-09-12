@@ -1,0 +1,354 @@
+[
+  {
+    "check": "kb_probability_release",
+    "severity": "critical",
+    "headline": "release_conditions.json declares 888 (pathology, evidence) slots and supplies conditional probabilities for 0 of them",
+    "detail": "This is the week-1 gate named in the proposal. The generator's likelihood tables are NOT part of the public DDXPlus release: every slot is an empty object. Exact posteriors for arbitrary evidence subsets therefore cannot be read off the knowledge base, and axioms A2 and A3 need another reference. Two were tested; see `naive_bayes_reconstruction` and `empirical_oracle_feasibility`.",
+    "stats": {
+      "n_slots": 888,
+      "n_with_probabilities": 0
+    }
+  },
+  {
+    "check": "schema_and_nulls",
+    "severity": "info",
+    "headline": "1,292,579 records; null fields: none; empty evidence lists: 0; empty differentials: 0",
+    "detail": "",
+    "stats": {
+      "n_rows": 1292579,
+      "nulls": {
+        "row_id": 0,
+        "age": 0,
+        "sex": 0,
+        "pathology": 0,
+        "initial_evidence": 0,
+        "evidences": 0,
+        "ddx_names": 0,
+        "ddx_probs": 0,
+        "split": 0
+      },
+      "empty_evidences": 0,
+      "empty_differentials": 0
+    }
+  },
+  {
+    "check": "duplicates",
+    "severity": "major",
+    "headline": "17324 (1.3403%) of records are exact duplicates of another record; 3,861 distinct cases appear in more than one split (8,705 records), i.e. train/test leakage",
+    "detail": "A case is keyed on (evidence multiset, age, sex, pathology, initial evidence). Cross-split repetition means any supervised model trained on DDXPlus train and scored on DDXPlus test has memorisation headroom. It does not affect the coherence measurements in this project, which are within-case and label-free, but it is reported because downstream users of the corpus are affected.",
+    "stats": {
+      "n_exact_duplicate_records": 17324,
+      "n_cases_in_multiple_splits": 3861,
+      "n_records_in_multiple_splits": 8705
+    }
+  },
+  {
+    "check": "demographics",
+    "severity": "info",
+    "headline": "age range [0, 109], median 39; sex values ['F', 'M']; out-of-range ages: 0",
+    "detail": "",
+    "stats": {
+      "age_quantiles": {
+        "min": 0.0,
+        "p1": 0.0,
+        "p25": 22.0,
+        "p50": 39.0,
+        "p75": 56.0,
+        "p99": 98.0,
+        "max": 109.0
+      },
+      "sex_values": [
+        "F",
+        "M"
+      ],
+      "n_age_out_of_range": 0
+    }
+  },
+  {
+    "check": "evidence_token_validity",
+    "severity": "info",
+    "headline": "516 distinct evidence tokens over 223 question codes; unknown codes: 0, invalid values: 0, malformed: 0",
+    "detail": "",
+    "stats": {
+      "n_distinct_tokens": 516,
+      "unknown_codes": [],
+      "invalid_values": [],
+      "malformed": []
+    }
+  },
+  {
+    "check": "differential_wellformed",
+    "severity": "info",
+    "headline": "differentials sum to 1 within 1e-6 for 1292579 (100.0000%); length mismatches: 0; non-monotone orderings: 0; negatives: 0",
+    "detail": "",
+    "stats": {
+      "n_not_normalised": 0,
+      "n_length_mismatch": 0,
+      "n_non_monotone": 0,
+      "max_abs_dev_from_1": 8.881784197001252e-16,
+      "k_quantiles": {
+        "min": 1.0,
+        "p25": 4.0,
+        "p50": 8.0,
+        "p75": 13.0,
+        "p95": 21.0,
+        "max": 34.0
+      }
+    }
+  },
+  {
+    "check": "true_pathology_in_differential",
+    "severity": "info",
+    "headline": "ground-truth pathology absent from its own differential in 0 (0.0000%); it is rank-1 in 73.60% of the rest (median rank 1)",
+    "detail": "Rank-1 agreement well below 100% is expected and is not an error: the differential is the generator's posterior, while PATHOLOGY is the sampled ground truth. It does bound achievable top-1 accuracy for any method, and that bound belongs in the results table.",
+    "stats": {
+      "n_truth_not_in_ddx": 0,
+      "top1_rate": 0.7360424391855352,
+      "mean_rank": 1.5774587085199434,
+      "median_rank": 1.0,
+      "top5_rate": 0.9731730130228017
+    }
+  },
+  {
+    "check": "kb_coverage",
+    "severity": "info",
+    "headline": "0 (pathology, evidence) pairs observed in data but not declared in the knowledge base; 0 declared pathologies never observed; 0 declared evidences never observed",
+    "detail": "Declared-but-unobserved is benign. Observed-but-undeclared means the structural KB cannot be used as a hard support constraint when reconstructing likelihoods: zeroing out undeclared evidence would assign probability 0 to cases that the generator actually produced.",
+    "stats": {
+      "n_violating_pairs": 0,
+      "unseen_pathologies": [],
+      "unseen_evidence_codes": []
+    }
+  },
+  {
+    "check": "generator_determinism",
+    "severity": "critical",
+    "headline": "21,004 replicate case pairs; the generator returns a DIFFERENT differential for 25.82% of them (mean JSD 0.04895, p90 0.21979, max 0.52613); the top-1 diagnosis flips in 0.48% of replicate pairs",
+    "detail": "Two patients identical in evidence multiset, age, sex, initial evidence and true pathology can receive materially different ground-truth differentials. No released field explains the difference, so it is irreducible from the corpus alone. Consequence for this project: the ground truth itself has an order-of-1e-2 JSD noise floor. Any model order-effect must be reported against it, alongside the model's own test-retest floor. Consequence for the wider literature: DDXPlus differential-matching metrics have a hard ceiling that is not 1.0, and papers reporting near-perfect differential reproduction should be read with that in mind.",
+    "stats": {
+      "n_replicate_pairs": 21004,
+      "frac_pairs_disagreeing": 0.2581889163968768,
+      "jsd_mean": 0.04895434666622638,
+      "jsd_median": 0.0,
+      "jsd_p90": 0.21978756874473587,
+      "jsd_p99": 0.32775485055364706,
+      "jsd_max": 0.5261316621231531,
+      "l1_mean": 0.1684420244737566,
+      "top1_flip_rate": 0.004760997905160921
+    }
+  },
+  {
+    "check": "class_balance",
+    "severity": "major",
+    "headline": "49 pathologies; prior range 0.00025-0.06326 (imbalance ratio 251.6x); prior entropy 5.38 bits of 5.61 max",
+    "detail": "Case sampling for the coherence battery must be stratified by pathology and by severity, otherwise the headline order-effect number is dominated by the handful of common respiratory pathologies and the severity-weighted analysis is starved of high-severity cases.",
+    "stats": {
+      "n_pathologies": 49,
+      "imbalance_ratio": 251.59076923076927,
+      "prior_entropy_bits": 5.37797447067042,
+      "severity_mass": {
+        "1": 0.07725639980225579,
+        "2": 0.20304832431905515,
+        "3": 0.3012612768735992,
+        "4": 0.3105465894154245,
+        "5": 0.1078874095896653
+      }
+    }
+  },
+  {
+    "check": "evidence_load",
+    "severity": "info",
+    "headline": "evidences per patient: median 20, IQR 15-25, range 2-47; 1,722 patients above the Tukey fence (40)",
+    "detail": "This distribution sets the feasible range for the evidence-set-size ablation and bounds the cost of ELR-Fusion, which issues one query per finding.",
+    "stats": {
+      "quantiles": {
+        "min": 2.0,
+        "p1": 5.0,
+        "p25": 15.0,
+        "p50": 20.0,
+        "p75": 25.0,
+        "p99": 37.0,
+        "max": 47.0
+      },
+      "tukey_fence": 40.0,
+      "n_above_fence": 1722,
+      "mean": 19.774255964238936
+    }
+  },
+  {
+    "check": "split_shift",
+    "severity": "info",
+    "headline": "pathology-marginal population stability index: train->test=0.0086, train->validate=0.0126  (<0.1 negligible, 0.1-0.25 moderate, >0.25 material)",
+    "detail": "",
+    "stats": {
+      "psi": {
+        "train->test": 0.008589547528444237,
+        "train->validate": 0.012601717449373686
+      },
+      "split_sizes": {
+        "test": 134529,
+        "validate": 132448,
+        "train": 1025602
+      }
+    }
+  },
+  {
+    "check": "severity_coverage",
+    "severity": "info",
+    "headline": "severity distribution (1 = most severe): sev1=99,860, sev2=262,456, sev3=389,404, sev4=401,406, sev5=139,453; 362,316 cases at severity <= 2 are available for the severity-weighted incoherence analysis",
+    "detail": "",
+    "stats": {
+      "counts": {
+        "1": 99860,
+        "2": 262456,
+        "3": 389404,
+        "4": 401406,
+        "5": 139453
+      },
+      "n_high_severity": 362316
+    }
+  },
+  {
+    "check": "sex_plausibility",
+    "severity": "info",
+    "headline": "0 sex-implausible evidence assertions (4 female-specific and 0 male-specific questions screened)",
+    "detail": "Screened by question wording, so it is a lower bound and may contain false positives where a question merely mentions an anatomical term. Any true positives are generator artefacts and the affected cases are excluded from the clinical plausibility subset used for the clinician-review arm.",
+    "stats": {
+      "n_violations": 0,
+      "female_specific_codes": [
+        "E_163",
+        "E_145",
+        "E_167",
+        "E_141"
+      ],
+      "male_specific_codes": [],
+      "example_questions": {
+        "E_163": "Have you had any vaginal discharge?",
+        "E_145": "Do you have very abundant or very long menstruation periods?",
+        "E_167": "Do you think you are pregnant or are you currently pregnant?",
+        "E_141": "Did you have your first menstrual period before the age of 12?"
+      }
+    }
+  },
+  {
+    "check": "age_plausibility",
+    "severity": "minor",
+    "headline": "181,916 assertions of smoking / occupational-exposure / travel history in patients under 10 years old across 8 screened questions",
+    "detail": "Reported as a realism limitation of the synthetic generator, not as a defect that threatens the coherence measurement: order invariance holds regardless of whether the case is clinically plausible. It does matter for the MIMIC external-validity arm, which is the reason that arm exists.",
+    "stats": {
+      "n_under_10": 181916,
+      "screened_codes": [
+        "E_191",
+        "E_198",
+        "E_199",
+        "E_200",
+        "E_204",
+        "E_222",
+        "E_49",
+        "E_79"
+      ]
+    }
+  },
+  {
+    "check": "naive_bayes_reconstruction",
+    "severity": "major",
+    "headline": "reconstructing the likelihood tables from corpus frequencies and recombining them by naive Bayes reproduces the shipped differentials at mean JSD 0.5463 (top-1 agreement 74.5%, top-5 Jaccard 0.257) against a generator noise floor of 0.0490 -- NOT adequate",
+    "detail": "The per-table estimates are precise (binomial SE ~3e-4); the failure is the recombination rule, not the estimation. Sampled evidence pairs within a pathology have mean |phi| 0.030 (p95 0.167, max 1.000), with 8.7% of pairs exceeding |phi|=0.1, so conditional independence given the pathology is violated materially and summing log-likelihood-ratios over ~20 correlated findings compounds the error. Temperature scaling does not rescue it, which confirms the defect is structural rather than a calibration issue. Consequence: naive Bayes is retained ONLY as an explicitly approximate baseline and as the object of the independence-correction ablation, never as ground truth.",
+    "stats": {
+      "validation": {
+        "n_cases": 20000,
+        "present_only": true,
+        "jsd_mean": 0.5462949577244856,
+        "jsd_median": 0.6167761222477275,
+        "jsd_p90": 0.7738178771449036,
+        "top1_agreement": 0.7445,
+        "top5_jaccard": 0.256915873015873
+      },
+      "independence": {
+        "n_pairs_tested": 3600,
+        "phi_mean_abs": 0.0296465679272286,
+        "phi_median_abs": 0.006114326405204689,
+        "phi_p95_abs": 0.16672074786549956,
+        "phi_max_abs": 1.0,
+        "frac_pairs_abs_phi_gt_0.1": 0.08722222222222223,
+        "mutual_information_nats_mean": 0.0037327927233939376,
+        "mutual_information_nats_p95": 0.0236024717303552
+      },
+      "generator_noise_floor_jsd": 0.04895434666622638
+    }
+  },
+  {
+    "check": "empirical_oracle_feasibility",
+    "severity": "info",
+    "headline": "conditioning directly on the corpus gives an assumption-free posterior; |E|=1: 100% scorable (median support 115346), |E|=2: 100% scorable (median support 23320), |E|=3: 96% scorable (median support 9136), |E|=4: 93% scorable (median support 4837), |E|=5: 85% scorable (median support 2705), |E|=6: 67% scorable (median support 1062), |E|=8: 42% scorable (median support 313), |E|=10: 13% scorable (median support 83) at a 500-patient minimum",
+    "detail": "Evidence sets up to |E|=5 keep at least 80% of items scorable, which covers the absolute-reference requirements of A2 and A3. A1 and A4 need no ground truth at all and so run at any evidence-set size, including the full ~20-finding cases and the MIMIC narratives. This is the resolution of the week-1 gate: A2/A3 are ABSOLUTE measures, not relative ones, and the reference carries no independence assumption for a reviewer to attack -- it is the generator's own joint distribution, counted.",
+    "stats": {
+      "min_support": 500,
+      "max_k_80pct_scorable": 5,
+      "by_k": {
+        "1": {
+          "median_support": 115346.0,
+          "p10_support": 21572.0,
+          "frac_scorable": 1.0
+        },
+        "2": {
+          "median_support": 23319.5,
+          "p10_support": 6432.200000000003,
+          "frac_scorable": 1.0
+        },
+        "3": {
+          "median_support": 9136.0,
+          "p10_support": 1542.4000000000003,
+          "frac_scorable": 0.9649122807017544
+        },
+        "4": {
+          "median_support": 4837.0,
+          "p10_support": 769.8,
+          "frac_scorable": 0.9323308270676691
+        },
+        "5": {
+          "median_support": 2705.0,
+          "p10_support": 311.30000000000007,
+          "frac_scorable": 0.8492462311557789
+        },
+        "6": {
+          "median_support": 1061.5,
+          "p10_support": 125.00000000000001,
+          "frac_scorable": 0.6709183673469388
+        },
+        "8": {
+          "median_support": 313.0,
+          "p10_support": 39.0,
+          "frac_scorable": 0.41689373297002724
+        },
+        "10": {
+          "median_support": 83.0,
+          "p10_support": 5.0,
+          "frac_scorable": 0.13353115727002968
+        }
+      }
+    }
+  },
+  {
+    "check": "oracle_vs_shipped_differential",
+    "severity": "info",
+    "headline": "the empirical 3-finding posterior differs from the shipped full-case differential at mean JSD 0.539 over 4,903 comparable items",
+    "detail": "This is expected and is not a defect: the two quantities condition on different evidence. The shipped differential conditions on the patient's entire finding set, the empirical oracle on the 3-finding subset actually presented. The comparison is reported so that the report does not silently imply the two are interchangeable. Each axiom states which reference it uses.",
+    "stats": {
+      "n_items": 4903,
+      "jsd_mean": 0.539152245348315,
+      "jsd_median": 0.5867368589938775,
+      "median_support": 9687.0
+    }
+  },
+  {
+    "check": "design_decision",
+    "severity": "info",
+    "headline": "A2/A3 operate in the ABSOLUTE regime using the empirical-posterior oracle; naive-Bayes reconstruction is retained only as an approximate baseline (it alone would have forced the RELATIVE regime)",
+    "detail": "A1 (order invariance) and A4 (positional anchoring) require no ground truth and are unaffected by any of this. A2 (update fidelity) and A3 (redundancy insensitivity) use the empirical oracle with a 500-patient minimum support and Wilson intervals on every target, restricted to evidence subsets of size <= 6. Every divergence figure in the paper is reported against three anchors: the model's test-retest floor, the generator's own replicate noise floor measured here (0.0490 JSD), and a shuffled-evidence ceiling.",
+    "stats": {
+      "regime_naive_bayes_would_force": "RELATIVE",
+      "generator_noise_floor_jsd": 0.04895434666622638
+    }
+  }
+]

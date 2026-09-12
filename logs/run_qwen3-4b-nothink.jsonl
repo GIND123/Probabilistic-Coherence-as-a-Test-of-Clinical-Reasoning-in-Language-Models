@@ -1,0 +1,3 @@
+{"model": "qwen3-4b-nothink", "task": "a1_posterior", "n": 64, "seconds": 16.13309907913208}
+{"model": "qwen3-4b-nothink", "task": "a1_posterior", "n": 512, "seconds": 40.51207518577576}
+{"model": "qwen3-4b-nothink", "task": "a1_posterior", "n": 512, "seconds": 27.92036724090576}

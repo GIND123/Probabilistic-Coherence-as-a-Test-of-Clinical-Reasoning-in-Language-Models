@@ -1,0 +1,8 @@
+.env
+data/
+build/
+results/raw/
+.venv/
+__pycache__/
+*.pyc
+codx.egg-info/

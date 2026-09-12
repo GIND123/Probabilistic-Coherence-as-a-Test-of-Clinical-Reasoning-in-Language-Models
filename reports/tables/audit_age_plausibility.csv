@@ -1,0 +1,9 @@
+code,n,min_age,p01_age,question
+E_49,124744,0,0.0,Do you attend or work in a daycare?
+E_204,1292579,0,0.0,Have you traveled out of the country in the last 4 weeks?
+E_198,29137,0,0.0,Do you work in agriculture?
+E_222,87448,0,0.0,Are you exposed to secondhand cigarette smoke on a daily basis?
+E_79,363510,0,0.0,Do you smoke cigarettes?
+E_191,30739,18,19.0,Are you a former smoker?
+E_199,12238,30,30.0,Do you work in construction?
+E_200,13767,30,30.0,Do you work in the mining sector?
