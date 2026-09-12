@@ -1,0 +1,3 @@
+model,n_cases,high_severity_topk_instability,k,high_severity_max
+qwen3-4b-nothink,1956,0.721881390593047,5,2
+qwen3-4b-think,1956,0.6814928425357873,5,2

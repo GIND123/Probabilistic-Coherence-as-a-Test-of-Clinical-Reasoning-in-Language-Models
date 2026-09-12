@@ -172,9 +172,21 @@ def analyse_methods(models: list[str], b: Battery, oracle) -> pl.DataFrame:
         priors = build_elicited_prior(m, b.pathologies) or {}
         emp_prior = np.log(np.clip(oracle.prior.probs, 1e-9, None))
 
-        per = {k: [] for k in ("direct", "self_consistency", "perm_ensemble_5",
-                               "perm_ensemble_10", "elr_fusion")}
+        # Ensemble sizes must satisfy 2K <= n_perms, because the residual is
+        # measured between two DISJOINT ensembles drawn from the same pool.
+        # An earlier version asked for K=10 from a 10-permutation pool and
+        # silently clamped it to 5, so the K=5 and K=10 rows of Table 1 were
+        # the same number reported twice.
+        ens_ks = (2, 3, 5)
+        per = {k: [] for k in ["direct", "self_consistency", "elr_fusion"]
+               + [f"perm_ensemble_{k}" for k in ens_ks]}
         inv = {k: [] for k in per}
+        truth = {k: [] for k in per}     # index of the sampled true pathology
+        ddx = {k: [] for k in per}       # the shipped differential, as a vector
+        cases_seen = {k: set() for k in per}
+        case_of = {k: [] for k in per}   # parallel to per[k], for pairing
+        pidx = {p: i for i, p in enumerate(b.pathologies)}
+        n_retest_used = 0
         for case_id, sub in d.group_by("case_id", maintain_order=True):
             case_id = case_id[0] if isinstance(case_id, tuple) else case_id
             c = ci.get(case_id)
@@ -184,34 +196,80 @@ def analyse_methods(models: list[str], b: Battery, oracle) -> pl.DataFrame:
             ret = P[sub.filter((pl.col("arm") == "retest") & pl.col("valid"))["row"].to_numpy()]
             if len(perm) < 4:
                 continue
-            half = len(perm) // 2
-            per["direct"].append(perm[0])
-            inv["direct"].append(jsd(perm[0], perm[1]))
+            ti = pidx.get(c.pathology)
+            if ti is None:
+                continue
+            dv = np.zeros(len(b.pathologies))
+            for nm, pr in zip(c.ddx_names, c.ddx_probs):
+                if nm in pidx:
+                    dv[pidx[nm]] = pr
+
+            def _rec(key, vec, residual):
+                per[key].append(vec)
+                inv[key].append(residual)
+                truth[key].append(ti)
+                ddx[key].append(dv)
+                cases_seen[key].add(case_id)
+                case_of[key].append(case_id)
+
+            case_vecs: dict[str, tuple] = {}
+
+            _rec("direct", perm[0], jsd(perm[0], perm[1]))
             if len(ret) >= 2:
-                per["self_consistency"].append(ret.mean(0))
-                inv["self_consistency"].append(jsd(perm[0], ret.mean(0)))
-            for k, key in ((min(5, half), "perm_ensemble_5"),
-                           (min(10, half), "perm_ensemble_10")):
-                if k >= 2:
+                n_retest_used = max(n_retest_used, len(ret))
+                half_r = len(ret) // 2
+                _rec("self_consistency", ret.mean(0),
+                     jsd(ret[:half_r].mean(0), ret[half_r:2 * half_r].mean(0)))
+            for k in ens_ks:
+                if 2 * k <= len(perm):
                     a = perm[:k].mean(0)
-                    bb = perm[half:half + k].mean(0)
-                    per[key].append(a)
-                    inv[key].append(jsd(a, bb))
+                    bb = perm[k:2 * k].mean(0)
+                    _rec(f"perm_ensemble_{k}", a, jsd(a, bb))
             if wt is not None and wt.coverage() > 0:
                 lp = np.log(np.clip(prior_for(priors, c.age, c.sex,
                                               np.exp(emp_prior)), 1e-9, None))
                 f = fuse(lp, wt, c.evidences)
-                per["elr_fusion"].append(f)
-                inv["elr_fusion"].append(0.0)   # theorem; verified separately
+                _rec("elr_fusion", f, 0.0)   # theorem; verified separately
 
-        for key, mats in per.items():
-            if not mats:
+        # Restrict every method to the cases ALL of them produced, so the
+        # comparison is paired. Without this, a method that fails on hard
+        # cases is scored on an easier subset and looks better for it: the
+        # unpaired run had perm_ensemble_5 on 1,113 cases against direct on
+        # 1,955, and they are not comparable numbers.
+        populated = [k for k, v in per.items() if v]
+        common = set.intersection(*[cases_seen[k] for k in populated]) if populated else set()
+        for key in populated:
+            keep = [i for i, cid in enumerate(case_of[key]) if cid in common]
+            if not keep:
                 continue
+            mats = [per[key][i] for i in keep]
+            M = np.vstack(mats)
+            tr = np.asarray([truth[key][i] for i in keep])
+            dd = np.vstack([ddx[key][i] for i in keep])
+            inv_k = [inv[key][i] for i in keep]
+            top1 = float(np.mean(M.argmax(axis=1) == tr))
+            top5 = float(np.mean([tr[i] in np.argsort(-M[i])[:5] for i in range(len(M))]))
+            # Cost is the query count a method needs for ONE new case.
+            # ELR-Fusion is reported twice: its weight table is elicited once
+            # per finding for the whole corpus, so a new case costs zero new
+            # queries -- but the unamortised figure is given too, because the
+            # amortisation only helps when the finding vocabulary is closed.
+            cost = {"direct": 1.0, "self_consistency": float(n_retest_used),
+                    "elr_fusion": 0.0}.get(key)
+            if cost is None:
+                cost = float(key.rsplit("_", 1)[1])
             rows.append({
                 "model": m, "method": key, "n_cases": len(mats),
-                "residual_order_sensitivity_jsd": float(np.mean(inv[key])),
+                "residual_order_sensitivity_jsd": float(np.mean(inv_k)),
+                "order_invariant": "exact" if key == "elr_fusion"
+                else ("approx" if key.startswith("perm_ensemble") else "no"),
+                "queries_per_new_case": cost,
+                "auditable_per_finding": key == "elr_fusion",
+                "top1_accuracy": top1, "top5_accuracy": top5,
+                "jsd_to_shipped_ddx": float(np.mean(
+                    [jsd(dd[i], M[i]) for i in range(len(M))])) if dd is not None else None,
                 "mean_entropy_bits": float(np.mean(
-                    [-(p[p > 0] * np.log2(p[p > 0])).sum() for p in mats])),
+                    [-(p[p > 0] * np.log2(p[p > 0])).sum() for p in M])),
             })
     return pl.DataFrame(rows)
 

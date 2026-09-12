@@ -25,15 +25,30 @@ def available_models(task: str = "a1_posterior") -> list[str]:
     return sorted(p.parent.name for p in RAW.glob(f"*/{task}.parquet"))
 
 
-def posterior_matrix(d: pl.DataFrame) -> tuple[np.ndarray, np.ndarray]:
-    """Return (posteriors, valid_mask). Invalid rows are NaN-filled."""
+def posterior_matrix(d: pl.DataFrame, repair: bool = True
+                     ) -> tuple[np.ndarray, np.ndarray]:
+    """Return (posteriors, valid_mask). Unusable rows are NaN-filled.
+
+    `repair` re-parses rows the runner marked invalid, using the raw text it
+    kept for exactly that purpose. Results generated before all-zero
+    plausibility vectors were reclassified as degenerate-but-valid are
+    recovered here rather than re-generated.
+    """
+    from coherence.elicit.engine import parse_probabilities
+
     rows = d["parsed"].to_list()
-    valid = d["valid"].to_numpy()
+    valid = d["valid"].to_numpy().copy()
     n = len(next(r for r in rows if r))
     out = np.full((len(rows), n), np.nan)
+    raw = d["raw_text"].to_list() if "raw_text" in d.columns else [None] * len(rows)
     for i, r in enumerate(rows):
         if r:
             out[i] = r
+        elif repair and raw[i]:
+            v = parse_probabilities(raw[i], n)
+            if v is not None:
+                out[i] = v
+                valid[i] = True
     return out, valid
 
 

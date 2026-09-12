@@ -229,7 +229,13 @@ def parse_probabilities(text: str, n: int, salvage: bool = True) -> np.ndarray |
     v = np.clip(v, 0.0, None)
     s = v.sum()
     if s <= 0:
-        return None
+        # An all-zero plausibility vector is well-formed and expresses no
+        # preference among the candidates, which after normalisation IS the
+        # uniform posterior. Treating it as a parse failure dropped the item
+        # entirely and unbalanced the per-arm sample; it is instead returned
+        # as uniform and picked up by `is_informative` as a non-informative
+        # response, which is the accounting it belongs in.
+        return np.full(n, 1.0 / n)
     return v / s
 
 

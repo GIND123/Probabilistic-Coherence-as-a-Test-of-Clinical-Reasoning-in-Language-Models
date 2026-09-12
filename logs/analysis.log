@@ -1,0 +1,63 @@
+analysing 2 model(s): qwen3-4b-nothink, qwen3-4b-think
+
+### a1_main   (generator noise floor JSD = 0.0490)
+| model            | n_cases | jsd_permutation | jsd_retest_floor | ... | normalised_order_effect | top1_flip_rate | top5_jaccard | mean_entropy_bits |
+|------------------|---------|-----------------|------------------|-----|-------------------------|----------------|--------------|-------------------|
+| qwen3-4b-nothink | 1956    | 0.1284          | 0.0722           | ... | 0.2149                  | 0.7955         | 0.7744       | 4.4918            |
+| qwen3-4b-think   | 1956    | 0.1315          | 0.1143           | ... | 0.0805                  | 0.6994         | 0.8400       | 4.9186            |
+
+### a1_k_sweep   (generator noise floor JSD = 0.0490)
+| model_key        | k  | jsd_permutation | jsd_retest | order_effect | ci_lo  | ci_hi  | top1_flip_rate |
+|------------------|----|-----------------|------------|--------------|--------|--------|----------------|
+| qwen3-4b-nothink | 2  | 0.1245          | 0.0722     | 0.0523       | 0.0453 | 0.0596 | 0.3983         |
+| qwen3-4b-nothink | 3  | 0.1268          | 0.0722     | 0.0545       | 0.0489 | 0.0603 | 0.5481         |
+| qwen3-4b-nothink | 5  | 0.1276          | 0.0722     | 0.0553       | 0.0506 | 0.0602 | 0.6667         |
+| qwen3-4b-nothink | 10 | 0.1284          | 0.0722     | 0.0562       | 0.0518 | 0.0606 | 0.7955         |
+| qwen3-4b-think   | 2  | 0.1393          | 0.1219     | 0.0174       | 0.0088 | 0.0262 | 0.3624         |
+| qwen3-4b-think   | 3  | 0.1313          | 0.1161     | 0.0153       | 0.0087 | 0.0222 | 0.4522         |
+| qwen3-4b-think   | 5  | 0.1304          | 0.1144     | 0.0160       | 0.0104 | 0.0218 | 0.5689         |
+| qwen3-4b-think   | 10 | 0.1315          | 0.1143     | 0.0173       | 0.0125 | 0.0222 | 0.6994         |
+
+### a1_severity   (generator noise floor JSD = 0.0490)
+| model            | n_cases | high_severity_topk_instability | k | high_severity_max |
+|------------------|---------|--------------------------------|---|-------------------|
+| qwen3-4b-nothink | 1956    | 0.7219                         | 5 | 2                 |
+| qwen3-4b-think   | 1956    | 0.6815                         | 5 | 2                 |
+
+### a2_main   (generator noise floor JSD = 0.0490)
+| model            | n_items | n_points | beta   | ... | spearman | mean_abs_error | direction_agreement | tie_rate |
+|------------------|---------|----------|--------|-----|----------|----------------|---------------------|----------|
+| qwen3-4b-nothink | 1435    | 4693     | 0.0164 | ... | -0.0292  | 1.9898         | 0.4977              | 0.3090   |
+| qwen3-4b-think   | 1298    | 4282     | 0.0158 | ... | 0.0211   | 1.9590         | 0.5489              | 0.2188   |
+
+### a3_main   (generator noise floor JSD = 0.0490)
+| model            | n_items | mean_spurious_jsd | median_spurious_jsd | ... | frac_above_floor | top1_flip_rate | mean_entropy_change | confidence_inflation_rate |
+|------------------|---------|-------------------|---------------------|-----|------------------|----------------|---------------------|---------------------------|
+| qwen3-4b-nothink | 1495    | 0.0759            | 0.0145              | ... | 0.2910           | 0.3458         | -0.0591             | 0.3064                    |
+
+### a4_main   (generator noise floor JSD = 0.0490)
+| model            | n_cases | beta_position | ci_lo   | ... | jsd_between_positions | jsd_within_position | position_effect | top1_flip_rate |
+|------------------|---------|---------------|---------|-----|-----------------------|---------------------|-----------------|----------------|
+| qwen3-4b-nothink | 600     | -0.0407       | -0.0703 | ... | 0.1297                | 0.1161              | 0.0136          | 0.4083         |
+| qwen3-4b-think   | 590     | -0.0457       | -0.0809 | ... | 0.1351                | 0.1281              | 0.0070          | 0.3085         |
+
+### methods   (generator noise floor JSD = 0.0490)
+| model            | method           | n_cases | residual_order_sensitivity_jsd | ... | top1_accuracy | top5_accuracy | jsd_to_shipped_ddx | mean_entropy_bits |
+|------------------|------------------|---------|--------------------------------|-----|---------------|---------------|--------------------|-------------------|
+| qwen3-4b-nothink | direct           | 1954    | 0.1246                         | ... | 0.0568        | 0.1612        | 0.6761             | 4.4933            |
+| qwen3-4b-nothink | self_consistency | 1954    | 0.0288                         | ... | 0.0711        | 0.1760        | 0.6660             | 4.6063            |
+| qwen3-4b-nothink | elr_fusion       | 1954    | 0.0000                         | ... | 0.0328        | 0.1218        | 0.7910             | 3.1143            |
+| qwen3-4b-nothink | perm_ensemble_2  | 1954    | 0.0731                         | ... | 0.0706        | 0.1684        | 0.6673             | 4.6033            |
+| qwen3-4b-nothink | perm_ensemble_3  | 1954    | 0.0517                         | ... | 0.0757        | 0.1781        | 0.6619             | 4.6648            |
+| qwen3-4b-nothink | perm_ensemble_5  | 1954    | 0.0331                         | ... | 0.0819        | 0.1842        | 0.6583             | 4.7059            |
+| qwen3-4b-think   | direct           | 1113    | 0.1645                         | ... | 0.0611        | 0.1680        | 0.6709             | 4.6732            |
+| qwen3-4b-think   | self_consistency | 1113    | 0.0586                         | ... | 0.0845        | 0.2174        | 0.6493             | 4.9392            |
+| qwen3-4b-think   | perm_ensemble_2  | 1113    | 0.0932                         | ... | 0.0719        | 0.1869        | 0.6572             | 4.8454            |
+| qwen3-4b-think   | perm_ensemble_3  | 1113    | 0.0675                         | ... | 0.0818        | 0.2013        | 0.6499             | 4.9054            |
+| qwen3-4b-think   | perm_ensemble_5  | 1113    | 0.0435                         | ... | 0.0907        | 0.2201        | 0.6450             | 4.9608            |
+
+### schema_validity   (generator noise floor JSD = 0.0490)
+| model            | a2_posterior | cot_posterior | elr_weights_ordinal | ... | elr_prior | a3_posterior | elr_weights_numeric | a1_posterior |
+|------------------|--------------|---------------|---------------------|-----|-----------|--------------|---------------------|--------------|
+| qwen3-4b-nothink | 1.0000       | 0.9951        | 1.0000              | ... | 1.0000    | 1.0000       | 1.0000              | 0.9999       |
+| qwen3-4b-think   | 0.9519       | null          | null                | ... | null      | null         | null                | 0.9264       |

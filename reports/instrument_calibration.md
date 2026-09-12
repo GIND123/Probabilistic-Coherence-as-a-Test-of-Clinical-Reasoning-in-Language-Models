@@ -162,3 +162,38 @@ released grouping help?" directly — `jsd_canonical_vs_random` and
 
 Battery A1 grows from 33,252 to 39,120 items (K=10 permutations, 6 retests,
 2 canonical, 2 shuffled per case).
+
+## C8 — All-zero plausibility vectors are a belief, not a parse failure
+
+Under the 0–100 plausibility format, `qwen3-4b-think` returned an all-zero
+score vector on 7.4% of A1 items, which the parser rejected as invalid. That
+was the wrong classification. An all-zero plausibility vector is well-formed
+and expresses *no preference among the candidates*, which after normalisation
+is exactly the uniform posterior — the same degenerate belief C6 already
+accounts for. Rejecting it dropped the item entirely and unbalanced the
+per-arm sample.
+
+It is now parsed as uniform and counted as non-informative. Schema validity
+returns to ~100% and the informative-rate gate does the work it was
+introduced to do. The rate was in any case arm-balanced (permutation 92.7%,
+retest 92.9%, canonical 93.6%, shuffled 90.6%), so it was not a threat to the
+estimand — but the accounting should still be right.
+
+Results already generated are recovered rather than re-run: the runner keeps
+the raw text of every failure, and `posterior_matrix` re-parses those rows.
+
+## C9 — Two defects in Table 1, the paper's central comparison
+
+**Ensemble sizes were silently clamped.** The residual order sensitivity of a
+K-permutation ensemble is measured between two *disjoint* ensembles, so it
+needs 2K orderings. With a 10-permutation pool, `K=10` was clamped to 5, and
+the K=5 and K=10 rows of Table 1 were the same number printed twice. Reported
+sizes are now K ∈ {2, 3, 5}, all satisfying 2K ≤ 10. The residual falls
+monotonically — 0.0731, 0.0517, 0.0331 — which is the O(1/√K) behaviour the
+argument against permutation ensembling depends on.
+
+**The comparison was unpaired.** Methods were scored on whatever cases they
+happened to produce: `perm_ensemble_5` on 1,113 cases against `direct` on
+1,955. A method that fails on hard cases is then scored on an easier subset
+and looks better for it. Every method is now restricted to the intersection
+of cases all of them produced.

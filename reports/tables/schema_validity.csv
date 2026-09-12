@@ -1,0 +1,3 @@
+model,a2_posterior,cot_posterior,elr_weights_ordinal,elr_weights_logodds,a1_narrative,a1_answer,a4_posterior,elr_prior,a3_posterior,elr_weights_numeric,a1_posterior
+qwen3-4b-nothink,1.0,0.9950579413769598,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,0.9999233128834356
+qwen3-4b-think,0.9518607033117105,,,,,,0.9277777777777778,,,,0.9264059304703477

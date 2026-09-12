@@ -1,0 +1,2 @@
+model,n_items,mean_spurious_jsd,median_spurious_jsd,p90_spurious_jsd,certified_true_jsd,ratio_to_truth,retest_floor,excess_over_floor,frac_above_floor,top1_flip_rate,mean_entropy_change,confidence_inflation_rate
+qwen3-4b-nothink,1495,0.07588087098783132,0.014476088862810873,0.26032656490612593,0.000031217662184577485,2430.7031878036937,0.07222997232648655,0.0036508986613447703,0.2909698996655518,0.345819397993311,-0.05907097341430259,0.3063545150501672
