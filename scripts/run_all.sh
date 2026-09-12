@@ -13,6 +13,11 @@ while pgrep -f "coherence.run.runner" >/dev/null; do sleep 30; done
 echo "### STAGE 1  model sweep  $(date -Is)"
 bash scripts/sweep.sh
 
+# Second pass. Tasks are resumable, so this only re-attempts whatever the
+# first pass failed to finish; completed tasks are skipped in seconds.
+echo "### STAGE 1-retry  $(date -Is)"
+bash scripts/sweep.sh
+
 echo "### STAGE 1b  gpt-oss-120b, A1 core only (CPU-offloaded, does not fit VRAM)"
 MODELS="gpt-oss-120b" TASKS="a1_posterior" MAX_NUM_SEQS=32 bash scripts/sweep.sh \
   || echo "120b arm failed (non-fatal)"

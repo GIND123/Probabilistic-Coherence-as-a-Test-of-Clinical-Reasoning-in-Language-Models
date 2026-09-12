@@ -1,0 +1,2 @@
+{"model": "qwen3-4b-think", "task": "a1_posterior", "n": 39120, "seconds": 963.0803115367889}
+{"model": "qwen3-4b-think", "task": "a4_posterior", "n": 5400, "seconds": 224.13144254684448}

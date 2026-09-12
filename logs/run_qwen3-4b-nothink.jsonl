@@ -10,3 +10,5 @@
 {"model": "qwen3-4b-nothink", "task": "elr_weights_logodds", "n": 483, "seconds": 12.31299114227295}
 {"model": "qwen3-4b-nothink", "task": "elr_weights_ordinal", "n": 483, "seconds": 18.17110586166382}
 {"model": "qwen3-4b-nothink", "task": "a1_answer", "n": 29340, "seconds": 279.6053717136383}
+{"model": "qwen3-4b-nothink", "task": "a1_posterior", "n": 39120, "seconds": 0.0972599983215332}
+{"model": "qwen3-4b-nothink", "task": "a4_posterior", "n": 5400, "seconds": 251.43038964271545}

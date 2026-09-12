@@ -156,7 +156,9 @@ def main() -> None:
             dt = time.time() - t0
             print(f"    {ci+len(chunk)}/{len(jobs)}  {dt:.0f}s  "
                   f"valid {100*np.mean([r['valid'] for r in rows[-len(chunk):]]):.1f}%")
-        pl.DataFrame(rows, schema_overrides={"parsed": pl.List(pl.Float64)}).write_parquet(
+        pl.DataFrame(rows, schema_overrides={"parsed": pl.List(pl.Float64),
+                                             "case_id": pl.Utf8,
+                                             "arm": pl.Utf8}).write_parquet(
             post_path, compression="zstd")
         print(f"  -> {post_path}")
     finally:

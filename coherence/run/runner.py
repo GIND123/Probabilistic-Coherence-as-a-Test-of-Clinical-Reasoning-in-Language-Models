@@ -89,14 +89,28 @@ def run_task(engine: Engine, jobs: list[T.Job], task: str, n_path: int,
             else:
                 row["raw_text"] = None
             rows.append(row)
-        df = pl.DataFrame(rows, schema_overrides={"parsed": pl.List(pl.Float64)})
+        # `raw_text` is None on success and a string on failure. Without an
+        # explicit dtype polars infers Null from a leading run of successes
+        # and then fails on the first failure row.
+        df = pl.DataFrame(rows, schema_overrides={"parsed": pl.List(pl.Float64),
+                                                  "raw_text": pl.Utf8,
+                                                  "item_id": pl.Utf8,
+                                                  "meta": pl.Utf8})
         df.write_parquet(shards / f"{ci}.parquet", compression="zstd")
         vr = float(np.mean([r["valid"] for r in rows]))
         print(f"    chunk {ci+1}/{n_chunks}  {len(chunk)} jobs  {dt:.1f}s  "
               f"({len(chunk)/dt:.1f}/s)  valid {100*vr:.1f}%")
     parts = sorted(shards.glob("*.parquet"), key=lambda p: int(p.stem))
-    pl.concat([pl.read_parquet(p) for p in parts]).write_parquet(
-        final, compression="zstd")
+    # Shards written across a schema change can disagree on `raw_text`: a
+    # chunk with no failures infers Null, one with failures infers String.
+    # Cast on read so a resumed task can merge shards from both.
+    frames = []
+    for part in parts:
+        f = pl.read_parquet(part)
+        if "raw_text" in f.columns:
+            f = f.with_columns(pl.col("raw_text").cast(pl.Utf8))
+        frames.append(f)
+    pl.concat(frames, how="diagonal_relaxed").write_parquet(final, compression="zstd")
     for p in parts:
         p.unlink()
     shards.rmdir()
