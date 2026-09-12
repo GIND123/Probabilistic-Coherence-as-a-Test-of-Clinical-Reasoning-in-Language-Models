@@ -218,6 +218,44 @@ def prior_supplied_jobs(b: Battery, kb: DDXPlusKB, prior: list[float],
                   "format": "bulleted", "prior_supplied": True})
 
 
+def distractor_jobs(b: Battery, kb: DDXPlusKB, distractors: dict[str, str],
+                    n_cases: int = 400, n_perms: int = 5,
+                    fmt: str = "bulleted") -> Iterator[Job]:
+    """Ablation 11: one salient but uninformative finding inserted.
+
+    Motivated directly by arXiv:2609.02797, which reports that irrelevant
+    contextual detail can raise probabilistic incoherence by an order of
+    magnitude. Here the question is sharper: does an irrelevant finding
+    increase the ORDER effect, i.e. make the model's belief more dependent on
+    sequence, not merely shift it?
+
+    The distractor is inserted at a random position within each permutation,
+    so its own position is not confounded with the effect being measured.
+    """
+    import random
+
+    ci = _case_index(b)
+    keep = [c for c in b.cases[:n_cases] if c.case_id in distractors]
+    sch = posterior_schema(len(b.pathologies))
+    rng = random.Random(20260912)
+    for it in b.a1:
+        if it.arm != "permutation" or it.perm_index >= n_perms:
+            continue
+        c = ci.get(it.case_id)
+        if c is None or c.case_id not in distractors:
+            continue
+        tok = distractors[c.case_id]
+        order = list(it.evidence_order)
+        order.insert(rng.randrange(len(order) + 1), tok)
+        yield Job(
+            task="a1_distractor", item_id=it.item_id,
+            messages=P.posterior_prompt(kb, b.pathologies, order, c.age, c.sex, fmt),
+            schema=sch, kind="posterior",
+            meta={"case_id": it.case_id, "arm": "permutation",
+                  "perm_index": it.perm_index, "replicate": 0, "format": fmt,
+                  "distractor": tok, "n_findings": len(order)})
+
+
 TASK_BUILDERS = {
     "a1_posterior": a1_jobs,
     "a1_answer": a1_answer_jobs,
@@ -235,3 +273,9 @@ CORE_TASKS = ["a1_posterior", "a4_posterior", "a2_posterior", "a3_posterior"]
 METHOD_TASKS = ["elr_prior", "elr_weights_numeric", "elr_weights_logodds",
                 "elr_weights_ordinal"]
 ABLATION_TASKS = ["a1_answer", "cot_posterior", "a1_narrative"]
+# Ablations run on a representative subset spanning the scale and tuning axes
+# rather than on all twelve configurations: the marginal information from the
+# twelfth model on a format ablation is small, and the compute buys more as
+# coverage of the core battery.
+FOCUSED_TASKS = ["a1_prior_supplied", "a1_distractor"]
+FOCUSED_MODELS = ["qwen3-8b-nothink", "qwen3-32b-nothink", "medgemma-27b", "med42-8b"]

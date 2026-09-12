@@ -10,6 +10,11 @@ PY=.venv/bin/python
 BATTERY=build/battery/codx_battery_v1.json
 
 CORE="a1_posterior a4_posterior a2_posterior a3_posterior"
+# Ablations 9 and 11 run on a representative subset spanning the scale and
+# tuning axes; the marginal information from the twelfth model on a format
+# ablation is small next to what the same compute buys in core coverage.
+FOCUSED="a1_prior_supplied a1_distractor"
+FOCUSED_MODELS="qwen3-8b-nothink qwen3-32b-nothink medgemma-27b med42-8b"
 METHOD="elr_prior elr_weights_numeric elr_weights_logodds elr_weights_ordinal"
 ABL="a1_answer cot_posterior a1_narrative"
 
@@ -22,8 +27,10 @@ for m in $MODELS; do
   echo "=============================================================="
   echo "MODEL $m   $(date -Is)"
   echo "=============================================================="
+  t="$TASKS"
+  case " $FOCUSED_MODELS " in *" $m "*) t="$TASKS $FOCUSED";; esac
   $PY -m coherence.run.runner --model "$m" --battery "$BATTERY" \
-      --tasks $TASKS --max-num-seqs "${MAX_NUM_SEQS:-256}" \
+      --tasks $t --max-num-seqs "${MAX_NUM_SEQS:-256}" \
       2>&1 | grep -vE "^\(|it/s\]|Adding requests|Processed prompts"
   echo "exit=$? for $m at $(date -Is)"
 done

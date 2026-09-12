@@ -77,6 +77,18 @@ _add(ModelSpec(key="med42-8b", hf_id="m42-health/Llama3-Med42-8B", family="llama
                params_b=8.0, max_model_len=8192,
                notes="medically tuned Llama-3 8B, general-vs-medical control at 8B"))
 
+# --- Ablation 17: ELR-Fusion with the trained likelihood-ratio adapter -----
+# Zero-shot LR elicitation is ELR-Fusion's weak point: on qwen3-4b-nothink the
+# fused posterior is exactly order-invariant but less accurate than direct
+# prompting (top-1 0.033 vs 0.057) and markedly overconfident (entropy 3.11 vs
+# 4.49). This arm tests whether training the elicitation closes that gap while
+# the invariance guarantee -- which is structural, not learned -- is untouched.
+_add(ModelSpec(key="qwen3-8b-elr-lora", hf_id="Qwen/Qwen3-8B",
+               family="qwen3", params_b=8.2, max_model_len=8192,
+               lora_path="build/models/elr-lora-qwen3-8b",
+               notes="Qwen3-8B + LoRA trained for schema-compliant, calibrated "
+                     "likelihood-ratio emission; held out 103 of 516 findings"))
+
 VRAM_GB = 48.0
 FITS_IN_VRAM = {k: (s.key != "gpt-oss-120b") for k, s in REGISTRY.items()}
 

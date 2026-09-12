@@ -26,3 +26,17 @@ exit=0 for qwen3-8b-think at 2026-09-13T03:27:23+05:30
 ==============================================================
 MODEL medgemma-1.5-4b   2026-09-13T03:27:23+05:30
 ==============================================================
+model medgemma-1.5-4b  (google/medgemma-1.5-4b-it, native, n/a)
+  a1_posterior: 39,120 jobs
+  a4_posterior: 5,400 jobs
+  a2_posterior: 5,858 jobs
+  a3_posterior: 2,990 jobs
+  elr_prior: 14 jobs
+  elr_weights_numeric: 483 jobs
+  elr_weights_logodds: 483 jobs
+  elr_weights_ordinal: 483 jobs
+  a1_answer: 35,208 jobs
+  cot_posterior: 5,868 jobs
+  a1_narrative: 4,400 jobs
+WARNING 09-13 03:27:39 [model.py:981] Model does not support mm_device_do_normalize, forcing mm_device_do_normalize = False.
+WARNING 09-13 03:27:48 [cuda.py:327] Forcing --disable_chunked_mm_input for models with multimodal-bidirectional attention.

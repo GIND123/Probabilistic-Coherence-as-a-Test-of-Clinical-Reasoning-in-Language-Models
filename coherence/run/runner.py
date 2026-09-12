@@ -122,6 +122,10 @@ def build_jobs(task: str, b: Battery, kb) -> list[T.Job]:
     if task.startswith("elr_weights_"):
         fmt = task.rsplit("_", 1)[1]
         return list(T.elr_weight_jobs(b, kb, formats=(fmt,)))
+    if task == "a1_distractor":
+        from coherence.run.distractors import load_or_build_distractors
+
+        return list(T.distractor_jobs(b, kb, load_or_build_distractors(b)))
     if task == "a1_prior_supplied":
         from coherence.data.empirical_oracle import EmpiricalOracle
         from coherence.data.kb_reconstruct import LikelihoodTable

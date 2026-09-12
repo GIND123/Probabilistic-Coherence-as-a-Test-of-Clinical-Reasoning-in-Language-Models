@@ -43,6 +43,7 @@ class ModelSpec:
     family: str = ""
     params_b: float = 0.0
     notes: str = ""
+    lora_path: str | None = None     # serve a LoRA adapter over `hf_id`
     extra_engine_kwargs: dict = field(default_factory=dict)
 
     @property
@@ -87,6 +88,9 @@ class Engine:
         )
         if spec.quantization:
             kwargs["quantization"] = spec.quantization
+        if spec.lora_path:
+            kwargs["enable_lora"] = True
+            kwargs["max_lora_rank"] = 64
         kwargs.update(spec.extra_engine_kwargs)
         self.llm = LLM(**kwargs)
         self.tokenizer = self.llm.get_tokenizer()
@@ -119,7 +123,14 @@ class Engine:
             sp_kwargs["structured_outputs"] = self._structured(json_schema)
         sp = SamplingParams(**sp_kwargs)
         texts = [self.apply_template(m) for m in prompts]
-        outs = self.llm.generate(texts, sp)
+        if self.spec.lora_path:
+            from vllm.lora.request import LoRARequest
+
+            outs = self.llm.generate(
+                texts, sp,
+                lora_request=LoRARequest("elr", 1, self.spec.lora_path))
+        else:
+            outs = self.llm.generate(texts, sp)
         return [o.outputs[0].text for o in outs]
 
     @staticmethod

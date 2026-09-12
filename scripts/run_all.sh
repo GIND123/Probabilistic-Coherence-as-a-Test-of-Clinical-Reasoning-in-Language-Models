@@ -36,6 +36,11 @@ $PY -m coherence.train.build_lr_dataset
 $PY -m coherence.train.train_lr_lora --base Qwen/Qwen3-8B \
     --out build/models/elr-lora-qwen3-8b --epochs 2
 
+echo "### STAGE 3b  ELR-Fusion with the trained adapter (ablation 17)  $(date -Is)"
+MODELS="qwen3-8b-elr-lora" \
+  TASKS="elr_prior elr_weights_numeric elr_weights_logodds elr_weights_ordinal" \
+  bash scripts/sweep.sh || echo "elr-lora arm failed (non-fatal)"
+
 echo "### STAGE 4  analysis  $(date -Is)"
 $PY -m coherence.analysis.run_analysis
 
