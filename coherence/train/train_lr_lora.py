@@ -21,7 +21,8 @@ import torch
 from datasets import load_dataset
 from peft import LoraConfig, get_peft_model
 from transformers import (AutoModelForCausalLM, AutoTokenizer,
-                          DataCollatorForSeq2Seq, Trainer, TrainingArguments)
+                          DataCollatorForSeq2Seq, EarlyStoppingCallback, Trainer,
+                          TrainingArguments)
 
 from coherence.config import BUILD, MODELS, SEED
 
@@ -50,7 +51,12 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--base", default="Qwen/Qwen3-8B")
     ap.add_argument("--out", default=str(MODELS / "elr-lora-qwen3-8b"))
+    # The first run went 3 epochs and overfit: held-out loss bottomed at
+    # 0.1883 around step 450 (~1.55 epochs) and rose to 0.2433 by step 870,
+    # 29% worse. Two epochs brackets the minimum, and best-checkpoint
+    # selection below makes the exact figure non-critical.
     ap.add_argument("--epochs", type=float, default=2.0)
+    ap.add_argument("--patience", type=int, default=3)
     ap.add_argument("--lr", type=float, default=1e-4)
     ap.add_argument("--rank", type=int, default=32)
     ap.add_argument("--alpha", type=int, default=64)
@@ -113,7 +119,13 @@ def main() -> None:
         # transformers 5.x dropped `warmup_ratio`; compute the step count.
         warmup_steps=args.warmup_steps,
         logging_steps=10, eval_strategy="steps", eval_steps=50,
-        save_strategy="steps", save_steps=150, save_total_limit=3,
+        # save_steps must match eval_steps for best-checkpoint selection, and
+        # the limit must not be able to evict the best one. The first run
+        # saved every 150 steps with a limit of 3 and deleted step 450 -- the
+        # best checkpoint -- keeping only the three most overfit ones.
+        save_strategy="steps", save_steps=50, save_total_limit=5,
+        load_best_model_at_end=True, metric_for_best_model="eval_loss",
+        greater_is_better=False,
         bf16=True, gradient_checkpointing=True,
         report_to=[], seed=SEED, dataloader_num_workers=4,
         remove_unused_columns=False,
@@ -121,11 +133,17 @@ def main() -> None:
     trainer = Trainer(
         model=model, args=targs, train_dataset=ds["train"], eval_dataset=eval_small,
         data_collator=DataCollatorForSeq2Seq(tok, padding=True, label_pad_token_id=IGNORE),
+        callbacks=[EarlyStoppingCallback(early_stopping_patience=args.patience)],
     )
     trainer.train()
     trainer.save_model(args.out)
     tok.save_pretrained(args.out)
+    # `load_best_model_at_end` means this evaluates the selected checkpoint,
+    # not the last one.
     metrics = trainer.evaluate(eval_dataset=eval_full)   # full held-out set
+    metrics["selected_checkpoint"] = str(getattr(trainer.state, "best_model_checkpoint", ""))
+    metrics["best_eval_loss_during_training"] = float(
+        getattr(trainer.state, "best_metric", float("nan")))
     Path(args.out, "final_metrics.json").write_text(json.dumps(metrics, indent=2))
     print(json.dumps(metrics, indent=2))
 
