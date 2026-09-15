@@ -170,7 +170,17 @@ def main() -> None:
 
     engine = Engine(spec, max_num_seqs=args.max_num_seqs)
     # Reasoning models need headroom for the thinking block before the JSON.
-    max_tokens = args.max_tokens if spec.thinking is not True else max(args.max_tokens, 3000)
+    # Harmony models spend most of the budget in the analysis channel and only
+    # then emit the answer, so a cap that truncates mid-reasoning loses the
+    # answer entirely. At 3000 that cost 2.45% of responses, and truncation is
+    # not random -- it selects the cases the model found hardest, which is
+    # exactly the wrong thing to drop from an order-sensitivity estimate.
+    if spec.free_form:
+        max_tokens = max(args.max_tokens, 4096)
+    elif spec.thinking is True:
+        max_tokens = max(args.max_tokens, 3000)
+    else:
+        max_tokens = args.max_tokens
     gen = GenConfig(temperature=args.temperature, top_p=args.top_p,
                     max_tokens=max_tokens, seed=None)
     log = LOGS / f"run_{spec.key}.jsonl"

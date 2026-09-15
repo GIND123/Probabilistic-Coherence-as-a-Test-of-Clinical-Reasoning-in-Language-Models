@@ -319,7 +319,12 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--public", action="store_true")
     ap.add_argument("--no-raw", action="store_true")
+    ap.add_argument("--model-only", action="store_true",
+                    help="push only the LoRA adapter, not the dataset repo")
     a = ap.parse_args()
+    if a.model_only:
+        print(f"  {'model':<10s} {sync_model(private=not a.public)}")
+        return
     for k, v in sync_all(private=not a.public, include_raw=not a.no_raw).items():
         print(f"  {k:<10s} {v}")
 

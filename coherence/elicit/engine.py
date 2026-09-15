@@ -44,6 +44,11 @@ class ModelSpec:
     params_b: float = 0.0
     notes: str = ""
     lora_path: str | None = None     # serve a LoRA adapter over `hf_id`
+    kv_cache_dtype: str | None = None  # "fp8" halves KV bytes/token
+    attention_backend: str | None = None  # force VLLM_ATTENTION_BACKEND
+    # gpt-oss only: harmony needs a free-running decode, see _so_config below
+    free_form: bool = False               # never constrain decoding with a grammar
+    final_channel_marker: str | None = None  # keep only what follows this marker
     extra_engine_kwargs: dict = field(default_factory=dict)
 
     @property
@@ -60,6 +65,36 @@ class GenConfig:
     max_tokens: int = 1400
     seed: int | None = None
     n: int = 1
+
+
+def _so_config(spec: "ModelSpec") -> dict[str, Any]:
+    """Structured-output settings for the engine."""
+    return {"backend": "xgrammar", "disable_any_whitespace": True}
+
+
+class _Harmony:
+    """Why gpt-oss is decoded without a grammar.
+
+    gpt-oss is trained on the harmony format. Its rendered prompt ends at
+    `<|start|>assistant` and the template states that a channel must be
+    included for every message, so the first generated token has to open a
+    channel. Applying a JSON grammar from token zero makes that impossible:
+    the model emitted a schema-valid `{"index": 0}` for essentially every case
+    and scored 0.039 on pick-one-diagnosis against a 0.020 chance rate, while
+    Qwen3-32B scored 0.537 on the same items.
+
+    vLLM's `openai_gptoss` reasoning parser does not help here -- its
+    `is_reasoning_end` returns True unconditionally, because it exists for the
+    serving path where harmony is decoded by a separate layer, not for offline
+    `generate`. So the grammar still applies from token zero.
+
+    Left to decode freely the same model reasons correctly and closes with
+    `assistantfinal{"index": 28}` -- the true label. So gpt-oss is decoded
+    unconstrained and the text after the final-channel marker is parsed, which
+    the existing salvage parsers already handle. The prompt, the sampling
+    parameters and the parsed quantity are unchanged; only the decoding
+    constraint differs, and that is reported as a per-family deviation.
+    """
 
 
 class Engine:
@@ -80,14 +115,34 @@ class Engine:
             # xgrammar honours disable_any_whitespace; the "auto" backend may
             # pick one that does not, and models then pad the JSON array with
             # tabs until max_tokens and truncate it mid-way.
-            structured_outputs_config={"backend": "xgrammar",
-                                       "disable_any_whitespace": True},
+            structured_outputs_config=_so_config(spec),
             enforce_eager=enforce_eager,
             max_num_seqs=max_num_seqs,
             trust_remote_code=True,
         )
         if spec.quantization:
             kwargs["quantization"] = spec.quantization
+        # Decode on this single card is KV-bound, not compute-bound: at fp16 a
+        # 32B model reserves 256 KB of KV per token and MedGemma-27B (16 KV
+        # heads, no GQA compression) 496 KB, which caps real concurrency near
+        # 69 and 36 sequences respectively -- far below max_num_seqs. Halving
+        # KV width is the only lever left, since gpu_memory_utilization is
+        # already at the card's limit. CODX_KV_DTYPE overrides per run so the
+        # setting can be A/B'd against the fp16 baseline without code edits.
+        kv = os.environ.get("CODX_KV_DTYPE") or spec.kv_cache_dtype
+        if kv:
+            kwargs["kv_cache_dtype"] = kv
+        # vLLM prefers FlashInfer for models with attention sinks (gpt-oss),
+        # but FlashInfer JIT-compiles against the system nvcc, which is 12.4
+        # here while targeting sm_120 needs >= 12.9. It raises inside
+        # _normalize_cuda_arch, the exception is swallowed into a warning that
+        # leaves TARGET_CUDA_ARCHS empty, and check_cuda_arch then reports the
+        # misleading "FlashInfer requires GPUs with sm75 or higher". TRITON_ATTN
+        # is the other backend vLLM itself lists as valid for has_sink=True.
+        # vLLM 0.29 dropped the VLLM_ATTENTION_BACKEND env var; the backend is
+        # now a field on AttentionConfig, passed through as an engine kwarg.
+        if spec.attention_backend:
+            kwargs["attention_config"] = {"backend": spec.attention_backend}
         if spec.lora_path:
             kwargs["enable_lora"] = True
             kwargs["max_lora_rank"] = 64
@@ -121,6 +176,8 @@ class Engine:
             sp_kwargs["seed"] = gen.seed
         if json_schema is not None:
             sp_kwargs["structured_outputs"] = self._structured(json_schema)
+        if self.spec.free_form:
+            sp_kwargs.pop("structured_outputs", None)
         sp = SamplingParams(**sp_kwargs)
         texts = [self.apply_template(m) for m in prompts]
         if self.spec.lora_path:
@@ -131,7 +188,22 @@ class Engine:
                 lora_request=LoRARequest("elr", 1, self.spec.lora_path))
         else:
             outs = self.llm.generate(texts, sp)
-        return [o.outputs[0].text for o in outs]
+        return [self._final_channel(o.outputs[0].text) for o in outs]
+
+    def _final_channel(self, text: str) -> str:
+        """Keep only the answer channel for models that emit a reasoning one.
+
+        gpt-oss closes its analysis channel and opens the answer channel with
+        a literal marker, so the JSON is everything after the LAST occurrence
+        of it. Sliced here rather than in the parsers so that every task and
+        every salvage path sees the same text. A response truncated before the
+        marker is left untouched and fails to parse, which is the honest
+        outcome -- it is a response with no answer in it.
+        """
+        marker = self.spec.final_channel_marker
+        if not marker or marker not in text:
+            return text
+        return text.rsplit(marker, 1)[-1]
 
     @staticmethod
     def _structured(schema: dict):

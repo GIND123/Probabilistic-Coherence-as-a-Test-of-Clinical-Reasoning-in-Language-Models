@@ -1,0 +1,13 @@
+{"model": "medgemma-27b", "task": "a1_posterior", "n": 39120, "seconds": 9654.264726638794}
+{"model": "medgemma-27b", "task": "a4_posterior", "n": 5400, "seconds": 1584.1281607151031}
+{"model": "medgemma-27b", "task": "a2_posterior", "n": 5858, "seconds": 1037.0392236709595}
+{"model": "medgemma-27b", "task": "a3_posterior", "n": 2990, "seconds": 474.58956718444824}
+{"model": "medgemma-27b", "task": "elr_prior", "n": 14, "seconds": 3.904327392578125}
+{"model": "medgemma-27b", "task": "elr_weights_numeric", "n": 483, "seconds": 156.3251190185547}
+{"model": "medgemma-27b", "task": "elr_weights_logodds", "n": 483, "seconds": 138.8543930053711}
+{"model": "medgemma-27b", "task": "elr_weights_ordinal", "n": 483, "seconds": 116.16940999031067}
+{"model": "medgemma-27b", "task": "a1_answer", "n": 35208, "seconds": 1913.6377913951874}
+{"model": "medgemma-27b", "task": "cot_posterior", "n": 5868, "seconds": 2141.982395172119}
+{"model": "medgemma-27b", "task": "a1_narrative", "n": 4400, "seconds": 953.6482105255127}
+{"model": "medgemma-27b", "task": "a1_prior_supplied", "n": 2000, "seconds": 957.8135762214661}
+{"model": "medgemma-27b", "task": "a1_distractor", "n": 1770, "seconds": 542.6190803050995}

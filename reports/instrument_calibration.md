@@ -232,3 +232,103 @@ the same prompt that makes a general 4B model shrug on half of them. The
 instrument is not the binding constraint; willingness to commit to a
 differential is a capability the models differ on, and it is reported as a
 first-class result.
+
+---
+
+## C11 — Schema validity is not evidence that the model answered the question
+
+Every gate the instrument had up to C10 constrains the **shape** of a response:
+schema validity, parse success, informative rate (C6), the all-zero convention
+(C8). None of them looks at whether the numbers have anything to do with the
+patient. gpt-oss-20b passed all of them and was measuring noise.
+
+### What was observed
+
+Under the standard elicitation the model returned, for essentially every case,
+
+```json
+{"index": 0}
+```
+
+Schema validity **1.000**. Informative rate **1.000**. Throughput was 3–7x
+faster than models of comparable size, which in hindsight was the visible
+symptom: it was not reasoning, it was emitting four tokens.
+
+Top-1 accuracy on the 49-way pick-one-diagnosis task, against a chance rate of
+0.0204:
+
+| model | top-1 | x chance |
+|---|---|---|
+| qwen3-32b-nothink | 0.5373 | 26.3 |
+| medgemma-27b | 0.5204 | 25.5 |
+| qwen3-32b-think | 0.5119 | 25.1 |
+| **gpt-oss-20b (constrained)** | **0.0394** | **1.9** |
+
+### Cause
+
+gpt-oss is trained on the **harmony** format. Its rendered prompt ends at
+`<|start|>assistant`, and the template states that a channel must be included
+for every message, so the first generated token has to open a channel
+(`<|channel|>analysis`). Applying an xgrammar JSON schema from token zero makes
+that impossible: the grammar admits only `{`. The model is pushed entirely off
+its training distribution and emits the shortest schema-satisfying string.
+
+Two candidate remedies were tried and rejected on evidence:
+
+1. **vLLM's `openai_gptoss` reasoning parser**, which is documented as
+   gating structured output on the end of reasoning. Its `is_reasoning_end()`
+   returns `True` unconditionally — it exists for the serving path, where
+   harmony is decoded by a separate layer, not for offline `generate`. Measured
+   effect: 0.0427 → 0.0394, i.e. none.
+2. **A different attention backend.** Unrelated to this defect; it fixed a
+   separate startup failure (FlashInfer cannot JIT for sm_120 under nvcc 12.4)
+   but not the elicitation.
+
+### Fix
+
+gpt-oss is decoded **without a grammar**, and the text after the final-channel
+marker `assistantfinal` is parsed by the existing salvage path. The prompt, the
+sampling parameters, the battery and the parsed quantity are unchanged; only
+the decoding constraint differs. Left free, the model reasons explicitly and
+closes with `assistantfinal{"index": 28}` — the true label.
+
+| gpt-oss-20b, same items | top-1 |
+|---|---|
+| grammar from token 0 | 0.0394 |
+| free decode + final-channel parse | **0.6328** |
+
+A 16x change from one decoding flag, making it the most accurate model in the
+sweep. The reasoning budget was raised to 4096 tokens: at 3000 2.45% of
+responses were truncated mid-analysis and never reached the answer channel, and
+that loss is not random — it selects the cases the model found hardest, which
+is precisely the wrong subset to drop from an order-sensitivity estimate.
+
+### What this changes in the instrument
+
+`coherence/analysis/competence.py` reports top-1 accuracy with a Wilson
+interval, its ratio to chance, and the prediction-concentration diagnostics,
+for every model, as a precondition for interpreting that model's coherence.
+
+Deliberately **no pass/fail accuracy threshold** is defined. On this battery a
+genuinely weak model and a broken one are not separable by any single cut:
+
+| | accuracy | x chance | top-class share |
+|---|---|---|---|
+| MedGemma-1.5-4B (weak, real) | 0.0805 | 3.9 | 0.467 |
+| gpt-oss-20b (broken) | 0.0427 | 2.1 | 0.459 |
+
+The only binary claim made is `beats_chance` (Wilson lower bound above 1/49).
+What settled this case was not a threshold but a **within-model** comparison:
+changing one thing about one model and re-measuring the same items.
+
+### Why this matters beyond one model
+
+An order-effect statistic computed over responses that do not track the patient
+is a measurement of the decoding constraint, not of clinical reasoning — and it
+fails silently in both directions. A model emitting a **constant** shows a
+near-zero order effect, which reads as excellent coherence. A model emitting
+**noise** shows an order effect at the between-patient ceiling, which reads as
+catastrophic incoherence. Before the fix, gpt-oss-20b sat at the second: a
+permutation JSD of 0.683 against a between-patient ceiling of 0.689 and a
+top-1 flip rate of 1.000. Reported as-is it would have been the paper's
+headline finding, and it would have been an artifact of xgrammar.

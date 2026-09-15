@@ -1,0 +1,565 @@
+### STAGE 1  model sweep  2026-09-13T08:32:18+05:30
+==============================================================
+MODEL qwen3-4b-nothink   2026-09-13T08:32:18+05:30
+==============================================================
+model qwen3-4b-nothink  (Qwen/Qwen3-4B, native, non-thinking)
+  nothing to do
+exit=0 for qwen3-4b-nothink at 2026-09-13T08:32:22+05:30
+==============================================================
+MODEL qwen3-4b-think   2026-09-13T08:32:22+05:30
+==============================================================
+model qwen3-4b-think  (Qwen/Qwen3-4B, native, thinking)
+  nothing to do
+exit=0 for qwen3-4b-think at 2026-09-13T08:32:27+05:30
+==============================================================
+MODEL qwen3-8b-nothink   2026-09-13T08:32:27+05:30
+==============================================================
+model qwen3-8b-nothink  (Qwen/Qwen3-8B, native, non-thinking)
+  a1_posterior: 39,120 jobs
+  a4_posterior: 5,400 jobs
+  a2_posterior: 5,858 jobs
+  a3_posterior: 2,990 jobs
+  elr_prior: 14 jobs
+  elr_weights_numeric: 483 jobs
+  elr_weights_logodds: 483 jobs
+  elr_weights_ordinal: 483 jobs
+  a1_answer: 35,208 jobs
+  cot_posterior: 5,868 jobs
+  a1_narrative: 4,400 jobs
+  a1_prior_supplied: 2,000 jobs
+  a1_distractor: 1,770 jobs
+  [skip] a1_posterior: already complete (/mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/qwen3-8b-nothink/a1_posterior.parquet)
+  [skip] a4_posterior: already complete (/mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/qwen3-8b-nothink/a4_posterior.parquet)
+  [skip] a2_posterior: already complete (/mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/qwen3-8b-nothink/a2_posterior.parquet)
+  [skip] a3_posterior: already complete (/mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/qwen3-8b-nothink/a3_posterior.parquet)
+  [skip] elr_prior: already complete (/mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/qwen3-8b-nothink/elr_prior.parquet)
+  [skip] elr_weights_numeric: already complete (/mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/qwen3-8b-nothink/elr_weights_numeric.parquet)
+  [skip] elr_weights_logodds: already complete (/mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/qwen3-8b-nothink/elr_weights_logodds.parquet)
+  [skip] elr_weights_ordinal: already complete (/mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/qwen3-8b-nothink/elr_weights_ordinal.parquet)
+  [skip] a1_answer: already complete (/mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/qwen3-8b-nothink/a1_answer.parquet)
+  [skip] cot_posterior: already complete (/mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/qwen3-8b-nothink/cot_posterior.parquet)
+  [skip] a1_narrative: already complete (/mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/qwen3-8b-nothink/a1_narrative.parquet)
+  [a1_prior_supplied] 2,000 jobs in 1 chunks (0 already done)
+    chunk 1/1  2000 jobs  192.8s  (10.4/s)  valid 100.0%
+  [a1_prior_supplied] -> /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/qwen3-8b-nothink/a1_prior_supplied.parquet
+  [a1_distractor] 1,770 jobs in 1 chunks (0 already done)
+    chunk 1/1  1770 jobs  133.6s  (13.2/s)  valid 100.0%
+  [a1_distractor] -> /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/qwen3-8b-nothink/a1_distractor.parquet
+exit=0 for qwen3-8b-nothink at 2026-09-13T08:38:24+05:30
+==============================================================
+MODEL qwen3-8b-think   2026-09-13T08:38:24+05:30
+==============================================================
+model qwen3-8b-think  (Qwen/Qwen3-8B, native, thinking)
+  nothing to do
+exit=0 for qwen3-8b-think at 2026-09-13T08:38:28+05:30
+==============================================================
+MODEL medgemma-1.5-4b   2026-09-13T08:38:28+05:30
+==============================================================
+model medgemma-1.5-4b  (google/medgemma-1.5-4b-it, native, n/a)
+  a1_posterior: 39,120 jobs
+  a4_posterior: 5,400 jobs
+  a2_posterior: 5,858 jobs
+  a3_posterior: 2,990 jobs
+  elr_prior: 14 jobs
+  elr_weights_numeric: 483 jobs
+  elr_weights_logodds: 483 jobs
+  elr_weights_ordinal: 483 jobs
+  a1_answer: 35,208 jobs
+  cot_posterior: 5,868 jobs
+  a1_narrative: 4,400 jobs
+WARNING 09-13 08:38:38 [model.py:981] Model does not support mm_device_do_normalize, forcing mm_device_do_normalize = False.
+WARNING 09-13 08:38:42 [cuda.py:327] Forcing --disable_chunked_mm_input for models with multimodal-bidirectional attention.
+  [a1_posterior] 39,120 jobs in 20 chunks (0 already done)
+    chunk 1/20  2000 jobs  86.5s  (23.1/s)  valid 100.0%
+    chunk 2/20  2000 jobs  86.1s  (23.2/s)  valid 100.0%
+    chunk 3/20  2000 jobs  85.9s  (23.3/s)  valid 100.0%
+    chunk 4/20  2000 jobs  86.4s  (23.1/s)  valid 100.0%
+    chunk 5/20  2000 jobs  85.8s  (23.3/s)  valid 100.0%
+    chunk 6/20  2000 jobs  84.9s  (23.6/s)  valid 100.0%
+    chunk 7/20  2000 jobs  85.6s  (23.4/s)  valid 100.0%
+    chunk 8/20  2000 jobs  85.7s  (23.3/s)  valid 100.0%
+    chunk 9/20  2000 jobs  87.1s  (23.0/s)  valid 100.0%
+    chunk 10/20  2000 jobs  85.2s  (23.5/s)  valid 100.0%
+    chunk 11/20  2000 jobs  85.8s  (23.3/s)  valid 100.0%
+    chunk 12/20  2000 jobs  83.5s  (24.0/s)  valid 100.0%
+    chunk 13/20  2000 jobs  83.1s  (24.1/s)  valid 100.0%
+    chunk 14/20  2000 jobs  86.4s  (23.1/s)  valid 100.0%
+    chunk 15/20  2000 jobs  84.6s  (23.6/s)  valid 100.0%
+    chunk 16/20  2000 jobs  85.0s  (23.5/s)  valid 100.0%
+    chunk 17/20  2000 jobs  87.1s  (23.0/s)  valid 100.0%
+    chunk 18/20  2000 jobs  84.1s  (23.8/s)  valid 100.0%
+    chunk 19/20  2000 jobs  85.9s  (23.3/s)  valid 100.0%
+    chunk 20/20  1120 jobs  48.3s  (23.2/s)  valid 100.0%
+  [a1_posterior] -> /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/medgemma-1.5-4b/a1_posterior.parquet
+  [a4_posterior] 5,400 jobs in 3 chunks (0 already done)
+    chunk 1/3  2000 jobs  97.5s  (20.5/s)  valid 100.0%
+    chunk 2/3  2000 jobs  98.1s  (20.4/s)  valid 100.0%
+    chunk 3/3  1400 jobs  67.0s  (20.9/s)  valid 100.0%
+  [a4_posterior] -> /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/medgemma-1.5-4b/a4_posterior.parquet
+  [a2_posterior] 5,858 jobs in 3 chunks (0 already done)
+    chunk 1/3  2000 jobs  73.1s  (27.4/s)  valid 100.0%
+    chunk 2/3  2000 jobs  71.5s  (28.0/s)  valid 100.0%
+    chunk 3/3  1858 jobs  67.6s  (27.5/s)  valid 100.0%
+  [a2_posterior] -> /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/medgemma-1.5-4b/a2_posterior.parquet
+  [a3_posterior] 2,990 jobs in 2 chunks (0 already done)
+    chunk 1/2  2000 jobs  69.3s  (28.8/s)  valid 100.0%
+    chunk 2/2  990 jobs  35.6s  (27.8/s)  valid 100.0%
+  [a3_posterior] -> /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/medgemma-1.5-4b/a3_posterior.parquet
+  [elr_prior] 14 jobs in 1 chunks (0 already done)
+    chunk 1/1  14 jobs  4.6s  (3.0/s)  valid 100.0%
+  [elr_prior] -> /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/medgemma-1.5-4b/elr_prior.parquet
+  [elr_weights_numeric] 483 jobs in 1 chunks (0 already done)
+    chunk 1/1  483 jobs  20.9s  (23.1/s)  valid 100.0%
+  [elr_weights_numeric] -> /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/medgemma-1.5-4b/elr_weights_numeric.parquet
+  [elr_weights_logodds] 483 jobs in 1 chunks (0 already done)
+    chunk 1/1  483 jobs  22.2s  (21.7/s)  valid 100.0%
+  [elr_weights_logodds] -> /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/medgemma-1.5-4b/elr_weights_logodds.parquet
+  [elr_weights_ordinal] 483 jobs in 1 chunks (0 already done)
+    chunk 1/1  483 jobs  15.9s  (30.4/s)  valid 100.0%
+  [elr_weights_ordinal] -> /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/medgemma-1.5-4b/elr_weights_ordinal.parquet
+  [a1_answer] 35,208 jobs in 18 chunks (0 already done)
+    chunk 1/18  2000 jobs  14.5s  (137.7/s)  valid 100.0%
+    chunk 2/18  2000 jobs  14.5s  (138.2/s)  valid 100.0%
+    chunk 3/18  2000 jobs  15.2s  (131.9/s)  valid 100.0%
+    chunk 4/18  2000 jobs  15.3s  (131.1/s)  valid 100.0%
+    chunk 5/18  2000 jobs  14.2s  (140.5/s)  valid 100.0%
+    chunk 6/18  2000 jobs  14.5s  (137.8/s)  valid 100.0%
+    chunk 7/18  2000 jobs  14.7s  (135.6/s)  valid 100.0%
+    chunk 8/18  2000 jobs  15.7s  (127.2/s)  valid 100.0%
+    chunk 9/18  2000 jobs  14.2s  (140.4/s)  valid 100.0%
+    chunk 10/18  2000 jobs  14.7s  (136.1/s)  valid 100.0%
+    chunk 11/18  2000 jobs  13.8s  (145.0/s)  valid 100.0%
+    chunk 12/18  2000 jobs  13.8s  (144.7/s)  valid 100.0%
+    chunk 13/18  2000 jobs  14.5s  (137.9/s)  valid 100.0%
+    chunk 14/18  2000 jobs  13.8s  (145.1/s)  valid 100.0%
+    chunk 15/18  2000 jobs  15.0s  (133.7/s)  valid 100.0%
+    chunk 16/18  2000 jobs  14.6s  (137.4/s)  valid 100.0%
+    chunk 17/18  2000 jobs  14.8s  (134.9/s)  valid 100.0%
+    chunk 18/18  1208 jobs  8.5s  (142.0/s)  valid 100.0%
+  [a1_answer] -> /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/medgemma-1.5-4b/a1_answer.parquet
+  [cot_posterior] 5,868 jobs in 3 chunks (0 already done)
+    chunk 1/3  2000 jobs  99.9s  (20.0/s)  valid 100.0%
+    chunk 2/3  2000 jobs  100.9s  (19.8/s)  valid 100.0%
+    chunk 3/3  1868 jobs  94.4s  (19.8/s)  valid 100.0%
+  [cot_posterior] -> /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/medgemma-1.5-4b/cot_posterior.parquet
+  [a1_narrative] 4,400 jobs in 3 chunks (0 already done)
+    chunk 1/3  2000 jobs  81.8s  (24.5/s)  valid 100.0%
+    chunk 2/3  2000 jobs  82.4s  (24.3/s)  valid 100.0%
+    chunk 3/3  400 jobs  18.5s  (21.7/s)  valid 100.0%
+  [a1_narrative] -> /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/medgemma-1.5-4b/a1_narrative.parquet
+exit=0 for medgemma-1.5-4b at 2026-09-13T09:30:21+05:30
+==============================================================
+MODEL med42-8b   2026-09-13T09:30:21+05:30
+==============================================================
+model med42-8b  (m42-health/Llama3-Med42-8B, native, n/a)
+  a1_posterior: 39,120 jobs
+  a4_posterior: 5,400 jobs
+  a2_posterior: 5,858 jobs
+  a3_posterior: 2,990 jobs
+  elr_prior: 14 jobs
+  elr_weights_numeric: 483 jobs
+  elr_weights_logodds: 483 jobs
+  elr_weights_ordinal: 483 jobs
+  a1_answer: 35,208 jobs
+  cot_posterior: 5,868 jobs
+  a1_narrative: 4,400 jobs
+  a1_prior_supplied: 2,000 jobs
+  a1_distractor: 1,770 jobs
+  [skip] a1_posterior: already complete (/mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/med42-8b/a1_posterior.parquet)
+  [skip] a4_posterior: already complete (/mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/med42-8b/a4_posterior.parquet)
+  [skip] a2_posterior: already complete (/mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/med42-8b/a2_posterior.parquet)
+  [skip] a3_posterior: already complete (/mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/med42-8b/a3_posterior.parquet)
+  [skip] elr_prior: already complete (/mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/med42-8b/elr_prior.parquet)
+  [skip] elr_weights_numeric: already complete (/mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/med42-8b/elr_weights_numeric.parquet)
+  [skip] elr_weights_logodds: already complete (/mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/med42-8b/elr_weights_logodds.parquet)
+  [skip] elr_weights_ordinal: already complete (/mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/med42-8b/elr_weights_ordinal.parquet)
+  [skip] a1_answer: already complete (/mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/med42-8b/a1_answer.parquet)
+  [skip] cot_posterior: already complete (/mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/med42-8b/cot_posterior.parquet)
+  [skip] a1_narrative: already complete (/mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/med42-8b/a1_narrative.parquet)
+  [a1_prior_supplied] 2,000 jobs in 1 chunks (0 already done)
+    chunk 1/1  2000 jobs  161.2s  (12.4/s)  valid 100.0%
+  [a1_prior_supplied] -> /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/med42-8b/a1_prior_supplied.parquet
+  [a1_distractor] 1,770 jobs in 1 chunks (0 already done)
+    chunk 1/1  1770 jobs  100.3s  (17.6/s)  valid 100.0%
+  [a1_distractor] -> /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/med42-8b/a1_distractor.parquet
+exit=0 for med42-8b at 2026-09-13T09:36:07+05:30
+==============================================================
+MODEL gpt-oss-20b   2026-09-13T09:36:07+05:30
+==============================================================
+model gpt-oss-20b  (openai/gpt-oss-20b, native, n/a)
+  a1_posterior: 39,120 jobs
+  a4_posterior: 5,400 jobs
+  a2_posterior: 5,858 jobs
+  a3_posterior: 2,990 jobs
+  elr_prior: 14 jobs
+  elr_weights_numeric: 483 jobs
+  elr_weights_logodds: 483 jobs
+  elr_weights_ordinal: 483 jobs
+  a1_answer: 35,208 jobs
+  cot_posterior: 5,868 jobs
+  a1_narrative: 4,400 jobs
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/coherence/run/runner.py", line 192, in <module>
+    main()
+  File "/mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/coherence/run/runner.py", line 171, in main
+    engine = Engine(spec, max_num_seqs=args.max_num_seqs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/coherence/elicit/engine.py", line 95, in __init__
+    self.llm = LLM(**kwargs)
+               ^^^^^^^^^^^^^
+  File "/mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/.venv/lib/python3.12/site-packages/vllm/entrypoints/llm.py", line 343, in __init__
+    self.llm_engine = LLMEngine.from_engine_args(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/.venv/lib/python3.12/site-packages/vllm/v1/engine/llm_engine.py", line 179, in from_engine_args
+    return cls(
+           ^^^^
+  File "/mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/.venv/lib/python3.12/site-packages/vllm/v1/engine/llm_engine.py", line 105, in __init__
+    self.engine_core = EngineCoreClient.make_client(
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/.venv/lib/python3.12/site-packages/vllm/v1/engine/core_client.py", line 110, in make_client
+    return SyncMPClient(vllm_config, executor_class, log_stats)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/.venv/lib/python3.12/site-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/.venv/lib/python3.12/site-packages/vllm/v1/engine/core_client.py", line 813, in __init__
+    super().__init__(
+  File "/mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/.venv/lib/python3.12/site-packages/vllm/v1/engine/core_client.py", line 609, in __init__
+    with launch_core_engines(
+         ^^^^^^^^^^^^^^^^^^^^
+  File "/home/george/snap/code/263/.local/share/uv/python/cpython-3.12.14-linux-x86_64-gnu/lib/python3.12/contextlib.py", line 144, in __exit__
+    next(self.gen)
+  File "/mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/.venv/lib/python3.12/site-packages/vllm/v1/engine/utils.py", line 1240, in launch_core_engines
+    wait_for_engine_startup(
+  File "/mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/.venv/lib/python3.12/site-packages/vllm/v1/engine/utils.py", line 1320, in wait_for_engine_startup
+    raise RuntimeError(
+RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {}
+exit=1 for gpt-oss-20b at 2026-09-13T09:36:50+05:30
+==============================================================
+MODEL medgemma-27b   2026-09-13T09:36:50+05:30
+==============================================================
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/coherence/run/runner.py", line 192, in <module>
+    main()
+  File "/mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/coherence/run/runner.py", line 171, in main
+    engine = Engine(spec, max_num_seqs=args.max_num_seqs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/coherence/elicit/engine.py", line 95, in __init__
+    self.llm = LLM(**kwargs)
+               ^^^^^^^^^^^^^
+  File "/mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/.venv/lib/python3.12/site-packages/vllm/entrypoints/llm.py", line 343, in __init__
+    self.llm_engine = LLMEngine.from_engine_args(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/.venv/lib/python3.12/site-packages/vllm/v1/engine/llm_engine.py", line 171, in from_engine_args
+    vllm_config = engine_args.create_engine_config(usage_context)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/.venv/lib/python3.12/site-packages/vllm/engine/arg_utils.py", line 2053, in create_engine_config
+    model_config = self.create_model_config()
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/.venv/lib/python3.12/site-packages/vllm/engine/arg_utils.py", line 1809, in create_model_config
+    return ModelConfig(
+           ^^^^^^^^^^^^
+  File "/mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/.venv/lib/python3.12/site-packages/pydantic/_internal/_dataclasses.py", line 121, in __init__
+    s.__pydantic_validator__.validate_python(ArgsKwargs(args, kwargs), self_instance=s)
+pydantic_core._pydantic_core.ValidationError: 1 validation error for ModelConfig
+  Value error, Quantization method specified in the model config (compressed-tensors) does not match the quantization method specified in the `quantization` argument (gptq_marlin). [type=value_error, input_value=ArgsKwargs((), {'model': ...nderer_num_workers': 1}), input_type=ArgsKwargs]
+    For further information visit https://errors.pydantic.dev/2.13/v/value_error
+model medgemma-27b  (bbarn4/medgemma-27b-text-it-GPTQ, gptq_marlin, n/a)
+  a1_posterior: 39,120 jobs
+  a4_posterior: 5,400 jobs
+  a2_posterior: 5,858 jobs
+  a3_posterior: 2,990 jobs
+  elr_prior: 14 jobs
+  elr_weights_numeric: 483 jobs
+  elr_weights_logodds: 483 jobs
+  elr_weights_ordinal: 483 jobs
+  a1_answer: 35,208 jobs
+  cot_posterior: 5,868 jobs
+  a1_narrative: 4,400 jobs
+  a1_prior_supplied: 2,000 jobs
+  a1_distractor: 1,770 jobs
+exit=1 for medgemma-27b at 2026-09-13T09:37:06+05:30
+==============================================================
+MODEL qwen3-32b-nothink   2026-09-13T09:37:06+05:30
+==============================================================
+model qwen3-32b-nothink  (Qwen/Qwen3-32B-AWQ, awq_marlin, non-thinking)
+  a1_posterior: 39,120 jobs
+  a4_posterior: 5,400 jobs
+  a2_posterior: 5,858 jobs
+  a3_posterior: 2,990 jobs
+  elr_prior: 14 jobs
+  elr_weights_numeric: 483 jobs
+  elr_weights_logodds: 483 jobs
+  elr_weights_ordinal: 483 jobs
+  a1_answer: 35,208 jobs
+  cot_posterior: 5,868 jobs
+  a1_narrative: 4,400 jobs
+  a1_prior_supplied: 2,000 jobs
+  a1_distractor: 1,770 jobs
+  [a1_posterior] 39,120 jobs in 20 chunks (9 already done)
+    chunk 10/20  2000 jobs  400.8s  (5.0/s)  valid 100.0%
+    chunk 11/20  2000 jobs  416.4s  (4.8/s)  valid 100.0%
+    chunk 12/20  2000 jobs  392.6s  (5.1/s)  valid 100.0%
+    chunk 13/20  2000 jobs  389.4s  (5.1/s)  valid 100.0%
+    chunk 14/20  2000 jobs  420.0s  (4.8/s)  valid 100.0%
+    chunk 15/20  2000 jobs  396.2s  (5.0/s)  valid 100.0%
+    chunk 16/20  2000 jobs  410.8s  (4.9/s)  valid 100.0%
+    chunk 17/20  2000 jobs  427.9s  (4.7/s)  valid 100.0%
+    chunk 18/20  2000 jobs  396.4s  (5.0/s)  valid 100.0%
+    chunk 19/20  2000 jobs  420.2s  (4.8/s)  valid 100.0%
+    chunk 20/20  1120 jobs  217.5s  (5.1/s)  valid 100.0%
+  [a1_posterior] -> /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/qwen3-32b-nothink/a1_posterior.parquet
+  [a4_posterior] 5,400 jobs in 3 chunks (0 already done)
+    chunk 1/3  2000 jobs  593.5s  (3.4/s)  valid 100.0%
+    chunk 2/3  2000 jobs  608.8s  (3.3/s)  valid 100.0%
+    chunk 3/3  1400 jobs  409.1s  (3.4/s)  valid 100.0%
+  [a4_posterior] -> /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/qwen3-32b-nothink/a4_posterior.parquet
+  [a2_posterior] 5,858 jobs in 3 chunks (0 already done)
+    chunk 1/3  2000 jobs  307.8s  (6.5/s)  valid 100.0%
+    chunk 2/3  2000 jobs  314.6s  (6.4/s)  valid 100.0%
+    chunk 3/3  1858 jobs  295.0s  (6.3/s)  valid 100.0%
+  [a2_posterior] -> /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/qwen3-32b-nothink/a2_posterior.parquet
+  [a3_posterior] 2,990 jobs in 2 chunks (0 already done)
+    chunk 1/2  2000 jobs  279.5s  (7.2/s)  valid 100.0%
+    chunk 2/2  990 jobs  130.1s  (7.6/s)  valid 100.0%
+  [a3_posterior] -> /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/qwen3-32b-nothink/a3_posterior.parquet
+  [elr_prior] 14 jobs in 1 chunks (0 already done)
+    chunk 1/1  14 jobs  4.1s  (3.4/s)  valid 100.0%
+  [elr_prior] -> /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/qwen3-32b-nothink/elr_prior.parquet
+  [elr_weights_numeric] 483 jobs in 1 chunks (0 already done)
+    chunk 1/1  483 jobs  102.7s  (4.7/s)  valid 100.0%
+  [elr_weights_numeric] -> /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/qwen3-32b-nothink/elr_weights_numeric.parquet
+  [elr_weights_logodds] 483 jobs in 1 chunks (0 already done)
+    chunk 1/1  483 jobs  83.4s  (5.8/s)  valid 100.0%
+  [elr_weights_logodds] -> /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/qwen3-32b-nothink/elr_weights_logodds.parquet
+  [elr_weights_ordinal] 483 jobs in 1 chunks (0 already done)
+    chunk 1/1  483 jobs  101.5s  (4.8/s)  valid 100.0%
+  [elr_weights_ordinal] -> /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/qwen3-32b-nothink/elr_weights_ordinal.parquet
+  [a1_answer] 35,208 jobs in 18 chunks (0 already done)
+    chunk 1/18  2000 jobs  141.1s  (14.2/s)  valid 100.0%
+    chunk 2/18  2000 jobs  140.9s  (14.2/s)  valid 100.0%
+    chunk 3/18  2000 jobs  148.2s  (13.5/s)  valid 100.0%
+    chunk 4/18  2000 jobs  148.7s  (13.5/s)  valid 100.0%
+    chunk 5/18  2000 jobs  138.8s  (14.4/s)  valid 100.0%
+    chunk 6/18  2000 jobs  140.9s  (14.2/s)  valid 100.0%
+    chunk 7/18  2000 jobs  144.0s  (13.9/s)  valid 100.0%
+    chunk 8/18  2000 jobs  153.9s  (13.0/s)  valid 100.0%
+    chunk 9/18  2000 jobs  139.5s  (14.3/s)  valid 100.0%
+    chunk 10/18  2000 jobs  143.3s  (14.0/s)  valid 100.0%
+    chunk 11/18  2000 jobs  133.7s  (15.0/s)  valid 100.0%
+    chunk 12/18  2000 jobs  134.0s  (14.9/s)  valid 100.0%
+    chunk 13/18  2000 jobs  142.6s  (14.0/s)  valid 100.0%
+    chunk 14/18  2000 jobs  134.2s  (14.9/s)  valid 100.0%
+    chunk 15/18  2000 jobs  146.7s  (13.6/s)  valid 100.0%
+    chunk 16/18  2000 jobs  142.2s  (14.1/s)  valid 100.0%
+    chunk 17/18  2000 jobs  144.0s  (13.9/s)  valid 100.0%
+    chunk 18/18  1208 jobs  81.7s  (14.8/s)  valid 100.0%
+  [a1_answer] -> /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/qwen3-32b-nothink/a1_answer.parquet
+  [cot_posterior] 5,868 jobs in 3 chunks (0 already done)
+    chunk 1/3  2000 jobs  619.0s  (3.2/s)  valid 100.0%
+    chunk 2/3  2000 jobs  619.0s  (3.2/s)  valid 100.0%
+    chunk 3/3  1868 jobs  574.1s  (3.3/s)  valid 100.0%
+  [cot_posterior] -> /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/qwen3-32b-nothink/cot_posterior.parquet
+  [a1_narrative] 4,400 jobs in 3 chunks (0 already done)
+    chunk 1/3  2000 jobs  351.1s  (5.7/s)  valid 100.0%
+    chunk 2/3  2000 jobs  347.0s  (5.8/s)  valid 100.0%
+    chunk 3/3  400 jobs  65.6s  (6.1/s)  valid 100.0%
+  [a1_narrative] -> /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/qwen3-32b-nothink/a1_narrative.parquet
+  [a1_prior_supplied] 2,000 jobs in 1 chunks (0 already done)
+    chunk 1/1  2000 jobs  630.7s  (3.2/s)  valid 100.0%
+  [a1_prior_supplied] -> /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/qwen3-32b-nothink/a1_prior_supplied.parquet
+  [a1_distractor] 1,770 jobs in 1 chunks (0 already done)
+    chunk 1/1  1770 jobs  550.4s  (3.2/s)  valid 100.0%
+  [a1_distractor] -> /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/qwen3-32b-nothink/a1_distractor.parquet
+exit=0 for qwen3-32b-nothink at 2026-09-13T13:27:33+05:30
+==============================================================
+MODEL qwen3-32b-think   2026-09-13T13:27:33+05:30
+==============================================================
+model qwen3-32b-think  (Qwen/Qwen3-32B-AWQ, awq_marlin, thinking)
+  a1_posterior: 39,120 jobs
+  a4_posterior: 5,400 jobs
+  a2_posterior: 5,858 jobs
+  a3_posterior: 2,990 jobs
+  elr_prior: 14 jobs
+  elr_weights_numeric: 483 jobs
+  elr_weights_logodds: 483 jobs
+  elr_weights_ordinal: 483 jobs
+  a1_answer: 35,208 jobs
+  cot_posterior: 5,868 jobs
+  a1_narrative: 4,400 jobs
+  [a1_posterior] 39,120 jobs in 20 chunks (0 already done)
+    chunk 1/20  2000 jobs  404.9s  (4.9/s)  valid 100.0%
+    chunk 2/20  2000 jobs  401.5s  (5.0/s)  valid 100.0%
+    chunk 3/20  2000 jobs  417.5s  (4.8/s)  valid 100.0%
+    chunk 4/20  2000 jobs  423.0s  (4.7/s)  valid 100.0%
+    chunk 5/20  2000 jobs  408.3s  (4.9/s)  valid 100.0%
+    chunk 6/20  2000 jobs  408.5s  (4.9/s)  valid 100.0%
+    chunk 7/20  2000 jobs  395.8s  (5.1/s)  valid 100.0%
+    chunk 8/20  2000 jobs  429.1s  (4.7/s)  valid 100.0%
+    chunk 9/20  2000 jobs  434.3s  (4.6/s)  valid 100.0%
+    chunk 10/20  2000 jobs  402.7s  (5.0/s)  valid 100.0%
+    chunk 11/20  2000 jobs  418.4s  (4.8/s)  valid 100.0%
+    chunk 12/20  2000 jobs  388.0s  (5.2/s)  valid 100.0%
+    chunk 13/20  2000 jobs  385.3s  (5.2/s)  valid 100.0%
+    chunk 14/20  2000 jobs  420.0s  (4.8/s)  valid 100.0%
+    chunk 15/20  2000 jobs  390.3s  (5.1/s)  valid 100.0%
+    chunk 16/20  2000 jobs  409.3s  (4.9/s)  valid 100.0%
+    chunk 17/20  2000 jobs  427.8s  (4.7/s)  valid 100.0%
+    chunk 18/20  2000 jobs  397.1s  (5.0/s)  valid 100.0%
+    chunk 19/20  2000 jobs  425.5s  (4.7/s)  valid 100.0%
+    chunk 20/20  1120 jobs  217.5s  (5.1/s)  valid 100.0%
+  [a1_posterior] -> /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/qwen3-32b-think/a1_posterior.parquet
+  [a4_posterior] 5,400 jobs in 3 chunks (0 already done)
+    chunk 1/3  2000 jobs  592.6s  (3.4/s)  valid 100.0%
+    chunk 2/3  2000 jobs  603.1s  (3.3/s)  valid 100.0%
+    chunk 3/3  1400 jobs  409.3s  (3.4/s)  valid 100.0%
+  [a4_posterior] -> /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/qwen3-32b-think/a4_posterior.parquet
+  [a2_posterior] 5,858 jobs in 3 chunks (0 already done)
+    chunk 1/3  2000 jobs  302.9s  (6.6/s)  valid 100.0%
+    chunk 2/3  2000 jobs  301.3s  (6.6/s)  valid 100.0%
+    chunk 3/3  1858 jobs  283.7s  (6.5/s)  valid 100.0%
+  [a2_posterior] -> /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/qwen3-32b-think/a2_posterior.parquet
+  [a3_posterior] 2,990 jobs in 2 chunks (0 already done)
+    chunk 1/2  2000 jobs  271.0s  (7.4/s)  valid 100.0%
+    chunk 2/2  990 jobs  127.7s  (7.8/s)  valid 100.0%
+  [a3_posterior] -> /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/qwen3-32b-think/a3_posterior.parquet
+  [elr_prior] 14 jobs in 1 chunks (0 already done)
+    chunk 1/1  14 jobs  4.1s  (3.4/s)  valid 100.0%
+  [elr_prior] -> /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/qwen3-32b-think/elr_prior.parquet
+  [elr_weights_numeric] 483 jobs in 1 chunks (0 already done)
+    chunk 1/1  483 jobs  105.5s  (4.6/s)  valid 100.0%
+  [elr_weights_numeric] -> /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/qwen3-32b-think/elr_weights_numeric.parquet
+  [elr_weights_logodds] 483 jobs in 1 chunks (0 already done)
+    chunk 1/1  483 jobs  70.5s  (6.9/s)  valid 100.0%
+  [elr_weights_logodds] -> /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/qwen3-32b-think/elr_weights_logodds.parquet
+  [elr_weights_ordinal] 483 jobs in 1 chunks (0 already done)
+    chunk 1/1  483 jobs  100.3s  (4.8/s)  valid 100.0%
+  [elr_weights_ordinal] -> /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/qwen3-32b-think/elr_weights_ordinal.parquet
+  [a1_answer] 35,208 jobs in 18 chunks (0 already done)
+    chunk 1/18  2000 jobs  138.1s  (14.5/s)  valid 100.0%
+    chunk 2/18  2000 jobs  138.4s  (14.4/s)  valid 100.0%
+    chunk 3/18  2000 jobs  145.2s  (13.8/s)  valid 100.0%
+    chunk 4/18  2000 jobs  146.4s  (13.7/s)  valid 100.0%
+    chunk 5/18  2000 jobs  136.3s  (14.7/s)  valid 100.0%
+    chunk 6/18  2000 jobs  138.5s  (14.4/s)  valid 100.0%
+    chunk 7/18  2000 jobs  140.6s  (14.2/s)  valid 100.0%
+    chunk 8/18  2000 jobs  151.6s  (13.2/s)  valid 100.0%
+    chunk 9/18  2000 jobs  137.2s  (14.6/s)  valid 100.0%
+    chunk 10/18  2000 jobs  141.0s  (14.2/s)  valid 100.0%
+    chunk 11/18  2000 jobs  131.7s  (15.2/s)  valid 100.0%
+    chunk 12/18  2000 jobs  131.6s  (15.2/s)  valid 100.0%
+    chunk 13/18  2000 jobs  140.1s  (14.3/s)  valid 100.0%
+    chunk 14/18  2000 jobs  132.0s  (15.2/s)  valid 100.0%
+    chunk 15/18  2000 jobs  144.7s  (13.8/s)  valid 100.0%
+    chunk 16/18  2000 jobs  138.5s  (14.4/s)  valid 100.0%
+    chunk 17/18  2000 jobs  142.2s  (14.1/s)  valid 100.0%
+    chunk 18/18  1208 jobs  80.7s  (15.0/s)  valid 100.0%
+  [a1_answer] -> /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/qwen3-32b-think/a1_answer.parquet
+  [cot_posterior] 5,868 jobs in 3 chunks (0 already done)
+    chunk 1/3  2000 jobs  617.8s  (3.2/s)  valid 100.0%
+    chunk 2/3  2000 jobs  618.7s  (3.2/s)  valid 100.0%
+    chunk 3/3  1868 jobs  573.3s  (3.3/s)  valid 100.0%
+  [cot_posterior] -> /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/qwen3-32b-think/cot_posterior.parquet
+  [a1_narrative] 4,400 jobs in 3 chunks (0 already done)
+    chunk 1/3  2000 jobs  344.1s  (5.8/s)  valid 100.0%
+    chunk 2/3  2000 jobs  350.0s  (5.7/s)  valid 100.0%
+    chunk 3/3  400 jobs  65.4s  (6.1/s)  valid 100.0%
+  [a1_narrative] -> /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/qwen3-32b-think/a1_narrative.parquet
+exit=0 for qwen3-32b-think at 2026-09-13T17:58:53+05:30
+==============================================================
+MODEL r1-distill-32b   2026-09-13T17:58:53+05:30
+==============================================================
+model r1-distill-32b  (casperhansen/deepseek-r1-distill-qwen-32b-awq, awq_marlin, n/a)
+  a1_posterior: 39,120 jobs
+  a4_posterior: 5,400 jobs
+  a2_posterior: 5,858 jobs
+  a3_posterior: 2,990 jobs
+  elr_prior: 14 jobs
+  elr_weights_numeric: 483 jobs
+  elr_weights_logodds: 483 jobs
+  elr_weights_ordinal: 483 jobs
+  a1_answer: 35,208 jobs
+  cot_posterior: 5,868 jobs
+  a1_narrative: 4,400 jobs
+  [a1_posterior] 39,120 jobs in 20 chunks (0 already done)
+    chunk 1/20  2000 jobs  404.4s  (4.9/s)  valid 100.0%
+    chunk 2/20  2000 jobs  407.2s  (4.9/s)  valid 100.0%
+    chunk 3/20  2000 jobs  414.1s  (4.8/s)  valid 100.0%
+    chunk 4/20  2000 jobs  422.3s  (4.7/s)  valid 100.0%
+    chunk 5/20  2000 jobs  413.4s  (4.8/s)  valid 100.0%
+    chunk 6/20  2000 jobs  406.7s  (4.9/s)  valid 100.0%
+    chunk 7/20  2000 jobs  400.2s  (5.0/s)  valid 100.0%
+    chunk 8/20  2000 jobs  422.0s  (4.7/s)  valid 100.0%
+    chunk 9/20  2000 jobs  424.9s  (4.7/s)  valid 100.0%
+    chunk 10/20  2000 jobs  408.4s  (4.9/s)  valid 100.0%
+    chunk 11/20  2000 jobs  412.6s  (4.8/s)  valid 100.0%
+    chunk 12/20  2000 jobs  399.5s  (5.0/s)  valid 100.0%
+    chunk 13/20  2000 jobs  398.6s  (5.0/s)  valid 100.0%
+    chunk 14/20  2000 jobs  413.3s  (4.8/s)  valid 100.0%
+    chunk 15/20  2000 jobs  401.1s  (5.0/s)  valid 100.0%
+    chunk 16/20  2000 jobs  407.3s  (4.9/s)  valid 100.0%
+    chunk 17/20  2000 jobs  419.2s  (4.8/s)  valid 100.0%
+    chunk 18/20  2000 jobs  397.4s  (5.0/s)  valid 100.0%
+    chunk 19/20  2000 jobs  419.5s  (4.8/s)  valid 100.0%
+    chunk 20/20  1120 jobs  212.7s  (5.3/s)  valid 100.0%
+  [a1_posterior] -> /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/r1-distill-32b/a1_posterior.parquet
+  [a4_posterior] 5,400 jobs in 3 chunks (0 already done)
+    chunk 1/3  2000 jobs  570.6s  (3.5/s)  valid 100.0%
+    chunk 2/3  2000 jobs  584.4s  (3.4/s)  valid 100.0%
+    chunk 3/3  1400 jobs  397.1s  (3.5/s)  valid 100.0%
+  [a4_posterior] -> /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/r1-distill-32b/a4_posterior.parquet
+  [a2_posterior] 5,858 jobs in 3 chunks (0 already done)
+    chunk 1/3  2000 jobs  307.6s  (6.5/s)  valid 100.0%
+    chunk 2/3  2000 jobs  300.8s  (6.6/s)  valid 100.0%
+    chunk 3/3  1858 jobs  281.3s  (6.6/s)  valid 100.0%
+  [a2_posterior] -> /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/r1-distill-32b/a2_posterior.parquet
+  [a3_posterior] 2,990 jobs in 2 chunks (0 already done)
+    chunk 1/2  2000 jobs  276.6s  (7.2/s)  valid 100.0%
+    chunk 2/2  990 jobs  129.0s  (7.7/s)  valid 100.0%
+  [a3_posterior] -> /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/r1-distill-32b/a3_posterior.parquet
+  [elr_prior] 14 jobs in 1 chunks (0 already done)
+    chunk 1/1  14 jobs  4.7s  (3.0/s)  valid 100.0%
+  [elr_prior] -> /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/r1-distill-32b/elr_prior.parquet
+  [elr_weights_numeric] 483 jobs in 1 chunks (0 already done)
+    chunk 1/1  483 jobs  81.9s  (5.9/s)  valid 100.0%
+  [elr_weights_numeric] -> /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/r1-distill-32b/elr_weights_numeric.parquet
+  [elr_weights_logodds] 483 jobs in 1 chunks (0 already done)
+    chunk 1/1  483 jobs  53.8s  (9.0/s)  valid 100.0%
+  [elr_weights_logodds] -> /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/r1-distill-32b/elr_weights_logodds.parquet
+  [elr_weights_ordinal] 483 jobs in 1 chunks (0 already done)
+    chunk 1/1  483 jobs  117.6s  (4.1/s)  valid 100.0%
+  [elr_weights_ordinal] -> /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/r1-distill-32b/elr_weights_ordinal.parquet
+  [a1_answer] 35,208 jobs in 18 chunks (0 already done)
+    chunk 1/18  2000 jobs  132.7s  (15.1/s)  valid 100.0%
+    chunk 2/18  2000 jobs  131.4s  (15.2/s)  valid 100.0%
+    chunk 3/18  2000 jobs  138.6s  (14.4/s)  valid 100.0%
+    chunk 4/18  2000 jobs  141.5s  (14.1/s)  valid 100.0%
+    chunk 5/18  2000 jobs  131.4s  (15.2/s)  valid 100.0%
+    chunk 6/18  2000 jobs  133.1s  (15.0/s)  valid 100.0%
+    chunk 7/18  2000 jobs  136.5s  (14.7/s)  valid 100.0%
+    chunk 8/18  2000 jobs  147.4s  (13.6/s)  valid 100.0%
+    chunk 9/18  2000 jobs  132.0s  (15.2/s)  valid 100.0%
+    chunk 10/18  2000 jobs  137.4s  (14.6/s)  valid 100.0%
+    chunk 11/18  2000 jobs  127.5s  (15.7/s)  valid 100.0%
+    chunk 12/18  2000 jobs  126.6s  (15.8/s)  valid 100.0%
+    chunk 13/18  2000 jobs  134.6s  (14.9/s)  valid 100.0%
+    chunk 14/18  2000 jobs  126.9s  (15.8/s)  valid 100.0%
+    chunk 15/18  2000 jobs  138.0s  (14.5/s)  valid 100.0%
+    chunk 16/18  2000 jobs  132.7s  (15.1/s)  valid 100.0%
+    chunk 17/18  2000 jobs  135.4s  (14.8/s)  valid 100.0%
+    chunk 18/18  1208 jobs  77.5s  (15.6/s)  valid 100.0%
+  [a1_answer] -> /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/r1-distill-32b/a1_answer.parquet
+  [cot_posterior] 5,868 jobs in 3 chunks (0 already done)
+    chunk 1/3  2000 jobs  607.7s  (3.3/s)  valid 100.0%
+    chunk 2/3  2000 jobs  600.0s  (3.3/s)  valid 100.0%
+    chunk 3/3  1868 jobs  559.9s  (3.3/s)  valid 100.0%
+  [cot_posterior] -> /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/r1-distill-32b/cot_posterior.parquet
+  [a1_narrative] 4,400 jobs in 3 chunks (0 already done)
+    chunk 1/3  2000 jobs  361.2s  (5.5/s)  valid 100.0%
+    chunk 2/3  2000 jobs  364.8s  (5.5/s)  valid 100.0%
+    chunk 3/3  400 jobs  65.4s  (6.1/s)  valid 100.0%
+  [a1_narrative] -> /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/r1-distill-32b/a1_narrative.parquet

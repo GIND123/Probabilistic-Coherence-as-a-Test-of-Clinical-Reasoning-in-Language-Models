@@ -1,0 +1,4 @@
+{"model": "qwen3-8b-elr-lora", "task": "elr_prior", "n": 14, "seconds": 6.6727235317230225}
+{"model": "qwen3-8b-elr-lora", "task": "elr_weights_numeric", "n": 483, "seconds": 39.849759340286255}
+{"model": "qwen3-8b-elr-lora", "task": "elr_weights_logodds", "n": 483, "seconds": 34.18548035621643}
+{"model": "qwen3-8b-elr-lora", "task": "elr_weights_ordinal", "n": 483, "seconds": 43.10257148742676}

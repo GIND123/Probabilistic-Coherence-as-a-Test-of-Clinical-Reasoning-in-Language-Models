@@ -51,20 +51,39 @@ for _key, _hf, _q, _p in [
 _add(ModelSpec(key="medgemma-1.5-4b", hf_id="google/medgemma-1.5-4b-it",
                family="medgemma", params_b=4.3, max_model_len=8192,
                notes="latest MedGemma line; no 27B counterpart exists"))
+# Despite the "GPTQ" in the repo name, this checkpoint is serialised in
+# llm-compressor's compressed-tensors format (pack-quantized, 4-bit, group 128),
+# not GPTQ. Forcing quantization="gptq_marlin" makes vLLM reject the config:
+#   "Quantization method specified in the model config (compressed-tensors)
+#    does not match the quantization method specified in the argument".
+# Leaving it None lets vLLM read quantization_config and pick the kernel.
 _add(ModelSpec(key="medgemma-27b", hf_id="bbarn4/medgemma-27b-text-it-GPTQ",
-               quantization="gptq_marlin", family="medgemma", params_b=27.0,
+               quantization=None, family="medgemma", params_b=27.0,
                max_model_len=8192,
-               notes="community GPTQ of google/medgemma-27b-text-it; 4-bit for 48 GB"))
+               notes="community 4-bit compressed-tensors quant of "
+                     "google/medgemma-27b-text-it; fits 48 GB"))
 
 # --- GPT-OSS ------------------------------------------------------------
 _add(ModelSpec(key="gpt-oss-20b", hf_id="openai/gpt-oss-20b", family="gpt-oss",
                params_b=21.0, max_model_len=8192,
-               notes="native MXFP4; fits comfortably"))
+               attention_backend="TRITON_ATTN",
+               free_form=True, final_channel_marker="assistantfinal",
+               notes="native MXFP4; fits comfortably. TRITON_ATTN because "
+                     "FlashInfer cannot JIT for sm_120 under nvcc 12.4"))
+# util 0.95 asked for 44.9 GiB when only 43.79 GiB was free (the desktop holds
+# ~3.5 GB), so the engine refused to start. 0.90 fits, and the 4 GB it gives up
+# is returned by offloading 4 GB more of the weights.
 _add(ModelSpec(key="gpt-oss-120b", hf_id="openai/gpt-oss-120b", family="gpt-oss",
-               params_b=117.0, max_model_len=8192, gpu_memory_utilization=0.95,
-               extra_engine_kwargs={"cpu_offload_gb": 24},
-               notes="MXFP4 weights ~63 GB exceed 48 GB VRAM; CPU-offloaded, "
-                     "core A1 subset only"))
+               params_b=117.0, max_model_len=8192, gpu_memory_utilization=0.90,
+               attention_backend="TRITON_ATTN",
+               free_form=True, final_channel_marker="assistantfinal",
+               extra_engine_kwargs={"cpu_offload_gb": 28},
+               notes="MXFP4 weights ~63 GB exceed 48 GB VRAM. NOT RUN: with "
+                     "cpu_offload_gb=28 every forward pass streams 28 GB over "
+                     "PCIe, and 16 h of generation produced 0 of 20 chunks "
+                     "(<0.035 items/s against 3.2 for gpt-oss-20b, ~90x "
+                     "slower). The A1 core would need ~13 days. Reported as a "
+                     "hardware limit, not a result."))
 
 # --- Distilled reasoning -------------------------------------------------
 _add(ModelSpec(key="r1-distill-32b", hf_id="casperhansen/deepseek-r1-distill-qwen-32b-awq",

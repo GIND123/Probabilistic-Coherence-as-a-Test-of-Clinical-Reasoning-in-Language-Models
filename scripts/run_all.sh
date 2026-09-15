@@ -7,8 +7,12 @@ source scripts/env.sh
 export HF_TOKEN=$(grep '^hf=' .env | cut -d= -f2)
 PY=.venv/bin/python
 
-# Wait for any sweep already running to finish before touching the GPU.
-while pgrep -f "coherence.run.runner" >/dev/null; do sleep 30; done
+# Wait for ANY of our GPU jobs still running before touching the GPU.
+# Training and the sweep both want the whole card; overlapping them OOMs the
+# vLLM engine at load time and silently kills the sweep.
+while pgrep -f "coherence.run.runner|coherence.train.train_lr_lora|coherence.run.mimic_runner" >/dev/null; do
+  echo "  waiting for a running GPU job to finish  $(date -Is)"; sleep 60
+done
 
 echo "### STAGE 1  model sweep  $(date -Is)"
 bash scripts/sweep.sh
@@ -18,9 +22,19 @@ bash scripts/sweep.sh
 echo "### STAGE 1-retry  $(date -Is)"
 bash scripts/sweep.sh
 
-echo "### STAGE 1b  gpt-oss-120b, A1 core only (CPU-offloaded, does not fit VRAM)"
-MODELS="gpt-oss-120b" TASKS="a1_posterior" MAX_NUM_SEQS=32 bash scripts/sweep.sh \
-  || echo "120b arm failed (non-fatal)"
+# STAGE 1b  gpt-oss-120b -- DISABLED.
+# 63 GB of MXFP4 weights on a 48 GB card means cpu_offload_gb=28, so every
+# forward pass streams 28 GB over PCIe. Measured: 16 h of generation produced
+# 0 of 20 chunks, i.e. <0.035 items/s against 3.2 for gpt-oss-20b. The A1 core
+# alone would take ~13 days, and the arm blocks analysis and sync while it
+# runs. Set CODX_RUN_120B=1 to attempt it anyway.
+if [ "${CODX_RUN_120B:-0}" = "1" ]; then
+  echo "### STAGE 1b  gpt-oss-120b, A1 core only (CPU-offloaded)"
+  MODELS="gpt-oss-120b" TASKS="a1_posterior" MAX_NUM_SEQS=32 bash scripts/sweep.sh \
+    || echo "120b arm failed (non-fatal)"
+else
+  echo "### STAGE 1b  gpt-oss-120b SKIPPED (infeasible on 48 GB; see registry notes)"
+fi
 
 echo "### STAGE 1c  MIMIC external-validity arm (local only, never uploaded)"
 for m in qwen3-8b-nothink qwen3-32b-nothink medgemma-27b; do
@@ -32,9 +46,17 @@ echo "### STAGE 2  sync results to the Hub  $(date -Is)"
 $PY -m coherence.hub.hf_sync || echo "sync failed (non-fatal)"
 
 echo "### STAGE 3  ELR LoRA training  $(date -Is)"
-$PY -m coherence.train.build_lr_dataset
-$PY -m coherence.train.train_lr_lora --base Qwen/Qwen3-8B \
-    --out build/models/elr-lora-qwen3-8b --epochs 2
+# Resumable: a completed run leaves final_metrics.json with the selected
+# checkpoint. Do not burn 90 GPU-minutes retraining an adapter we already have.
+if [ -f build/models/elr-lora-qwen3-8b/final_metrics.json ]; then
+  echo "  adapter already trained -- skipping"
+  cat build/models/elr-lora-qwen3-8b/final_metrics.json
+else
+  $PY -m coherence.train.build_lr_dataset
+  $PY -m coherence.train.train_lr_lora --base Qwen/Qwen3-8B \
+      --out build/models/elr-lora-qwen3-8b --epochs 2
+fi
+$PY -m coherence.hub.hf_sync --model-only || echo "adapter push failed (non-fatal)"
 
 echo "### STAGE 3b  ELR-Fusion with the trained adapter (ablation 17)  $(date -Is)"
 MODELS="qwen3-8b-elr-lora" \

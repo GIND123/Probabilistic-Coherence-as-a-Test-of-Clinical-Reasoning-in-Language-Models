@@ -32,5 +32,19 @@ for m in $MODELS; do
   $PY -m coherence.run.runner --model "$m" --battery "$BATTERY" \
       --tasks $t --max-num-seqs "${MAX_NUM_SEQS:-256}" \
       2>&1 | grep -vE "^\(|it/s\]|Adding requests|Processed prompts"
-  echo "exit=$? for $m at $(date -Is)"
+  rc=$?
+  echo "exit=$rc for $m at $(date -Is)"
+  # vLLM v1 runs the engine in a child process; when it dies at init the
+  # parent only reports "Engine core initialization failed" and the actual
+  # reason (unsupported kernel, bad quant config) stays in the child at
+  # DEBUG level. Re-run the init once, verbosely, into a per-model log so
+  # the cause is on disk instead of needing a manual repro.
+  if [ "$rc" -ne 0 ]; then
+    echo "  capturing engine-init diagnostics -> logs/diag_$m.log"
+    VLLM_LOGGING_LEVEL=DEBUG timeout 600 $PY -m coherence.run.runner \
+        --model "$m" --battery "$BATTERY" --tasks elr_prior \
+        --max-num-seqs 8 > "logs/diag_$m.log" 2>&1 || true
+    grep -m5 -E "NotImplementedError|ValueError|RuntimeError|ImportError|reason:" \
+        "logs/diag_$m.log" | sed 's/^/    /' || true
+  fi
 done

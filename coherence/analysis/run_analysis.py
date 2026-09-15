@@ -23,7 +23,9 @@ from coherence.data.battery import Battery
 from coherence.data.ddxplus import load_kb
 from coherence.elicit.registry import DEFAULT_ORDER
 from coherence.methods import baselines
-from coherence.methods.elr_fusion import fuse, verify_invariance
+from coherence.methods.elr_fusion import (evidence_logsum, fit_tau, fuse,
+                                          fuse_tau, verify_invariance)
+from coherence.analysis.competence import competence_table
 from coherence.analysis.elr_build import (build_elicited_prior, build_weight_table,
                                           prior_for)
 
@@ -155,6 +157,106 @@ def analyse_a4(models: list[str], b: Battery) -> pl.DataFrame:
     return pl.DataFrame(rows)
 
 
+def pidx_of(b: Battery) -> dict:
+    return {p: i for i, p in enumerate(b.pathologies)}
+
+
+def _fold_of(case_id: str, n_folds: int = 2) -> int:
+    """Stable fold assignment, independent of case order or run."""
+    import hashlib
+
+    return int(hashlib.sha1(str(case_id).encode()).hexdigest(), 16) % n_folds
+
+
+def _fit_tau_folds(b: Battery, wt, priors, emp_prior, pidx, n_folds: int = 2):
+    """Cross-fitted shrinkage coefficients, one per fold.
+
+    The tau applied to a case comes from the fold that does NOT contain it, so
+    no case contributes to its own coefficient. Returns {fold: tau} plus the
+    full grid trace on all cases, which is what the ablation table reports.
+    """
+    if wt is None or wt.coverage() <= 0:
+        return {}, []
+    packs = {f: [] for f in range(n_folds)}
+    allp = []
+    for c in b.cases:
+        ti = pidx.get(c.pathology)
+        if ti is None:
+            continue
+        ssum = evidence_logsum(wt, list(c.evidences))
+        if np.isscalar(ssum):
+            continue
+        lp = np.log(np.clip(prior_for(priors, c.age, c.sex,
+                                      np.exp(emp_prior)), 1e-9, None))
+        packs[_fold_of(c.case_id, n_folds)].append((lp, ssum, ti))
+        allp.append((lp, ssum, ti))
+    out = {}
+    for f in range(n_folds):
+        fit = [r for g in range(n_folds) if g != f for r in packs[g]]
+        if not fit:
+            continue
+        out[f], _ = fit_tau([r[0] for r in fit], [r[1] for r in fit],
+                            [r[2] for r in fit])
+    trace = []
+    if allp:
+        _, trace = fit_tau([r[0] for r in allp], [r[1] for r in allp],
+                           [r[2] for r in allp])
+    return out, trace
+
+
+def elr_tau_sweep(models: list[str], b: Battery, oracle) -> pl.DataFrame:
+    """Accuracy / calibration along the shrinkage coefficient.
+
+    Reported because tau is a frontier, not a free parameter with a right
+    answer: order-invariance is exact at every tau, but accuracy peaks near
+    tau ~ 0.4 while the likelihood of the truth peaks near tau ~ 0.05. Hiding
+    that behind a single fitted number would overstate the method.
+    """
+    pidx = pidx_of(b)
+    emp_prior = np.log(np.clip(oracle.prior.probs, 1e-9, None))
+    grid = [0.0, 0.02, 0.05, 0.1, 0.2, 0.4, 0.6, 0.8, 1.0, 1.5, 2.0, 3.0]
+    rows = []
+    for m in models:
+        wt = build_weight_table(m, "numeric", b.pathologies)
+        if wt is None or wt.coverage() <= 0:
+            continue
+        priors = build_elicited_prior(m, b.pathologies) or {}
+        packs = []
+        for c in b.cases:
+            ti = pidx.get(c.pathology)
+            if ti is None:
+                continue
+            ssum = evidence_logsum(wt, list(c.evidences))
+            if np.isscalar(ssum):
+                continue
+            lp = np.log(np.clip(prior_for(priors, c.age, c.sex,
+                                          np.exp(emp_prior)), 1e-9, None))
+            packs.append((lp, ssum, ti))
+        if not packs:
+            continue
+        tr = np.asarray([r[2] for r in packs])
+        for t in grid:
+            M = np.vstack([_softmax(lp + t * ss) for lp, ss, _ in packs])
+            rows.append({
+                "model": m, "tau": t, "n_cases": len(packs),
+                "top1_accuracy": float(np.mean(M.argmax(1) == tr)),
+                "top5_accuracy": float(np.mean(
+                    [tr[i] in np.argsort(-M[i])[:5] for i in range(len(M))])),
+                "nll_of_truth": float(np.mean(
+                    [-np.log(max(M[i, tr[i]], 1e-12)) for i in range(len(M))])),
+                "mean_entropy_bits": float(np.mean(
+                    [-(q[q > 0] * np.log2(q[q > 0])).sum() for q in M])),
+                "order_invariant": "exact",
+            })
+    return pl.DataFrame(rows)
+
+
+def _softmax(lo: np.ndarray) -> np.ndarray:
+    lo = lo - lo.max()
+    p = np.exp(lo)
+    return p / p.sum()
+
+
 def analyse_methods(models: list[str], b: Battery, oracle) -> pl.DataFrame:
     """Table 1: the central comparison, including permutation ensembling."""
     from coherence.metrics.divergence import jsd
@@ -172,13 +274,22 @@ def analyse_methods(models: list[str], b: Battery, oracle) -> pl.DataFrame:
         priors = build_elicited_prior(m, b.pathologies) or {}
         emp_prior = np.log(np.clip(oracle.prior.probs, 1e-9, None))
 
+        # ---- shrinkage on the evidence term -------------------------------
+        # tau is fitted by CROSS-FITTING over two folds of cases: the tau used
+        # for a case is always fitted on the fold that excludes it. That keeps
+        # every case in the paired comparison (a held-out split would shrink
+        # the common set for every other method too) while never letting a
+        # case inform its own coefficient.
+        tau_fold, tau_trace = _fit_tau_folds(b, wt, priors, emp_prior, pidx_of(b))
+
         # Ensemble sizes must satisfy 2K <= n_perms, because the residual is
         # measured between two DISJOINT ensembles drawn from the same pool.
         # An earlier version asked for K=10 from a 10-permutation pool and
         # silently clamped it to 5, so the K=5 and K=10 rows of Table 1 were
         # the same number reported twice.
         ens_ks = (2, 3, 5)
-        per = {k: [] for k in ["direct", "self_consistency", "elr_fusion"]
+        per = {k: [] for k in ["direct", "self_consistency", "elr_fusion",
+                               "elr_fusion_calibrated"]
                + [f"perm_ensemble_{k}" for k in ens_ks]}
         inv = {k: [] for k in per}
         truth = {k: [] for k in per}     # index of the sampled true pathology
@@ -230,6 +341,12 @@ def analyse_methods(models: list[str], b: Battery, oracle) -> pl.DataFrame:
                                               np.exp(emp_prior)), 1e-9, None))
                 f = fuse(lp, wt, c.evidences)
                 _rec("elr_fusion", f, 0.0)   # theorem; verified separately
+                # Same weights, same sum, one scalar different -- so the
+                # residual is still exactly 0 by the same argument.
+                t = tau_fold.get(_fold_of(case_id))
+                if t is not None:
+                    _rec("elr_fusion_calibrated",
+                         fuse_tau(lp, wt, c.evidences, t), 0.0)
 
         # Restrict every method to the cases ALL of them produced, so the
         # comparison is paired. Without this, a method that fails on hard
@@ -255,16 +372,16 @@ def analyse_methods(models: list[str], b: Battery, oracle) -> pl.DataFrame:
             # queries -- but the unamortised figure is given too, because the
             # amortisation only helps when the finding vocabulary is closed.
             cost = {"direct": 1.0, "self_consistency": float(n_retest_used),
-                    "elr_fusion": 0.0}.get(key)
+                    "elr_fusion": 0.0, "elr_fusion_calibrated": 0.0}.get(key)
             if cost is None:
                 cost = float(key.rsplit("_", 1)[1])
             rows.append({
                 "model": m, "method": key, "n_cases": len(mats),
                 "residual_order_sensitivity_jsd": float(np.mean(inv_k)),
-                "order_invariant": "exact" if key == "elr_fusion"
+                "order_invariant": "exact" if key.startswith("elr_fusion")
                 else ("approx" if key.startswith("perm_ensemble") else "no"),
                 "queries_per_new_case": cost,
-                "auditable_per_finding": key == "elr_fusion",
+                "auditable_per_finding": key.startswith("elr_fusion"),
                 "top1_accuracy": top1, "top5_accuracy": top5,
                 "jsd_to_shipped_ddx": float(np.mean(
                     [jsd(dd[i], M[i]) for i in range(len(M))])) if dd is not None else None,
@@ -303,8 +420,13 @@ def main() -> None:
     out["a3_main"] = analyse_a3(models, b, floors)
     out["a4_main"] = analyse_a4(models, b)
     out["methods"] = analyse_methods(models, b, oracle)
+    out["elr_tau_sweep"] = elr_tau_sweep(models, b, oracle)
     out["schema_validity"] = pl.DataFrame(
         [{"model": m, **schema_validity(m)} for m in models])
+    # Competence gates coherence: an order-effect computed over responses that
+    # do not track the patient is a measurement of noise, however clean its
+    # schema validity looks. See coherence/analysis/competence.py.
+    out["competence"] = competence_table(models, b)
 
     nf = _audit_noise_floor()
     for name, t in out.items():

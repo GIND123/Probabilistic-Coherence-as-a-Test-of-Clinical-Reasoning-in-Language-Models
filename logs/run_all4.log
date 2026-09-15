@@ -1,0 +1,230 @@
+### STAGE 1  model sweep  2026-09-14T07:47:09+05:30
+==============================================================
+MODEL qwen3-4b-nothink   2026-09-14T07:47:09+05:30
+==============================================================
+model qwen3-4b-nothink  (Qwen/Qwen3-4B, native, non-thinking)
+  nothing to do
+exit=0 for qwen3-4b-nothink at 2026-09-14T07:47:13+05:30
+==============================================================
+MODEL qwen3-4b-think   2026-09-14T07:47:13+05:30
+==============================================================
+model qwen3-4b-think  (Qwen/Qwen3-4B, native, thinking)
+  nothing to do
+exit=0 for qwen3-4b-think at 2026-09-14T07:47:17+05:30
+==============================================================
+MODEL qwen3-8b-nothink   2026-09-14T07:47:17+05:30
+==============================================================
+model qwen3-8b-nothink  (Qwen/Qwen3-8B, native, non-thinking)
+  nothing to do
+exit=0 for qwen3-8b-nothink at 2026-09-14T07:47:22+05:30
+==============================================================
+MODEL qwen3-8b-think   2026-09-14T07:47:22+05:30
+==============================================================
+model qwen3-8b-think  (Qwen/Qwen3-8B, native, thinking)
+  nothing to do
+exit=0 for qwen3-8b-think at 2026-09-14T07:47:26+05:30
+==============================================================
+MODEL medgemma-1.5-4b   2026-09-14T07:47:26+05:30
+==============================================================
+model medgemma-1.5-4b  (google/medgemma-1.5-4b-it, native, n/a)
+  nothing to do
+exit=0 for medgemma-1.5-4b at 2026-09-14T07:47:30+05:30
+==============================================================
+MODEL med42-8b   2026-09-14T07:47:30+05:30
+==============================================================
+model med42-8b  (m42-health/Llama3-Med42-8B, native, n/a)
+  nothing to do
+exit=0 for med42-8b at 2026-09-14T07:47:35+05:30
+==============================================================
+MODEL gpt-oss-20b   2026-09-14T07:47:35+05:30
+==============================================================
+model gpt-oss-20b  (openai/gpt-oss-20b, native, n/a)
+  a1_posterior: 39,120 jobs
+  a4_posterior: 5,400 jobs
+  a2_posterior: 5,858 jobs
+  a3_posterior: 2,990 jobs
+  elr_prior: 14 jobs
+  elr_weights_numeric: 483 jobs
+  elr_weights_logodds: 483 jobs
+  elr_weights_ordinal: 483 jobs
+  a1_answer: 35,208 jobs
+  cot_posterior: 5,868 jobs
+  a1_narrative: 4,400 jobs
+  [a1_posterior] 39,120 jobs in 20 chunks (0 already done)
+    chunk 1/20  2000 jobs  50.8s  (39.4/s)  valid 100.0%
+    chunk 2/20  2000 jobs  50.9s  (39.3/s)  valid 100.0%
+    chunk 3/20  2000 jobs  51.1s  (39.2/s)  valid 100.0%
+    chunk 4/20  2000 jobs  51.6s  (38.8/s)  valid 100.0%
+    chunk 5/20  2000 jobs  49.9s  (40.0/s)  valid 100.0%
+    chunk 6/20  2000 jobs  49.9s  (40.1/s)  valid 100.0%
+    chunk 7/20  2000 jobs  49.4s  (40.5/s)  valid 100.0%
+    chunk 8/20  2000 jobs  50.6s  (39.5/s)  valid 100.0%
+    chunk 9/20  2000 jobs  50.6s  (39.5/s)  valid 100.0%
+    chunk 10/20  2000 jobs  49.6s  (40.3/s)  valid 100.0%
+    chunk 11/20  2000 jobs  50.2s  (39.8/s)  valid 100.0%
+    chunk 12/20  2000 jobs  49.1s  (40.7/s)  valid 100.0%
+    chunk 13/20  2000 jobs  48.6s  (41.2/s)  valid 100.0%
+    chunk 14/20  2000 jobs  50.5s  (39.6/s)  valid 100.0%
+    chunk 15/20  2000 jobs  49.0s  (40.8/s)  valid 100.0%
+    chunk 16/20  2000 jobs  49.9s  (40.1/s)  valid 100.0%
+    chunk 17/20  2000 jobs  50.9s  (39.3/s)  valid 100.0%
+    chunk 18/20  2000 jobs  49.3s  (40.6/s)  valid 100.0%
+    chunk 19/20  2000 jobs  50.3s  (39.8/s)  valid 100.0%
+    chunk 20/20  1120 jobs  27.8s  (40.2/s)  valid 100.0%
+  [a1_posterior] -> /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/gpt-oss-20b/a1_posterior.parquet
+  [a4_posterior] 5,400 jobs in 3 chunks (0 already done)
+    chunk 1/3  2000 jobs  59.4s  (33.7/s)  valid 100.0%
+    chunk 2/3  2000 jobs  60.4s  (33.1/s)  valid 100.0%
+    chunk 3/3  1400 jobs  41.9s  (33.4/s)  valid 100.0%
+  [a4_posterior] -> /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/gpt-oss-20b/a4_posterior.parquet
+  [a2_posterior] 5,858 jobs in 3 chunks (0 already done)
+    chunk 1/3  2000 jobs  40.8s  (49.0/s)  valid 100.0%
+    chunk 2/3  2000 jobs  40.2s  (49.7/s)  valid 100.0%
+    chunk 3/3  1858 jobs  38.1s  (48.7/s)  valid 100.0%
+  [a2_posterior] -> /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/gpt-oss-20b/a2_posterior.parquet
+  [a3_posterior] 2,990 jobs in 2 chunks (0 already done)
+    chunk 1/2  2000 jobs  37.9s  (52.7/s)  valid 100.0%
+    chunk 2/2  990 jobs  18.7s  (53.0/s)  valid 100.0%
+  [a3_posterior] -> /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/gpt-oss-20b/a3_posterior.parquet
+  [skip] elr_prior: already complete (/mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/gpt-oss-20b/elr_prior.parquet)
+  [elr_weights_numeric] 483 jobs in 1 chunks (0 already done)
+    chunk 1/1  483 jobs  15.1s  (31.9/s)  valid 100.0%
+  [elr_weights_numeric] -> /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/gpt-oss-20b/elr_weights_numeric.parquet
+  [elr_weights_logodds] 483 jobs in 1 chunks (0 already done)
+    chunk 1/1  483 jobs  12.2s  (39.5/s)  valid 100.0%
+  [elr_weights_logodds] -> /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/gpt-oss-20b/elr_weights_logodds.parquet
+  [elr_weights_ordinal] 483 jobs in 1 chunks (0 already done)
+    chunk 1/1  483 jobs  22.6s  (21.4/s)  valid 100.0%
+  [elr_weights_ordinal] -> /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/gpt-oss-20b/elr_weights_ordinal.parquet
+  [a1_answer] 35,208 jobs in 18 chunks (0 already done)
+    chunk 1/18  2000 jobs  14.4s  (139.1/s)  valid 100.0%
+    chunk 2/18  2000 jobs  14.2s  (140.4/s)  valid 100.0%
+    chunk 3/18  2000 jobs  14.9s  (134.3/s)  valid 100.0%
+    chunk 4/18  2000 jobs  15.0s  (133.3/s)  valid 100.0%
+    chunk 5/18  2000 jobs  13.9s  (143.5/s)  valid 100.0%
+    chunk 6/18  2000 jobs  14.2s  (140.5/s)  valid 100.0%
+    chunk 7/18  2000 jobs  14.5s  (137.7/s)  valid 100.0%
+    chunk 8/18  2000 jobs  15.4s  (129.5/s)  valid 100.0%
+    chunk 9/18  2000 jobs  14.0s  (143.0/s)  valid 100.0%
+    chunk 10/18  2000 jobs  14.5s  (137.8/s)  valid 100.0%
+    chunk 11/18  2000 jobs  13.5s  (147.7/s)  valid 100.0%
+    chunk 12/18  2000 jobs  13.5s  (148.3/s)  valid 100.0%
+    chunk 13/18  2000 jobs  14.2s  (140.4/s)  valid 100.0%
+    chunk 14/18  2000 jobs  13.5s  (147.8/s)  valid 100.0%
+    chunk 15/18  2000 jobs  14.7s  (135.7/s)  valid 100.0%
+    chunk 16/18  2000 jobs  14.3s  (140.3/s)  valid 100.0%
+    chunk 17/18  2000 jobs  14.5s  (138.1/s)  valid 100.0%
+    chunk 18/18  1208 jobs  8.3s  (144.7/s)  valid 100.0%
+  [a1_answer] -> /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/gpt-oss-20b/a1_answer.parquet
+  [cot_posterior] 5,868 jobs in 3 chunks (0 already done)
+    chunk 1/3  2000 jobs  62.0s  (32.3/s)  valid 100.0%
+    chunk 2/3  2000 jobs  62.0s  (32.3/s)  valid 100.0%
+    chunk 3/3  1868 jobs  58.3s  (32.1/s)  valid 100.0%
+  [cot_posterior] -> /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/gpt-oss-20b/cot_posterior.parquet
+  [a1_narrative] 4,400 jobs in 3 chunks (0 already done)
+    chunk 1/3  2000 jobs  44.8s  (44.6/s)  valid 100.0%
+    chunk 2/3  2000 jobs  45.2s  (44.3/s)  valid 100.0%
+    chunk 3/3  400 jobs  9.6s  (41.7/s)  valid 100.0%
+  [a1_narrative] -> /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/gpt-oss-20b/a1_narrative.parquet
+exit=0 for gpt-oss-20b at 2026-09-14T08:20:00+05:30
+==============================================================
+MODEL medgemma-27b   2026-09-14T08:20:00+05:30
+==============================================================
+model medgemma-27b  (bbarn4/medgemma-27b-text-it-GPTQ, native, n/a)
+  nothing to do
+exit=0 for medgemma-27b at 2026-09-14T08:20:05+05:30
+==============================================================
+MODEL qwen3-32b-nothink   2026-09-14T08:20:05+05:30
+==============================================================
+model qwen3-32b-nothink  (Qwen/Qwen3-32B-AWQ, awq_marlin, non-thinking)
+  nothing to do
+exit=0 for qwen3-32b-nothink at 2026-09-14T08:20:10+05:30
+==============================================================
+MODEL qwen3-32b-think   2026-09-14T08:20:10+05:30
+==============================================================
+model qwen3-32b-think  (Qwen/Qwen3-32B-AWQ, awq_marlin, thinking)
+  nothing to do
+exit=0 for qwen3-32b-think at 2026-09-14T08:20:14+05:30
+==============================================================
+MODEL r1-distill-32b   2026-09-14T08:20:14+05:30
+==============================================================
+model r1-distill-32b  (casperhansen/deepseek-r1-distill-qwen-32b-awq, awq_marlin, n/a)
+  nothing to do
+exit=0 for r1-distill-32b at 2026-09-14T08:20:18+05:30
+### STAGE 1-retry  2026-09-14T08:20:18+05:30
+==============================================================
+MODEL qwen3-4b-nothink   2026-09-14T08:20:18+05:30
+==============================================================
+model qwen3-4b-nothink  (Qwen/Qwen3-4B, native, non-thinking)
+  nothing to do
+exit=0 for qwen3-4b-nothink at 2026-09-14T08:20:22+05:30
+==============================================================
+MODEL qwen3-4b-think   2026-09-14T08:20:22+05:30
+==============================================================
+model qwen3-4b-think  (Qwen/Qwen3-4B, native, thinking)
+  nothing to do
+exit=0 for qwen3-4b-think at 2026-09-14T08:20:26+05:30
+==============================================================
+MODEL qwen3-8b-nothink   2026-09-14T08:20:26+05:30
+==============================================================
+model qwen3-8b-nothink  (Qwen/Qwen3-8B, native, non-thinking)
+  nothing to do
+exit=0 for qwen3-8b-nothink at 2026-09-14T08:20:31+05:30
+==============================================================
+MODEL qwen3-8b-think   2026-09-14T08:20:31+05:30
+==============================================================
+model qwen3-8b-think  (Qwen/Qwen3-8B, native, thinking)
+  nothing to do
+exit=0 for qwen3-8b-think at 2026-09-14T08:20:35+05:30
+==============================================================
+MODEL medgemma-1.5-4b   2026-09-14T08:20:35+05:30
+==============================================================
+model medgemma-1.5-4b  (google/medgemma-1.5-4b-it, native, n/a)
+  nothing to do
+exit=0 for medgemma-1.5-4b at 2026-09-14T08:20:39+05:30
+==============================================================
+MODEL med42-8b   2026-09-14T08:20:39+05:30
+==============================================================
+model med42-8b  (m42-health/Llama3-Med42-8B, native, n/a)
+  nothing to do
+exit=0 for med42-8b at 2026-09-14T08:20:44+05:30
+==============================================================
+MODEL gpt-oss-20b   2026-09-14T08:20:44+05:30
+==============================================================
+model gpt-oss-20b  (openai/gpt-oss-20b, native, n/a)
+  nothing to do
+exit=0 for gpt-oss-20b at 2026-09-14T08:20:48+05:30
+==============================================================
+MODEL medgemma-27b   2026-09-14T08:20:48+05:30
+==============================================================
+model medgemma-27b  (bbarn4/medgemma-27b-text-it-GPTQ, native, n/a)
+  nothing to do
+exit=0 for medgemma-27b at 2026-09-14T08:20:53+05:30
+==============================================================
+MODEL qwen3-32b-nothink   2026-09-14T08:20:53+05:30
+==============================================================
+model qwen3-32b-nothink  (Qwen/Qwen3-32B-AWQ, awq_marlin, non-thinking)
+  nothing to do
+exit=0 for qwen3-32b-nothink at 2026-09-14T08:20:57+05:30
+==============================================================
+MODEL qwen3-32b-think   2026-09-14T08:20:57+05:30
+==============================================================
+model qwen3-32b-think  (Qwen/Qwen3-32B-AWQ, awq_marlin, thinking)
+  nothing to do
+exit=0 for qwen3-32b-think at 2026-09-14T08:21:01+05:30
+==============================================================
+MODEL r1-distill-32b   2026-09-14T08:21:01+05:30
+==============================================================
+model r1-distill-32b  (casperhansen/deepseek-r1-distill-qwen-32b-awq, awq_marlin, n/a)
+  nothing to do
+exit=0 for r1-distill-32b at 2026-09-14T08:21:06+05:30
+### STAGE 1b  gpt-oss-120b, A1 core only (CPU-offloaded, does not fit VRAM)
+==============================================================
+MODEL gpt-oss-120b   2026-09-14T08:21:06+05:30
+==============================================================
+model gpt-oss-120b  (openai/gpt-oss-120b, native, n/a)
+  a1_posterior: 39,120 jobs
+  [a1_posterior] 39,120 jobs in 20 chunks (0 already done)
+Done                       $PY -m coherence.run.runner --model "$m" --battery "$BATTERY" --tasks $t --max-num-seqs "${MAX_NUM_SEQS:-256}" 2>&1 | grep -vE "^\(|it/s\]|Adding requests|Processed prompts"
+exit=143 for gpt-oss-120b at 2026-09-14T09:58:49+05:30
+  capturing engine-init diagnostics -> logs/diag_gpt-oss-120b.log

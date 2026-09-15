@@ -1,8 +1,25 @@
+# Secrets
 .env
+
+# Data and build artifacts
 data/
 build/
-results/raw/
 .venv/
 __pycache__/
 *.pyc
 codx.egg-info/
+
+# Per-case model output (large; published to the Hub instead)
+results/raw/
+
+# --- Credentialed data: MUST NEVER leave this machine ---------------------
+# MIMIC-IV-Note is PhysioNet credentialed data under a use agreement that
+# forbids redistribution. Only aggregate divergence statistics may be shared.
+# `results/raw/` above does NOT match `results/raw_mimic/`, so it is named
+# explicitly here rather than relied on by prefix.
+results/raw_mimic/
+results/*mimic*
+**/mimic/
+**/physionet/
+*discharge.csv
+*radiology.csv
