@@ -148,7 +148,11 @@ of cases, so the coefficient applied to a case is never fitted on that case.
 
 ### 4.1 A1 — the anchors reverse the finding
 
-![A1 anchors](reports/figures/result_a1_anchors.png)
+![A1 anchors](reports/figures/fig01_a1_anchors.png)
+
+**Figure 1.** Each model's permutation divergence (filled) between its own
+test–retest floor (hollow) and between-patient ceiling. The coloured segment is
+the order effect. Values at right are the normalised effect.
 
 Each model's permutation divergence sits between its own test–retest floor and
 its own between-patient ceiling. The order effect is the **gap from the floor**,
@@ -168,7 +172,9 @@ not the observed value.
 | medgemma-1.5-4b | 0.2836 | 0.2815 | 0.3532 | 0.0285 | 0.994 |
 | gpt-oss-20b | 0.2866 | 0.2831 | 0.4460 | **0.0211** | 0.959 |
 
-![scale reversal](reports/figures/result_scale_reversal.png)
+![scale reversal](reports/figures/fig02_scale_reversal.png)
+
+**Figure 2.** The same data read two ways, for both Qwen3 ladders.
 
 **Raw divergence rises with scale; the normalised effect falls.** The
 test–retest floor rises faster than the order effect does, so reporting the raw
@@ -180,6 +186,19 @@ The top-1 flip rate is high everywhere (0.70–0.99): reordering the same findin
 changes the leading diagnosis for most patients even where distributional
 movement is modest.
 
+![per-case distribution](reports/figures/fig03_percase_distribution.png)
+
+**Figure 3.** The per-case distribution behind each mean. Even models with a
+small mean effect carry a heavy upper tail: the 95th percentile is at least
+0.198 for every model in the sweep, and reaches 0.344 for Qwen3-32B (thinking).
+
+![K sweep](reports/figures/fig04_k_sweep.png)
+
+**Figure 4.** Sampling more orderings per case does not uncover more
+divergence — the estimate is stable by K ≈ 5 — but it does keep uncovering more
+top-1 flips, because each new ordering is another chance to land on a different
+leading diagnosis.
+
 **A caution on the bottom of the table.** GPT-OSS-20B's 0.0211 and
 MedGemma-1.5-4B's 0.0285 are not coherence successes. Both have floors that have
 nearly reached their own ceilings, and flip rates of 0.96 and 0.99. A small
@@ -188,7 +207,14 @@ rows must be read alongside §4.4.
 
 ### 4.2 A2 — belief updates do not track the evidence
 
-![A2 direction](reports/figures/result_a2_direction.png)
+![A2 direction](reports/figures/fig05_a2_direction.png)
+
+**Figure 5.** Direction agreement against the chance line at 0.5.
+
+![A2 slope](reports/figures/fig06_a2_slope.png)
+
+**Figure 6.** Slope β with 95% CIs. Calibrated updating would place every
+point at β = 1, off-scale to the right by a factor of 17.
 
 | quantity | range over 11 models |
 |---|---|
@@ -216,6 +242,16 @@ reproduces, in the clinical setting and against an absolute reference, the
 "irrelevant context" degradation reported for probabilistic forecasts by
 Andrews and Sarkar [[1]](#ref1).
 
+![A3 redundancy](reports/figures/fig07_a3_redundancy.png)
+
+**Figure 7.** Left: median → p90 spread of the divergence induced by irrelevant
+evidence. Right: the share of patients affected.
+
+![severity](reports/figures/fig13_severity.png)
+
+**Figure 13.** High-severity cases are not protected. For 68–99% of cases the
+top-5 set restricted to high-severity pathologies changes under reordering.
+
 ### 4.4 A4 — positional anchoring
 
 Position effects are present but small: η² = 0.245–0.269 over 600 cases, with
@@ -225,9 +261,16 @@ distributed rather than positional. This distinguishes the clinical
 belief-revision setting from the multiple-choice option-order effects
 documented by Schilcher et al. [[5]](#ref5) and Lin et al. [[6]](#ref6).
 
+![A4 position](reports/figures/fig08_a4_position.png)
+
+**Figure 8.** Between-position and within-position divergence fall on the
+diagonal: no position in the sequence carries special weight.
+
 ### 4.5 Table 1 — remedies
 
-![methods frontier](reports/figures/result_methods_frontier.png)
+![methods frontier](reports/figures/fig09_methods_pareto.png)
+
+**Figure 9.** Residual order sensitivity against query cost.
 
 Paired over the cases every method produced, for `qwen3-32b-nothink`:
 
@@ -253,7 +296,10 @@ here.
 
 ### 4.6 The shrinkage coefficient is a frontier, not a fitted constant
 
-![tau frontier](reports/figures/result_tau_frontier.png)
+![tau frontier](reports/figures/fig10_tau_frontier.png)
+
+**Figure 10.** Accuracy and calibration select different τ. Invariance is
+exact at every point on this axis.
 
 | τ | top-1 | top-5 | NLL of truth | entropy |
 |---|---|---|---|---|
@@ -278,9 +324,32 @@ the fusion rule, is where the remaining accuracy is.**
 
 ---
 
+### 4.7 Summary across axioms
+
+![summary matrix](reports/figures/fig12_summary_matrix.png)
+
+**Figure 12.** Every column is oriented so that a higher number is worse, and
+competence is drawn on its own axis rather than on the severity scale — it is
+the one quantity here where high is good. No model is coherent on any axiom;
+the models differ only in which axiom they fail hardest.
+
+![accuracy vs coherence](reports/figures/fig14_accuracy_vs_coherence.png)
+
+**Figure 14.** Diagnostic accuracy and order-coherence are close to orthogonal.
+The most accurate model in the sweep (GPT-OSS-20B, 0.653) has a test–retest
+floor that nearly reaches its own ceiling; the least accurate (MedGemma-1.5-4B)
+sits beside it on the coherence axis. Being right and being coherent are
+separate properties, and a benchmark measuring only the first cannot see the
+second.
+
+---
+
 ## 5. Instrument calibration
 
-![competence](reports/figures/result_competence.png)
+![competence](reports/figures/fig11_competence.png)
+
+**Figure 11.** Top-1 accuracy with Wilson intervals, against the 1/49 chance
+line. The cross marks gpt-oss-20b before the C11 fix.
 
 Eleven calibration steps are documented in
 [`reports/instrument_calibration.md`](reports/instrument_calibration.md).
