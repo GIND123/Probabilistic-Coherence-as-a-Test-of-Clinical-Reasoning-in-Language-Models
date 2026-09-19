@@ -106,6 +106,100 @@ hardware limit, not a result.
 
 ---
 
+## 2.5 How the measurement works, and one case carried through it
+
+![pipeline](reports/figures/fig15_pipeline.png)
+
+**Figure 0.** The data-and-prediction pipeline. Every box is a measured
+quantity from this study, not a schematic placeholder.
+
+Read left to right, top to bottom. A patient is sampled from the 1.29M-case
+DDXPlus corpus. That patient's findings form an **evidence set**, and the set
+never changes again — what changes is the order it is presented in, and that is
+the only manipulation in A1. Four arms hold different things constant:
+*permutation* varies the order, *retest* varies nothing at all (this is the
+noise floor every other number is measured against), *canonical* uses the
+order DDXPlus released, and *between-patient* varies the patient (the upper
+reference). The same model is then asked in three ways, and the three disagree
+sharply — which is most of what this paper is about.
+
+### 2.5.1 What the data looks like
+
+DDXPlus ships evidence as codes. The renderer turns each into a clinical
+statement, and the model sees only the right-hand column:
+
+| code | rendered finding |
+|---|---|
+| `E_0` | Recently had a viral infection |
+| `E_66` | Shortness of breath, significant |
+| `E_83` | Weakness in facial muscles and/or eyes |
+| `E_84` | Weakness in both arms and/or both legs |
+| `E_93` | Numbness / tingling in the feet |
+| `E_156` | Weakness or paralysis on one side of the face |
+| `E_204_@_V_10` | No travel outside the country in 4 weeks |
+
+That is patient `09c27173dfc592e6`: a 19-year-old woman whose true label is
+**Guillain-Barré syndrome**. Clinically the presentation is textbook —
+post-viral onset, ascending bilateral limb weakness, facial weakness, distal
+paraesthesia, respiratory involvement. A reader does not need to trust our
+metric to judge this case; the answer is legible from the findings.
+
+The prompt is the rendered findings, a fixed alphabetical list of the 49
+candidate diagnoses, and one instruction. Only the **order of the findings**
+differs between conditions.
+
+### 2.5.2 What the model predicts
+
+![worked example](reports/figures/fig16_worked_example.png)
+
+**Figure 0b.** The same patient under ten random orderings of the identical
+seven findings (Qwen3-32B).
+
+The same seven findings, reordered ten times, produce **six different leading
+diagnoses**:
+
+| ordering | leading diagnosis | probability |
+|---|---|---|
+| 4, 9 | **Guillain-Barré syndrome** | **1.00** |
+| 3 | **Guillain-Barré syndrome** | 0.61 |
+| 6, 7 | GERD | 0.64 |
+| 5 | GERD | 0.31 |
+| 8 | Atrial fibrillation | 0.28 |
+| 10 | HIV (initial infection) | **1.00** |
+| 1 | Bronchospasm / asthma | 0.06 |
+| 2 | Localized edema | 0.07 |
+
+The probability the model assigns to the correct diagnosis moves from
+**0.000 to 1.000** on reordering alone. Orderings 4 and 9 are certain it is
+Guillain-Barré; ordering 10 is equally certain it is HIV. Nothing about the
+patient changed.
+
+That this is an *order* effect and not noise is what the retest arm settles:
+asking the identical prompt six times gives a mean pairwise divergence of
+**0.048**, against **0.593** across orderings — an order effect of **0.545**
+above this model's own floor.
+
+### 2.5.3 The part that reframes the problem
+
+Asked instead to *name* one diagnosis, the same model answers **Guillain-Barré
+in 18 of 18 items** — every ordering, every replicate. Its stated 49-way
+distribution ranks that same diagnosis first in only **3 of 10 orderings**.
+
+The information is present. What is unstable is the probability the model puts
+on it. This dissociation is the paper's central finding, and it holds across
+the sweep: the named diagnosis beats the stated posterior's argmax by 0.058 to
+0.427 top-1, and sits at median rank 1–3 of 49 inside the model's own
+posterior ([reports/tables/rev_named_vs_posterior.csv](reports/tables/rev_named_vs_posterior.csv)).
+
+> **Reading this case honestly.** It was selected for *legibility*, not for
+> effect size: its order effect (0.545) is far above the sweep median. Across
+> all 1,956 patients the mean absolute gap is 0.002–0.056 depending on model,
+> and for three of eleven models the patient-clustered CI includes zero
+> (§4.1). One case shows what the failure looks like; it does not show how
+> often it happens.
+
+---
+
 ## 3. Method
 
 ### 3.1 The axioms
