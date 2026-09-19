@@ -1,2 +1,2 @@
-note,columns
-columns unavailable,"age,ddx_names,ddx_probs,evidences,initial_evidence,pathology,row_id,sex,split"
+n_replicate_pairs,n_pairs_differing,frac_differing,mean_jsd_conditional_on_differing,mean_jsd_unconditional_all_pairs,p90_conditional,p90_unconditional
+21004,5423,0.2581889163968768,0.18960669322836415,0.04895434666622638,0.2641946681074328,0.21978756874473587

@@ -1,0 +1,609 @@
+RESPONSE TO REVIEW COMMENTS
+Probabilistic Coherence as a Test of Clinical Reasoning in Language Models
+Target venue: Machine Learning and Knowledge Extraction (MDPI, MAKE)
+Prepared 2026-09-19
+
+--------------------------------------------------------------------------
+HOW TO READ THIS
+--------------------------------------------------------------------------
+Every numbered item below carries one of:
+
+  ACCEPTED - MEASURED   the comment was right, and the measurement is here
+  ACCEPTED - FIXED      a defect was found and corrected
+  CORRECTION            the comment's factual premise does not hold; evidence given
+  PARTIAL               partly answered; what remains is stated
+  IN PROGRESS           running now, with an ETA
+  PENDING               not started, with a plan
+
+Every new number is reproducible from a named CSV in reports/tables/ and a
+named module in coherence/. All new intervals are PATIENT-level cluster
+bootstraps (5,000 resamples), not item-level: items are nested within patients
+(K orderings x R replicates), so the previous item-level intervals treated
+about 16 correlated observations as independent. See comment 26.
+
+--------------------------------------------------------------------------
+HEADLINE: FOUR RESULTS THAT CHANGE THE PAPER'S CLAIMS
+--------------------------------------------------------------------------
+Before the itemised replies, four findings that the review's questions
+produced and that require the paper's framing to change. We would rather
+state them plainly than have them found at review.
+
+(a) A FIXED CANONICAL ORDER IS FREE (comment 1). Presenting every case in one
+    deterministic order gives exactly zero order effect at essentially zero
+    accuracy cost (-0.012 to +0.021 top-1 vs a random fixed order; canonical
+    is slightly BETTER for 9 of 11 models). ELR-Fusion attains the same zero
+    and pays 5.6 top-1 points. The "exact zero order effect" contribution as
+    written is not a contribution.
+
+(b) THE FUSION RULE WAS NEVER THE PROBLEM (comment 2). Replacing the
+    model-elicited log-LR table with one estimated from the 1.29M-patient
+    corpus, changing nothing else in the recombination, moves top-1 from
+    0.133 to 0.9765 (top-5 1.000). The accuracy cost attributed to
+    ELR-Fusion belongs entirely to the elicited weights.
+
+(c) THE A1 TOP-1 FLIP RATE WAS MOSTLY NOISE (comment 21). The retest flip
+    rate - the leading diagnosis changing when nothing changes at all - is
+    0.53 to 0.95. The reported permutation flip rate of 0.70 to 0.99 exceeds
+    it by only 0.04 to 0.27.
+
+(d) THE ORDER EFFECT IS SMALL, AND ABSENT FOR THREE MODELS (comment 18).
+    Absolute gaps are 0.002 to 0.056 JSD. For MedGemma-1.5-4B, Med42-8B and
+    GPT-OSS-20B the patient-clustered 95% CI includes zero.
+
+==========================================================================
+MAJOR COMMENTS
+==========================================================================
+
+1. CANONICAL-ORDERING BASELINE
+   ACCEPTED - MEASURED. The comment is correct and the effect is larger than
+   suggested. The battery already contained a canonical arm (the DDXPlus
+   released code-sorted order, 2 replicates/case), so this is measured, not
+   argued.  [reports/tables/rev_canonical_baseline.csv]
+
+     model              canonical  random-fixed   cost
+     GPT-OSS-20B          0.4055     0.3930      +0.0125
+     Qwen3-32B            0.1915     0.1845      +0.0070
+     MedGemma-27B         0.1127     0.1015      +0.0112
+     R1-Distill-32B       0.0987     0.1110      -0.0124
+     (11 models; cost range -0.012 to +0.021)
+
+   A fixed order therefore dominates ELR-Fusion on both axes reported in
+   Table 1: same exact zero, no accuracy cost.
+
+   What a fixed order does NOT do is remove the dependence - it conceals it
+   by fixing one arbitrary choice. The canonical-order posterior sits 0.120
+   to 0.258 JSD away from the posterior under a randomly chosen fixed order
+   (same table, column canonical_vs_random_jsd). That distance is zero by
+   construction for an order-invariant method and is the price of the
+   arbitrary choice for a fixed order.
+
+   PAPER CHANGE: the canonical baseline is added to Table 1 as a first-class
+   row. The ELR-Fusion claim is narrowed from "achieves exact zero order
+   effect" to "is invariant to WHICH fixed order is chosen, and is auditable
+   per finding" - and we now state explicitly that zero order effect alone is
+   obtainable for free.
+
+2. ELR-FUSION IS A CONDITIONAL-INDEPENDENCE RECOMBINATION
+   ACCEPTED - MEASURED. The comment identifies a genuine internal tension,
+   and the ablation settles which half of it matters.
+   [coherence/analysis/corpus_lr_ablation.py -> rev_corpus_lr_ablation.csv]
+
+   Same log-linear rule, same evidence sets, same 1,956 patients; only the
+   log-LR table changes:
+
+     weights source                 best top-1   top-5    NLL
+     corpus-derived (1.29M cases)     0.9765     1.000    0.037
+     elicited: GPT-OSS-20B            0.2592     0.618    3.378
+     elicited: Qwen3-32B-think        0.1498     0.273    3.730
+     elicited: Qwen3-32B              0.0946     0.237    3.858
+     elicited: MedGemma-1.5-4B        0.0194     0.099    4.190
+
+   So the recombination rule is not the limitation; the elicited weights are.
+   Elicited tables reach 2% to 27% of what the same rule reaches with
+   corpus-estimated weights.
+
+   On the apparent contradiction with the naive-Bayes rejection: these are
+   two different targets and both results stand. Naive-Bayes recombination
+   fails to reproduce the DDXPlus DIFFERENTIAL DISTRIBUTION (JSD 0.546 vs the
+   0.0490 floor) while being an excellent TOP-1 CLASSIFIER on the same data
+   (0.9765). The paper conflated "cannot reconstruct the shipped
+   differential" with "is not a usable recombination rule". That is corrected.
+
+   On tau <= 0.10 for ten of eleven models: yes, this is itself a knowledge
+   failure, and we now say so. A likelihood-optimal shrinkage that near zero
+   means the best calibrated use of the elicited evidence term is to
+   discount it almost entirely - i.e. the elicited log-LRs carry little
+   reliable information. This is now presented as a FINDING about elicited
+   likelihood ratios, not as a tuning detail.
+
+3. "DIRECT" IS TWO DIFFERENT QUANTITIES
+   ACCEPTED - FIXED. The comment is correct: 0.1892 is the argmax of the
+   stated 49-way posterior, and ~0.53 is the separately elicited named
+   diagnosis. They were both labelled "direct". They are now separated
+   everywhere, with n reported per row.
+   [reports/tables/rev_named_vs_posterior.csv]
+
+     model            posterior-argmax  named    gap    median rank of
+                       (n=39,120)     (n=35,208)         named in posterior
+     MedGemma-27B        0.0935        0.5204   0.4269        2
+     Qwen3-32B-think     0.1428        0.5119   0.3691        1
+     Qwen3-32B           0.1691        0.5373   0.3682        2
+     GPT-OSS-20B         0.3553        0.6510   0.2957        2
+     MedGemma-1.5-4B     0.0229        0.0805   0.0576        3
+
+   The reconciliation: the model names the correct diagnosis and then does
+   not rank it first in its own stated distribution. Median rank of the named
+   diagnosis within the model's posterior is 1 to 3 of 49, and it is ranked
+   first in only 13% to 56% of items.
+
+4. CROSS-FITTED CALIBRATION OF THE DIRECT POSTERIORS
+   PENDING. Accepted as necessary. ELR's tau is cross-fitted on labels, so
+   the comparison is unfair unless the direct posteriors get the same
+   treatment. We will add cross-fitted temperature scaling and isotonic
+   regression on the direct posteriors, using the identical two-fold
+   patient-level split, and report all three in Table 1.
+   ETA: next revision cycle (CPU-only, ~1 day).
+
+5. IS THE BELIEF GAP SAMPLING NOISE?
+   ACCEPTED - MEASURED. Answered without new generation: the retest arm is
+   six draws from an identical prompt, so averaging it IS the N-sample
+   condition.  [reports/tables/rev_nsample_averaged.csv]
+
+     model            single-sample   6-sample avg   gain
+     GPT-OSS-20B         0.3843          0.5442     +0.1599
+     R1-Distill-32B      0.1155          0.1979     +0.0823
+     Qwen3-32B           0.1861          0.2265     +0.0404
+     Med42-8B            0.0771          0.0803     +0.0032
+     (11 models; gain 0.003 to 0.160)
+
+   Averaging six samples recovers 0.003 to 0.160, against a named-minus-
+   posterior gap of 0.058 to 0.427. It helps and does not close the gap, so
+   the deficit is not resampling noise. Reported with the retest floors
+   alongside, as requested.
+
+6. TOKEN-LOGPROB BASELINE
+   IN PROGRESS. Implemented and running across all 11 models.
+   [coherence/run/logprob_baseline.py]
+   Each of the 49 candidate names is scored as a continuation by summed token
+   log-probability (length-normalised variant also stored), softmaxed to a
+   distribution that never passes through verbalized numbers. The 49-line
+   candidate list is deliberately omitted from this prompt so that list
+   position cannot influence the score (see comment 8).
+
+   Pilot, Qwen3-8B, 120 cases, same cases both paths:
+     token-logprob (summed)   top-1 0.200   top-5 0.408
+     stated 49-way posterior  top-1 0.093
+     chance                          0.020
+
+   The logprob path is 2.1x the verbalized path on identical patients, which
+   is direct support for "expression, not knowledge". Full sweep ETA ~17 GPU-
+   hours; the table will be rev_logprob_baseline.csv.
+
+7. DECODING REGIME FOR NAMING VS SCORING
+   ACCEPTED - STATED. Both tasks use identical decoding within a model:
+   grammar-constrained (xgrammar, disable_any_whitespace=True) for 10 of 11
+   models, and free decoding with final-channel parsing for GPT-OSS-20B only,
+   for the reason in comment 7's own reference (harmony forbids a JSON token
+   at position 0; see C11). So naming and scoring are NOT confounded by
+   decoding within any model. The GPT-OSS deviation is per-model, applies to
+   both tasks equally, and is now stated in Methods rather than only in the
+   calibration appendix.
+
+8. ARE THE 49 SCORES A DISTRIBUTION? IS LIST ORDER FIXED?
+   ACCEPTED - STATED, and one confound conceded.
+   - The scores are INDEPENDENT ratings. The prompt says "Score each
+     candidate diagnosis from 0 to 100 ... The scores do NOT need to sum to
+     anything." They are normalised to a simplex afterwards for the
+     divergence computation. This was a deliberate calibration decision (C6):
+     asking for probabilities summing to 1 produced 62.9% uniform collapse.
+     The paper will now say "normalised plausibility ratings", not
+     "posterior", wherever the elicited object is meant.
+   - The candidate list order is FIXED (alphabetical) in every prompt, for
+     every model and every item. So list order cannot confound any
+     WITHIN-item comparison (A1, A3, A4 are all paired within item). It does
+     leave a constant positional bias that could inflate or depress
+     particular pathologies uniformly; we now say so, and the token-logprob
+     baseline (comment 6) omits the list entirely and so is free of it.
+
+9. "NOT A KNOWLEDGE FAILURE" OVERREACHES
+   ACCEPTED - MEASURED, and the claim is withdrawn as written. The upper
+   bound the comment asks for is now measured: the same log-linear rule with
+   corpus-estimated weights reaches top-1 0.9765 / top-5 1.000 on these
+   1,956 patients (comment 2). Against that bound:
+
+     corpus-derived log-linear      0.9765   (100% of bound)
+     GPT-OSS-20B, named             0.6510   ( 67%)
+     Qwen3-32B, named               0.5373   ( 55%)
+     GPT-OSS-20B, stated posterior  0.3553   ( 36%)
+     Qwen3-32B, stated posterior    0.1691   ( 17%)
+     MedGemma-1.5-4B, named         0.0805   (  8%)
+
+   A model that reaches 55-67% of a bound attainable by counting
+   co-occurrences in the training corpus has a knowledge gap as well as an
+   expression gap. The paper will claim only the narrower, supported point:
+   the expression gap is REAL AND SEPARABLE (the same model's own named
+   answer, and its own token logprobs, both beat its stated posterior), not
+   that knowledge is intact.
+
+   On "32x chance": qualified. It is driven by GPT-OSS-20B (0.653); the
+   median model is 13.8x, and MedGemma-1.5-4B is 3.9x. Chance (1/49) is also
+   a weak reference on a class-balanced 49-way task; the corpus-derived bound
+   is the reference we now use.
+
+10. ABSTRACT "3 TO 12 PERCENT" VS TABLE
+    ACCEPTED - FIXED. The figure does not survive. Measured stated-posterior
+    top-1 by model is 0.023 (MedGemma-1.5-4B) to 0.355 (GPT-OSS-20B), and
+    Qwen3-4B-think is 0.044, not 0.019. The abstract sentence is removed and
+    replaced with the measured range and its source table.
+
+11. A2 JUDGED AGAINST AN UNATTAINABLE IDEAL
+    ACCEPTED - MEASURED. A reachable ceiling is now estimated from split-half
+    reliability of the instrument, using the permutation arm as an
+    INDEPENDENT reference.  [reports/tables/rev_a2_noise_ceiling.csv]
+
+      model           dir-agree ceiling  r2 ceiling  observed r2  % of ceiling
+      Qwen3-4B            0.788            0.618       0.0075        1.2%
+      Qwen3-32B           0.644            0.365       0.0006        0.2%
+      MedGemma-27B        0.605            0.421       0.0081        1.9%
+      GPT-OSS-20B         0.587            0.219       0.0026        1.2%
+      (11 models; ceiling r2 0.195-0.618; observed 0.003%-5.6% of ceiling)
+
+    Note on method, because the first attempt was wrong and we would rather
+    flag it: differencing each half against the POOLED retest mean forces
+    dA = -dB algebraically and returns ~0 direction agreement and r2 ~ 1 for
+    every model. Those were artefacts of the reference. The ceiling above
+    uses an independent reference.
+
+    The A2 finding survives the fair denominator: the ceiling is r2 0.20-0.62,
+    not 1.0, and models reach under 6% of it.
+
+12. A2 UNIT OF ANALYSIS, WEIGHTING, NEAR-ZERO ORACLE CHANGES, LOG-LR SPACE
+    PARTIAL.
+    - Unit: one row per (A2 item, pathology); 2,929 items, 4,693 retained
+      points per model. Now stated in Methods.
+    - Near-zero oracle changes: already excluded by min_true_delta = 0.05 in
+      log-odds, and min_count = 10 for oracle support in both the before and
+      after conditioning sets. The second filter is load-bearing: without it,
+      pathologies with zero matching patients after conditioning clip to
+      log-odds -9.2, and the slope measures that floor rather than the model.
+      Both thresholds move into Methods from the code comment.
+    - Weighting: currently unweighted across pathologies. To be reported both
+      unweighted and support-weighted.
+    - Log-LR space: ACCEPTED, not yet done. The regression will be rerun in
+      log-LR space so it does not depend on a corpus prior the model is never
+      given. ETA: next revision cycle.
+
+13. A3 HAS NO NULL
+    ACCEPTED - MEASURED. The null is the per-case retest divergence
+    distribution.  [reports/tables/rev_a1_absolute_gaps.csv]
+    Against the retest 95th percentile, the fraction of cases whose
+    permutation divergence exceeds it is 1.6% to 13.3%, against a null
+    expectation of exactly 5%. Only Qwen3-4B (13.3%) and Qwen3-8B (6.4%)
+    clearly exceed the null; the remaining nine sit at or below it. The
+    retest flip rate (comment 21) is the corresponding null for the flip
+    statistic. A3's "cases beyond the floor" and flip rates are re-reported
+    against both.
+
+14. HOW IS EVIDENCE "CERTIFIED UNINFORMATIVE"?
+    ACCEPTED - STATED, with the limitation conceded. Definition: a finding is
+    certified uninformative for a context when adding it to the conditioning
+    set moves the empirical posterior by JSD < 1e-3 while retaining >= 500
+    patients of support. The comment is right that a Wilson interval at
+    n = 500 resolves only effects of a few percentage points, and that a
+    finding can be irrelevant to common pathologies while mattering to rare
+    ones. We now (i) report the support actually retained per distractor,
+    (ii) state the detectable-effect floor explicitly, and (iii) flag that
+    certification is with respect to the full 49-way distribution, so
+    rare-pathology effects below the resolution are not excluded.
+
+15. ORACLE CONDITIONS ON E SUPERSET-OF S
+    ACCEPTED - CONFIRMED. The mask is M[:, idx].all(axis=1), i.e. patients
+    whose evidence set CONTAINS the queried tokens. The comment is correct
+    that a model shown S may treat S as complete, and that DDXPlus absence is
+    missing-not-at-random. Justification for superset conditioning: exact-set
+    matching collapses support (median 19 findings/case, so exact sets are
+    near-unique) and the >= 500 minimum would reject almost every item.
+    ACTION: we will add an exact-match variant restricted to the subset sizes
+    where support permits, and report A2/A3 under both. ETA: next cycle.
+
+16. SUBSET-SIZE DISTRIBUTION RETAINED BY THE 500-CASE MINIMUM
+    PARTIAL. Case-level distribution is: median 19 findings, p5 = 6, p95 = 32,
+    range 6-40. The distribution of retained CONDITIONING SUBSET sizes (which
+    is what the minimum actually bites on) is not yet reported; it will be,
+    together with A2/A3 restricted to the largest subsets, to show whether
+    the conclusions hold where the oracle is best supported.
+
+17. SAMPLING TEMPERATURE AND TOP-P; N-SAMPLE A1
+    ACCEPTED - STATED. temperature = 0.7, top_p = 0.95, max_tokens = 1400
+    (3000 for thinking models, 4096 for harmony models), one sample per item,
+    seed 20260912. These move into Methods. The comment is right that the
+    retest floor - and therefore the "reversal" - depends on these; A1 with
+    N-sample-averaged distributions per ordering is planned, and comment 5
+    already shows what 6-sample averaging does to the top-1 statistic.
+
+18. THE ANCHORED EFFECT IS A RATIO WITH A COLLAPSING DENOMINATOR
+    ACCEPTED - MEASURED. Absolute gaps with patient-clustered CIs are now the
+    primary statistic.  [reports/tables/rev_a1_absolute_gaps.csv]
+
+      model              abs gap   95% CI            excludes 0?
+      Qwen3-4B           0.0562   [0.0519, 0.0604]      yes
+      Qwen3-32B-think    0.0429   [0.0352, 0.0507]      yes
+      Qwen3-32B          0.0346   [0.0272, 0.0420]      yes
+      Qwen3-8B           0.0331   [0.0286, 0.0375]      yes
+      MedGemma-27B       0.0248   [0.0175, 0.0325]      yes
+      R1-Distill-32B     0.0134   [0.0046, 0.0220]      yes
+      Med42-8B           0.0073   [-0.0009, 0.0157]     NO
+      GPT-OSS-20B        0.0034   [-0.0015, 0.0083]     NO
+      MedGemma-1.5-4B    0.0020   [-0.0042, 0.0080]     NO
+
+    Three of eleven models show no detectable order effect. A
+    variance-decomposition / PERMANOVA-style test is accepted and PENDING.
+
+19. IS THE REVERSAL DRIVEN BY OUTPUT SHARPNESS?
+    PARTIAL - MEASURED. Across the 11 models:
+      Pearson r(mean entropy, retest floor)          = -0.584
+      Pearson r(mean entropy, absolute gap)          = -0.221
+      Pearson r(mean entropy, normalised effect)     = +0.118
+    So sharpness explains a substantial share of the FLOOR (which is the
+    denominator), and much less of the absolute gap. This weakens the
+    normalised statistic specifically, and is one more reason the absolute
+    gap is now primary (comment 18). A within-family entropy-matched
+    comparison is PENDING.
+
+20. THE SCALE CLAIM RESTS ON ONE FAMILY
+    ACCEPTED - the claim does not generalise and is withdrawn.
+    [reports/tables/rev_scale_families.csv]
+
+      family                 sizes  raw rises  normalised falls  reversal holds
+      Qwen3 non-thinking       3       yes           yes              YES
+      Qwen3 thinking           3       yes           no               no
+      MedGemma (4B, 27B)       2       no            no               no
+
+    The reversal holds for exactly one of three available ladders. We also
+    concede the framing point: 6 of the 11 "models" are Qwen3 configurations,
+    so the study has 4 independent families, not 11. The scaling claim is
+    demoted from a headline finding to an observation about one family.
+
+21. TOP-1 FLIP RATE HAS NO RETEST ANCHOR
+    ACCEPTED - MEASURED, and this substantially deflates the statistic.
+    [reports/tables/rev_canonical_baseline.csv]
+
+      model            retest flip  permutation flip  excess
+      Qwen3-4B            0.528          0.796        0.268
+      Qwen3-4B-think      0.538          0.699        0.161
+      Qwen3-32B           0.831          0.928        0.097
+      MedGemma-1.5-4B     0.951          0.994        0.043
+      GPT-OSS-20B         0.916          0.959        0.042
+
+    The models change their own leading diagnosis for 53% to 95% of patients
+    when the prompt does not change at all. The "0.70-0.99 of patients"
+    sentence is removed; only the excess over retest is reported.
+
+22. IS THE DDXPLUS INITIAL EVIDENCE PERMUTED OR HELD FIXED?
+    ACCEPTED - STATED. It is PERMUTED. initial_evidence appears inside the
+    evidences list for 1,956 of 1,956 cases, and build_a1 permutes that list
+    in full, so the distinguished first finding is moved like any other. This
+    was never stated and should have been. We will additionally report an arm
+    with initial_evidence pinned to position 1, since a clinician would not
+    reorder the presenting complaint.
+
+23. THE "THREE ANCHORS" FRAMING IS NOT REALISED
+    ACCEPTED - FIXED. The comment is correct: the generator floor (0.0490)
+    lies below every model's test-retest floor (0.072 to 0.283) and never
+    enters any computation - the normalised effect uses only the retest floor
+    and the between-patient ceiling. The abstract now says TWO anchors. The
+    generator floor is retained in its proper role, which is a statement
+    about DDXPlus as a corpus (comment 24), not an anchor for our estimand.
+
+24. IS 0.0490 CONDITIONAL OR UNCONDITIONAL?
+    CORRECTION. It is UNCONDITIONAL, over all replicate pairs. Recomputed
+    directly:  [reports/tables/rev_generator_floor.csv]
+
+      replicate pairs                        21,004
+      pairs with a DIFFERENT differential     5,423  (25.82%)
+      mean JSD over ALL pairs                0.04895   <- the reported figure
+      mean JSD over DIFFERING pairs only     0.18961
+      p90 over all pairs                     0.21979
+      p90 over differing pairs               0.26419
+
+    So the comment's supposition (that the unconditional figure would be
+    about 0.013) does not hold; 0.0490 already is the unconditional mean, and
+    the conditional figure is nearly 4x larger. Both are now reported.
+    Effect on standard DDXPlus metrics (GTPA@1, DDR/DDP/DDF1) is PENDING; we
+    have the top-1 flip rate across replicate pairs (0.48%), which bounds
+    GTPA@1 at about 0.995, and will compute the rest.
+
+25. THE COMPETENCE GATE IS DESCRIBED BUT NOT DEFINED
+    ACCEPTED - FIXED. Two explicit criteria are now reported per model.
+    [reports/tables/rev_competence_gate.csv]
+      (i)  beats chance: Wilson 95% lower bound > 1/49. All 11 pass.
+      (ii) ratio >= 5x chance. 10 of 11 pass; MedGemma-1.5-4B (3.9x) FAILS.
+    MedGemma-1.5-4B is retained in the tables but flagged, and is excluded
+    from any claim about its coherence, because its retest floor (0.2815) has
+    nearly reached its own ceiling (0.3532) - its low normalised order effect
+    (0.0285) is a collapsing denominator, not coherence. The paper previously
+    made this point in prose; it is now a gate with a threshold.
+
+26. NESTING, BOOTSTRAP UNIT, AND MCNEMAR
+    ACCEPTED - FIXED. Every interval in the new tables is a patient-level
+    cluster bootstrap: cases are resampled with replacement and all items
+    within a drawn case are carried together (5,000 resamples).
+    [coherence/analysis/reviewer_response.py: cluster_bootstrap]
+    Item-level McNemar is withdrawn; paired comparisons will be re-run with a
+    patient-level permutation test.
+
+27. MULTIPLICITY
+    PENDING - accepted. We will report Benjamini-Hochberg FDR across the
+    11 models x 4 axioms family and state the adjusted thresholds. A4 effect
+    sizes move into the main text (see minor comment 8).
+
+28. A4 IS DESCRIBED AS LABEL-FREE BUT USES A TARGET
+    CORRECTION ACCEPTED - the description was wrong. A4 regresses the log-odds
+    of the TRUE pathology on position (a4_anchoring.py takes
+    target = pathology index for the case), so it is label-dependent. The
+    claim that "A1 and A4 are label-free" is false for A4 and is removed.
+    A1 remains genuinely label-free. We will additionally report a label-free
+    A4 variant using the model's own modal diagnosis as the target.
+
+29. REAL CLINICAL NARRATIVES
+    PARTIAL. Two relevant arms already exist and are not yet reported:
+      - a1_narrative: 4,400 items/model on generated clinical narratives
+        rather than bulleted findings.
+      - a MIMIC-IV-Note arm: 33,558 responses over 3 models, held locally
+        under the PhysioNet agreement (aggregate statistics only may be
+        shared).
+    These will be analysed as the A1/A4 external-validity arm. We accept the
+    caveat that real-note order carries temporal information, so the
+    order-invariance axiom is weaker there and will be stated as such.
+
+30. SCOPE AND CONTAMINATION
+    ACCEPTED. Conclusions will be scoped explicitly to open-weight models of
+    4B-32B parameters. On contamination: DDXPlus (NeurIPS 2022) predates every
+    model tested and may well be in pretraining data. This matters most for
+    the elicited LR table, which asks directly about finding-pathology
+    associations the corpus contains. We will state it as a limitation. Note
+    it cuts against our own results rather than for them: contamination would
+    make elicited weights BETTER, and they reach 2-27% of corpus-derived.
+
+31. "ZERO MARGINAL QUERY COST" OMITS THE FIXED COST
+    ACCEPTED - FIXED. The fixed cost is now reported: 1,463 elicitation
+    queries per model (483 finding-level weight queries in the numeric
+    format, plus 483 each for the log-odds and ordinal format ablations, plus
+    14 prior queries). Amortised over 1,956 cases that is 0.25 queries/case
+    for the single format actually used; over a 100-case deployment it is
+    4.97 queries/case, i.e. worse than direct elicitation. We also state the
+    structural requirement the comment identifies: amortisation assumes a
+    CLOSED finding vocabulary, and a new finding requires a new elicitation.
+
+32. REPRODUCIBILITY
+    PARTIAL - most of it is already released, and the rest is being added.
+    Released: all code (coherence/), the battery JSON, prompts
+    (coherence/elicit/prompts.py), the DDXPlus corpus parquet, all result
+    tables and figures, and the LoRA adapter - archived hourly to the Hugging
+    Face Hub (GOVINDFROM/codx-clinical-coherence, GOVINDFROM/codx-elr-fusion)
+    with a manifest recording git revision and a SHA-256 per table.
+    Now added to Methods: temperature 0.7, top_p 0.95, seed 20260912,
+    K = 10 permutations, 6 retest replicates, 2 canonical, 2 shuffled per
+    case; vLLM 0.29.0, quantization per model (AWQ-Marlin for 32B,
+    compressed-tensors 4-bit for MedGemma-27B, MXFP4 for GPT-OSS, bf16
+    otherwise); single NVIDIA RTX PRO 5000 Blackwell (48 GB).
+    Per-case raw responses are NOT released for the MIMIC arm (credentialed).
+
+33. NO RELATED-WORK SECTION; UNCITED REFERENCES
+    PENDING - accepted in full. A Related Work section will be written
+    positioning against: (i) verbalized vs token-level confidence, which our
+    comment-6 baseline speaks to directly; (ii) generator-validator gaps,
+    which is the closest framing for our comment-3 dissociation;
+    (iii) self-consistency as an order-effect remedy; and (iv) the
+    positional-bias literature. References 2-5 and 7 are currently cited
+    nowhere in the text; each will either be cited properly or removed.
+
+34. LIMITATIONS SECTION
+    PENDING - accepted. MAKE and EMNLP both expect a dedicated section. The
+    two limitations currently buried in the Conclusion will move there, and
+    will be joined by: single hardware platform, 4 independent model families,
+    DDXPlus contamination risk, superset oracle conditioning (comment 15),
+    fixed candidate-list order (comment 8), and the synthetic-generator
+    realism ceiling.
+
+==========================================================================
+MINOR COMMENTS
+==========================================================================
+
+1.  UNITS. ACCEPTED. Entropy is in BITS (log base 2); 3.94 bits vs the 5.615
+    bits of a uniform over 49. JSD is base 2, so it is bounded by 1. Both
+    stated at first use. Also accepted: ELR-calibrated entropy of 5.25 bits
+    is within 0.37 bits of uniform, i.e. very nearly uninformative, and we
+    now say so rather than presenting it as a calibration success.
+
+2.  FIGURE 1 BARS READ AS CIs. ACCEPTED. The floor-to-ceiling range will be
+    visually distinguished from intervals, and a companion panel added with
+    bootstrap CIs for the absolute gap (the data is in
+    rev_a1_absolute_gaps.csv). Models will be sorted by family then size.
+
+3.  LABEL CONSISTENCY. ACCEPTED - FIXED. Figures used "Qwen3-8B t" while
+    tables used "think". One scheme ("-think"/"-nothink") everywhere.
+
+4.  O(1/sqrt(K)) THROUGH THREE POINTS. ACCEPTED. The fitted decay curve is
+    removed; the three measured points are shown without an interpolating
+    line, for all models rather than one.
+
+5.  FIGURE 2 CIs AND ACCESSIBILITY. ACCEPTED. CIs added; the palette is
+    already Okabe-Ito colourblind-safe, and distinguishable markers
+    (circle/square) carry the series in addition to colour.
+
+6.  TABLE 2.3 SHOWS 5 OF 11 MODELS. ACCEPTED. The full 11-model table goes in
+    the main text; per-model detail to an appendix.
+
+7.  DIRECTION AGREEMENT "IDEAL 1.0". ACCEPTED - FIXED. The column now marks
+    chance (0.5) and the per-model retest ceiling (0.587-0.788) instead of an
+    unreachable 1.0. See major comment 11.
+
+8.  A4 MEASURE UNDEFINED; NEGATIVE VALUES. ACCEPTED. Definition: mean
+    between-position JSD minus mean within-position (replicate) JSD, so it is
+    a difference of divergences and is negative when positions differ LESS
+    than replicates of the same position - i.e. no positional effect plus
+    sampling noise. Range -0.004 to +0.014. Both the definition and the
+    interpretation of the sign go into the text, with effect sizes.
+
+9.  THINKING SCORES BELOW NON-THINKING. ACCEPTED - will be discussed.
+    Measured: 0.252 vs 0.281 (8B) and 0.233 vs 0.267 (4B) on named diagnosis.
+    We will not over-explain it; the honest statement is that the thinking
+    variants spend budget on a reasoning trace and then emit a shorter final
+    answer, and that our max_tokens for thinking models (3000) truncates a
+    fraction of traces. We will report the truncation rate rather than
+    speculate.
+
+10. "Bayesian belief revision is order invariant as a theorem"
+    -> "Bayesian posterior inference is order invariant: P(d | e1...en)
+    depends only on the evidence set." ADOPTED verbatim.
+
+11. "The posterior therefore encodes the answer and declines to rank it first"
+    -> "The model's own named diagnosis sits at median rank 3-4 of 49 in its
+    stated posterior." ADOPTED, with the measured value substituted: the
+    median rank is 1-3 depending on model (see major comment 3), so the
+    sentence will read "median rank 1-3 of 49".
+
+12. "which is a collapsing denominator rather than a coherence success"
+    -> "because the anchoring denominator collapses, the estimate is
+    uninformative rather than evidence of coherence." ADOPTED verbatim.
+
+13. "Jensen Shannon divergence is symmetric and cancels a consistent
+    directional shift"
+    -> "Jensen Shannon divergence measures magnitude, not direction, so it
+    cannot detect a consistent directional shift." ADOPTED verbatim.
+
+14. "Ordering cannot explain it, since the comparison is paired within item"
+    -> "Ordering is controlled, since the comparison is paired within item."
+    ADOPTED verbatim.
+
+15. "It is a failure to express what the model knows"
+    -> "This suggests a failure to express what the model knows." ADOPTED
+    verbatim, and this is now the only form of the claim we make anywhere
+    (see major comment 9).
+
+16. REFERENCE 5 UMLAUT. ACCEPTED - FIXED. "Schopf" -> "Schöpf"
+    (Schilcher, Karasin, Schöpf, Saleh, Tommasel and Schedl, Findings of
+    EMNLP 2025). All references were re-verified against primary sources
+    (arXiv, ACL Anthology, PMLR, NeurIPS Proceedings, PhysioNet).
+
+==========================================================================
+SUMMARY OF STATUS
+==========================================================================
+  ACCEPTED - MEASURED / FIXED / STATED   : 1,2,3,5,7,8,9,10,11,13,14,15,17,
+                                           18,20,21,22,23,25,26,28,31
+                                           + minor 1,3,5,7,8,10-16
+  CORRECTION (with evidence)             : 24  (and the premise of 28)
+  PARTIAL                                : 12,16,19,29,32  + minor 2,4,6,9
+  IN PROGRESS                            : 6   (~17 GPU-hours)
+  PENDING                                : 4,27,30,33,34
+
+New artifacts:
+  coherence/analysis/reviewer_response.py     comments 1,3,5,11,13,18,20,21,25,26
+  coherence/analysis/corpus_lr_ablation.py    comments 2,9
+  coherence/run/logprob_baseline.py           comment 6
+  scripts/archive_hf.sh                       comment 32 (hourly Hub archival)
+  reports/tables/rev_*.csv                    all new numbers
+
+Four of the paper's stated contributions do not survive in their current
+form (comments 1, 2, 20, 23) and are being rewritten rather than defended.
