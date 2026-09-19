@@ -1,8 +1,12 @@
 # Secrets
 .env
 
-# Data and build artifacts
-data/
+# Data and build artifacts.
+# NOTE: anchored with a leading slash. A bare `data/` also matches
+# `coherence/data/`, which silently kept six source modules -- including the
+# empirical-posterior oracle the paper's C2 contribution rests on -- out of
+# every commit. Do not un-anchor this.
+/data/
 build/
 .venv/
 __pycache__/

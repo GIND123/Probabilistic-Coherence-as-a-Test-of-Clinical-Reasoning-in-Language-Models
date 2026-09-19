@@ -121,7 +121,11 @@ def analyse(model_key: str, d: pl.DataFrame, posteriors: np.ndarray,
     return A4Result(
         model_key=model_key, n_cases=t.height, beta_position=b,
         beta_ci=(float(np.quantile(bs, .025)), float(np.quantile(bs, .975))),
-        eta_squared=float(t["eta_squared"].mean()),
+        # nanmean, not mean: a case whose log-odds are constant across all
+        # replicates has ss_total == 0 and yields NaN, and a single such case
+        # propagated NaN through the whole model average -- which is why
+        # eta_squared was reported for only 3 of 11 models.
+        eta_squared=float(np.nanmean(t["eta_squared"].to_numpy())),
         jsd_between_positions=jbm, jsd_within_position=jwm,
         position_effect=jbm - jwm,
         top1_flip_rate=float(np.mean(flips)), per_case=t)

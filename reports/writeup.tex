@@ -1,0 +1,311 @@
+\documentclass[10pt]{article}
+\usepackage[a4paper,top=1.6cm,bottom=1.6cm,left=1.8cm,right=1.8cm]{geometry}
+\usepackage{times}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage[font=footnotesize,labelfont=bf,skip=3pt]{caption}
+\usepackage{titlesec}
+\usepackage[none]{hyphenat}
+
+% No automatic hyphenation anywhere in the document.
+\hyphenpenalty=10000
+\exhyphenpenalty=10000
+\pretolerance=10000
+\tolerance=4000
+\emergencystretch=4em
+
+% No header, no footer.
+\pagestyle{empty}
+
+\titlespacing*{\section}{0pt}{6pt}{2pt}
+\titlespacing*{\subsection}{0pt}{4pt}{1pt}
+\titleformat{\section}{\normalfont\normalsize\bfseries}{\thesection.}{0.5em}{}
+\titleformat{\subsection}{\normalfont\small\bfseries}{\thesubsection}{0.5em}{}
+
+\setlength{\parskip}{1.5pt}
+\setlength{\parindent}{0pt}
+\setlength{\tabcolsep}{4pt}
+\setlength{\textfloatsep}{7pt}
+\setlength{\intextsep}{7pt}
+\renewcommand{\arraystretch}{1.02}
+
+\begin{document}
+\small
+
+\begin{center}
+{\large\bfseries Probabilistic Coherence as a Test of Clinical LLM Reasoning}
+\end{center}
+\vspace{-2pt}
+
+\subsection*{Abstract}
+\footnotesize
+Bayesian belief revision is order invariant as a theorem, since $P(d \mid e_1 \dots e_n)$ is a
+function of the evidence set and not of the sequence in which it arrives. This gives a correctness
+criterion for clinical language models that needs no annotator, no judge model and no independence
+assumption, because the target value is known to be zero exactly. We evaluate eleven open weight
+models from 4B to 32B parameters, spanning general, medically tuned and reasoning distilled
+families, on 1.12 million elicited responses over 1{,}956 DDXPlus patients and 49 pathologies.
+Every divergence is reported against three anchors measured on the same model, namely its test
+retest floor, its between patient ceiling, and a corpus level generator noise floor of 0.0490
+established from exact replicate cases in DDXPlus itself. Three findings follow. The anchors
+reverse the direction of the headline result, since raw permutation divergence rises with model
+scale while the anchored order effect does not. Belief updates do not track the evidence, with
+direction agreement against an assumption free empirical oracle spanning 0.454 to 0.549 across all
+eleven models. Most consequentially, every model names the correct diagnosis two to five times more
+often than its own stated posterior ranks it first, and agrees with the top entry of its own
+distribution on only 3 to 12 percent of items. The deficit is therefore in the probabilistic
+interface rather than in the clinical knowledge, which motivates ELR Fusion, a symbolic combination
+layer attaining an exactly zero order effect at zero marginal query cost in all 132 configurations
+tested.
+\small
+
+\section{Methodology}
+
+\subsection{Coherence axioms}
+The instrument tests four properties of belief revision, each with an exact target and none
+requiring human annotation. A1 and A4 are label free; A2 and A3 need ground truth, and the choice
+of reference is the main methodological commitment of the study.
+
+\begin{center}
+\footnotesize
+\begin{tabular}{@{}llc@{}}
+\toprule
+Axiom & Property & Target \\
+\midrule
+A1 & Order invariance, $P(d \mid e_1 \dots e_n)$ depends on the evidence set and not its order & 0 \\
+A2 & Update fidelity, adding a finding moves belief as the corpus says it should & slope 1 \\
+A3 & Redundancy insensitivity, certified uninformative evidence must not move belief & 0 \\
+A4 & Positional anchoring, no position in the sequence carries special weight & 0 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Data, models and the absent knowledge base}
+The corpus is DDXPlus [1], comprising 1{,}292{,}579 synthetic patients over 49
+pathologies and 223 findings. A data audit established two facts that constrain the design. The
+released knowledge base declares 888 pathology by evidence slots and supplies conditional
+probabilities for none of them, so exact posteriors for arbitrary evidence subsets cannot be read
+off it. Reconstructing those tables from corpus frequencies and recombining them under conditional
+independence reproduces the shipped differentials at mean Jensen Shannon divergence 0.546, roughly
+eleven times the generator noise floor, and was therefore rejected. The posterior is instead
+conditioned directly on all 1{,}292{,}579 released patients with Wilson intervals and a minimum
+support of 500 cases, which makes A2 and A3 absolute while making no independence assumption.
+
+The audit also found the ground truth differential to be stochastic. Across 21{,}004 replicate
+pairs, that is patients identical in evidence multiset, age, sex, initial evidence and true
+pathology, the shipped differential differs for 25.8 percent of pairs at mean divergence 0.0490.
+Every DDXPlus differential matching metric therefore has a ceiling below 1.0, which applies to any
+work on this corpus. Eleven models were evaluated: Qwen3 at 4B, 8B and 32B in thinking and
+nonthinking configurations, MedGemma 4B, MedGemma 27B, Med42 8B, R1 Distill 32B and GPT OSS 20B.
+
+\subsection{Three anchors and a competence gate}
+A raw divergence is uninterpretable alone, since a model that resamples noisily appears incoherent
+regardless of ordering. Each model is measured against three references computed on that same model
+and the same items: a test retest floor from resampling the identical prompt, a between patient
+ceiling from unrelated patients, and the corpus generator floor of 0.0490. The anchored order
+effect is the gap from the floor as a fraction of the floor to ceiling distance.
+
+A competence gate precedes all coherence reporting, because schema validity constrains the shape of
+a response and not its content, and a model returning a constant scores a near zero order effect
+that reads as excellent coherence. During calibration GPT OSS 20B under a JSON grammar returned an
+identical minimal object for essentially every case at 1.000 schema validity and 1.000 informative
+rate, scoring 0.039 top 1 accuracy against a chance rate of 0.020. The cause is the harmony response
+format, which requires a channel token at position zero that a JSON grammar forbids. Decoded freely
+and parsed from the final channel, the same model on the same items reaches 0.653, a change of 16.6
+times from one decoding flag. All reported results use the corrected path.
+
+\subsection{ELR Fusion}
+Log odds accumulate over an evidence set, so the result is order invariant by construction:
+$\operatorname{logodds}(d \mid E) = \operatorname{logodds}(d) + \tau \sum_{i} \log \mathrm{LR}(e_i \mid d)$.
+The likelihood ratio table is elicited once per finding for the whole corpus, so a new case costs
+zero additional model queries. Because the sum ranges over an unordered set, and scaling an order
+invariant quantity leaves it order invariant, the guarantee holds for every value of $\tau$. That
+coefficient is the log odds form of temperature scaling [6] applied to the evidence term so
+the prior is untouched, correcting the overcounting that arises because correlated findings are
+summed as though independent. It is fitted by cross fitting over two folds, so the coefficient
+applied to a case is never fitted on that case.
+
+\section{Results}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.93\textwidth]{fig1_anchors.pdf}
+\caption{Order invariance against three anchors. For each model the horizontal line spans its own
+test retest floor to its own between patient ceiling, and the filled circle is the observed
+permutation divergence. The order effect is the gap from the floor, not the observed value.}
+\end{figure}
+
+\subsection{A1, the anchors reverse the finding}
+Permutation divergence rises with scale across the Qwen3 ladder, from 0.128 at 4B to 0.291 at 32B,
+which read alone would indicate that larger models are less coherent. The test retest floor rises
+faster over the same ladder, from 0.072 to 0.256, so the anchored effect falls from 0.215 to 0.127.
+Reporting the raw number alone inverts the conclusion, which is the strongest argument for the three
+anchor design and the reason prior order effect figures are not directly comparable to these.
+
+The effect is real but not universal. Eight of eleven models show an order effect whose bootstrap
+interval excludes zero. For MedGemma 4B, Med42 8B and GPT OSS 20B the interval covers zero, and in
+each case the floor has risen close to the ceiling, which is a collapsing denominator rather than a
+coherence success. The top 1 flip rate is high throughout, from 0.699 to 0.994, so reordering the
+same findings changes the leading diagnosis for most patients even where distributional movement is
+modest.
+
+\subsection{A2, A3 and A4}
+\begin{center}
+\footnotesize
+\begin{tabular}{@{}llll@{}}
+\toprule
+Axiom & Quantity & Range over eleven models & Ideal \\
+\midrule
+A2 & Slope $\beta$ against the empirical oracle & 0.0009 to 0.0576 & 1.0 \\
+A2 & Coefficient of determination $r^2$ & at most 0.0207 & 1.0 \\
+A2 & Direction agreement & 0.454 to 0.549 & 1.0 \\
+A3 & Mean divergence from uninformative evidence & 0.0759 to 0.2687 & 0 \\
+A3 & Cases moved beyond the model's own floor & 15.8 to 44.9 percent & 0 \\
+A3 & Ninetieth percentile of that divergence & up to 0.928 & 0 \\
+A4 & Models with a significant positional slope & 7 of 11 & 0 of 11 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+A2 is the strongest negative result. Whether a model's belief in a diagnosis rises or falls when a
+finding is added is uncorrelated with whether the corpus says it should, and direction agreement
+straddles chance for every model. Six of eleven have a slope interval excluding zero, so the effect
+is real, but at $\beta$ below 0.058 against an ideal of 1.0 it is swamped. Unlike A1 this is a
+failure of direction measured against ground truth, with no independence assumption available to
+attack.
+
+A3 requires care. Evidence the corpus certifies as uninformative moves the posterior beyond the
+model's own resampling noise for 15.8 to 44.9 percent of cases and flips the leading diagnosis for
+26.5 to 69.8 percent. The mean spurious divergence, however, sits below the model's own retest floor
+for ten of eleven models. The distribution is heavy tailed rather than uniformly shifted, so the
+correct claim is that irrelevant findings move belief substantially for a large minority of cases,
+not that they do so on average.
+
+For A4 the directional reading matters. A divergence based position measure is near zero throughout,
+between $-0.004$ and $0.014$, but Jensen Shannon divergence is symmetric and cancels a consistent
+directional shift. Regressing the target log odds on position instead, seven of eleven models show a
+slope whose bootstrap interval excludes zero. Six are primacy, meaning the decisive finding carries
+more weight when presented first, and they comprise every Qwen3 configuration together with R1
+Distill 32B. MedGemma 27B alone reverses to recency. A symmetric divergence measure is blind to the
+effect the regression detects, which is worth noting for anyone measuring position bias this way.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.485\textwidth]{fig2_gap.pdf}
+\hfill
+\includegraphics[width=0.485\textwidth]{fig3_methods.pdf}
+\caption{Left, the answer and belief gap across all eleven models. Solid bars are top 1 accuracy
+when the model names one diagnosis; hatched bars are the top ranked entry of the same model's own
+stated posterior on the same items. Right, residual order sensitivity against query cost for Qwen3
+32B. Permutation ensembling decays as $O(1/\sqrt{K})$ and never reaches zero, while ELR Fusion is
+exactly zero at zero marginal cost.}
+\end{figure}
+
+\subsection{The answer and belief gap}
+Each model was asked, on the same item and with the same prompt content, both to name one diagnosis
+and to score all 49 candidates for plausibility. The two tasks share an item identifier, so the
+comparison is exactly paired. Every model is markedly more accurate when naming a diagnosis than
+when ranking its own distribution. Self agreement below is the share of items on which the named
+diagnosis equals the top entry of that model's own posterior.
+
+\begin{center}
+\footnotesize
+\begin{tabular}{@{}lrrrrrr@{}}
+\toprule
+Model & Paired items & Named & Posterior & Ratio & Self agreement & Median rank \\
+\midrule
+Med42 8B        & 35{,}208 & 0.309 & 0.079 & 3.89 & 0.121 & 3 \\
+Qwen3 8B        & 35{,}208 & 0.281 & 0.109 & 2.58 & 0.085 & 3 \\
+Qwen3 8B think  & 35{,}208 & 0.252 & 0.097 & 2.58 & 0.067 & 3 \\
+Qwen3 4B        & 35{,}205 & 0.267 & 0.059 & 4.51 & 0.042 & 4 \\
+Qwen3 4B think  & 32{,}696 & 0.235 & 0.049 & 4.81 & 0.019 & 3 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+A McNemar test on Med42 8B gives $\chi^2 = 7{,}131$ over 8{,}633 versus 543 discordant pairs. Three
+confounds were excluded. Uniform posteriors cannot explain the effect, since Med42 8B emits a
+uniform vector on 0.3 percent of items and shows the largest gap. Ties at the top cannot explain it,
+since restricting to strictly unimodal posteriors leaves accuracy at 0.081 against 0.309 named.
+Ordering cannot explain it, since the comparison is paired within item. The median rank of the
+model's own named diagnosis inside its own distribution is 3 or 4 of 49, against a chance value of
+25. The posterior therefore encodes the answer and declines to rank it first. This is not a
+knowledge failure and not sampling noise. It is a failure to express what the model knows as a
+coherent distribution, and it explains the A2 null, since a model whose probabilistic interface is
+broken cannot move that interface in the direction the evidence requires.
+
+\subsection{Remedies}
+Paired over the cases every method produced, for Qwen3 32B:
+
+\begin{center}
+\footnotesize
+\begin{tabular}{@{}lrrrrrl@{}}
+\toprule
+Method & Order residual & Queries per case & Top 1 & Top 5 & Entropy & Exact \\
+\midrule
+Direct                  & 0.2988 & 1 & 0.1892 & 0.3006 & 3.94 & no \\
+Self consistency        & 0.1244 & 6 & 0.2265 & 0.4346 & 4.50 & no \\
+Permutation ensemble K5 & 0.1038 & 5 & 0.2377 & 0.4443 & 4.53 & approximate \\
+ELR Fusion              & 0.0000 & 0 & 0.1334 & 0.2480 & 0.86 & yes \\
+ELR Fusion calibrated   & 0.0000 & 0 & 0.0997 & 0.2393 & 5.25 & yes \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+ELR Fusion is the only method reaching an exactly zero order effect, at zero marginal query cost,
+because the weight table is elicited once for the whole corpus rather than once per case. The result
+generalises: residual order sensitivity is exactly zero for all eleven models at all twelve values
+of $\tau$, that is 132 of 132 configurations. Permutation ensembling buys its residual with queries,
+decays only as $O(1/\sqrt{K})$, and no value of $K$ reaches zero.
+
+The honest cost is accuracy, and it is model dependent rather than fixed. Across the eleven models
+ELR Fusion retains between 0.30 and 1.06 of direct elicitation accuracy, median 0.71, and for two
+models it is more accurate than direct elicitation. The shrinkage coefficient is likewise a frontier
+rather than a fitted constant, since the accuracy optimal $\tau$ reaches at least 2.0 for eight of eleven
+models while the optimum for the likelihood of the truth falls at or below 0.10 for ten of eleven,
+a difference of more than an order of magnitude in the same model. Order invariance is exact at every
+point on that frontier.
+
+\section{Conclusion}
+Three claims are supported. First, order effects in clinical language models cannot be interpreted
+without anchors measured on the same model, because the test retest floor rises with scale faster
+than the effect does and the raw number therefore inverts the comparison. Second, the failure these
+models exhibit is not primarily a reasoning failure. They identify the correct diagnosis at up to 32
+times the chance rate while ranking that same diagnosis third or fourth of 49 in their own stated
+distribution, and they agree with themselves on fewer than one item in eight. The deficit lies in the
+probabilistic interface. Third, because the deficit is one of representation rather than knowledge,
+moving the probability arithmetic into a symbolic layer is the structurally indicated fix, and ELR
+Fusion attains an exactly zero order effect at zero marginal query cost in every configuration
+tested, at an accuracy cost reported in full rather than concealed.
+
+Two limitations are stated plainly. DDXPlus is synthetic, which is what makes an exact reference
+possible for A2 and A3, but an external validity arm on real clinical narratives is required before
+these magnitudes are claimed for deployed settings. The elicited likelihood ratios, rather than the
+fusion rule, set the accuracy ceiling of the method, and improving that elicitation is where the
+remaining accuracy lies.
+
+\vspace{2pt}
+\footnotesize
+\textbf{References}
+\vspace{-4pt}
+\begin{enumerate}\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}\setlength{\leftmargin}{0pt}
+\item Fansi Tchango, A., Goel, R., Wen, Z., Martel, J. and Ghosn, J. (2022). DDXPlus,
+a new dataset for automatic medical diagnosis. \textit{Advances in Neural Information Processing
+Systems 35}, Datasets and Benchmarks Track. arXiv:2205.09148.
+\item Andrews, I. and Sarkar, S. (2026). Dutch books for language models. arXiv:2609.02797.
+\item Chen, W., Zhu, Z., Huang, G. and Wang, W. (2026). MedEinst, benchmarking the Einstellung
+effect in medical LLMs through counterfactual differential diagnosis. arXiv:2601.06636.
+\item Handler, R., Bedi, S. and Shah, N. (2026). Quantifying and mitigating premature closure in
+frontier LLMs. arXiv:2605.15000.
+\item Schilcher, P., Karasin, D., Sch\"opf, M., Saleh, H., Tommasel, A. and Schedl, M. (2025).
+Characterizing positional bias in large language models. \textit{Findings of the Association for
+Computational Linguistics, EMNLP 2025}.
+\item Guo, C., Pleiss, G., Sun, Y. and Weinberger, K. Q. (2017). On calibration of modern
+neural networks. \textit{Proceedings of the 34th International Conference on Machine Learning},
+PMLR 70.
+\item McDuff, D., Schaekermann, M., Tu, T., Palepu, A., Wang, A., Garrison, J. and Singhal, K.
+(2023). Towards accurate differential diagnosis with large language models. arXiv:2312.00164.
+\end{enumerate}
+
+\end{document}
