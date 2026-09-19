@@ -59,8 +59,13 @@ def _check_safe(paths: list[Path]) -> None:
             f"refusing to upload {len(bad)} credentialed-data path(s), e.g. {bad[0]}")
 
 
+def _is_forbidden(p: Path) -> bool:
+    return any(f in str(p).lower() for f in FORBIDDEN)
+
+
 def upload_folder(local: Path, path_in_repo: str, kind: str = "dataset",
                   allow_patterns: list[str] | None = None,
+                  ignore_patterns: list[str] | None = None,
                   message: str = "sync") -> str:
     local = Path(local)
     if not local.exists():
@@ -75,12 +80,30 @@ def upload_folder(local: Path, path_in_repo: str, kind: str = "dataset",
     if allow_patterns:
         candidates = [q for q in candidates
                       if any(fnmatch.fnmatch(q.name, pat) for pat in allow_patterns)]
+
+    # Credentialed subtrees are EXCLUDED from the upload rather than allowed to
+    # abort it. An earlier version screened the whole tree and raised, which
+    # meant one MIMIC directory blocked the archival of every table, figure and
+    # report under the same parent -- the guard was working, but it took the
+    # backup down with it. Excluding keeps both properties: the periodic
+    # archive always runs, and credentialed data is never a candidate.
+    ignore_patterns = list(ignore_patterns or [])
+    ignore_patterns += [f"*{f}*" for f in FORBIDDEN]
+    dropped = [q for q in candidates if _is_forbidden(q)]
+    candidates = [q for q in candidates if not _is_forbidden(q)]
+    if dropped:
+        print(f"  [guard] excluded {len(dropped)} credentialed path(s) from "
+              f"{path_in_repo}")
+
+    # Whatever survives is screened again: excluding by pattern and asserting
+    # the result are different checks, and the assertion is the one that must
+    # never be removed.
     _check_safe(candidates)
     rid = ensure_repo(kind)
     _api().upload_folder(
         repo_id=rid, repo_type=kind, folder_path=str(local),
         path_in_repo=path_in_repo, allow_patterns=allow_patterns,
-        commit_message=message,
+        ignore_patterns=ignore_patterns, commit_message=message,
     )
     return f"{rid}:{path_in_repo}"
 

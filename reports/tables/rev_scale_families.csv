@@ -1,0 +1,4 @@
+family,n_sizes,models,raw_first,raw_last,raw_rises_with_scale,normalised_first,normalised_last,normalised_falls_with_scale,abs_gap_first,abs_gap_last,abs_gap_falls_with_scale,reversal_holds
+Qwen3 (non-thinking),3,"qwen3-4b-nothink, qwen3-8b-nothink, qwen3-32b-nothink",0.12844860935796878,0.290754034356224,true,0.21485824130084324,0.12699404282686014,true,0.056218637031482235,0.03459500543754823,true,true
+Qwen3 (thinking),3,"qwen3-4b-think, qwen3-8b-think, qwen3-32b-think",0.13146875630411223,0.30945179994557176,true,0.08045373973274024,0.10619605092373124,false,0.017183319467909908,0.042897778380275475,false,false
+MedGemma,2,"medgemma-1.5-4b, medgemma-27b",0.28357571194322917,0.27122577357955546,false,0.028491330948254037,0.07407952929519637,false,0.0020414370968878104,0.024840225644798014,false,false
