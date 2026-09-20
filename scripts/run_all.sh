@@ -7,6 +7,17 @@ source scripts/env.sh
 export HF_TOKEN=$(grep '^hf=' .env | cut -d= -f2)
 PY=.venv/bin/python
 
+# Hub archival is ON by default. Set CODX_HF_SYNC=0 to suppress it.
+# Every sync stage below goes through this wrapper so there is exactly one
+# switch, rather than three call sites that can drift apart.
+hf_sync() {
+  if [ "${CODX_HF_SYNC:-1}" != "1" ]; then
+    echo "  [hf] skipped (CODX_HF_SYNC=0)"
+    return 0
+  fi
+  $PY -m coherence.hub.hf_sync "$@" || echo "  [hf] sync failed (non-fatal)"
+}
+
 # Wait for ANY of our GPU jobs still running before touching the GPU.
 # Training and the sweep both want the whole card; overlapping them OOMs the
 # vLLM engine at load time and silently kills the sweep.
@@ -43,7 +54,7 @@ for m in qwen3-8b-nothink qwen3-32b-nothink medgemma-27b; do
 done
 
 echo "### STAGE 2  sync results to the Hub  $(date -Is)"
-$PY -m coherence.hub.hf_sync || echo "sync failed (non-fatal)"
+hf_sync
 
 echo "### STAGE 3  ELR LoRA training  $(date -Is)"
 # Resumable: a completed run leaves final_metrics.json with the selected
@@ -56,7 +67,7 @@ else
   $PY -m coherence.train.train_lr_lora --base Qwen/Qwen3-8B \
       --out build/models/elr-lora-qwen3-8b --epochs 2
 fi
-$PY -m coherence.hub.hf_sync --model-only || echo "adapter push failed (non-fatal)"
+hf_sync --model-only
 
 echo "### STAGE 3b  ELR-Fusion with the trained adapter (ablation 17)  $(date -Is)"
 MODELS="qwen3-8b-elr-lora" \
@@ -67,5 +78,5 @@ echo "### STAGE 4  analysis  $(date -Is)"
 $PY -m coherence.analysis.run_analysis
 
 echo "### STAGE 5  final sync  $(date -Is)"
-$PY -m coherence.hub.hf_sync || echo "sync failed (non-fatal)"
+hf_sync
 echo "### DONE  $(date -Is)"

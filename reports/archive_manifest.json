@@ -1,6 +1,6 @@
 {
-  "archived_utc": "2026-09-19T03:10:07Z",
-  "git_rev": "bc1ecb9",
+  "archived_utc": "2026-09-20T14:58:16Z",
+  "git_rev": "9c9342e",
   "tables": {
     "a1_k_sweep.csv": "a2766c9a7ae22bd6",
     "a1_main.csv": "d8581db599414723",
@@ -21,8 +21,10 @@
     "rev_a2_noise_ceiling.csv": "823859cb0b1716f8",
     "rev_canonical_baseline.csv": "fc5d78687dd6acc7",
     "rev_competence_gate.csv": "9f3daa92e51f4c52",
+    "rev_corpus_lr_ablation.csv": "a6ceeca84897e670",
     "rev_entropy_control.csv": "6307c4a2789c3ce3",
-    "rev_generator_floor.csv": "4eee3e29fbc0bb12",
+    "rev_generator_floor.csv": "18721a9ac85b0b04",
+    "rev_logprob_baseline.csv": "801d04519fbe6b2d",
     "rev_named_vs_posterior.csv": "63beb18c2c23ac59",
     "rev_nsample_averaged.csv": "6501f6a1f8b88488",
     "rev_scale_families.csv": "ba7fa525b421dd61",
@@ -49,6 +51,8 @@
     "fig11_competence.png",
     "fig12_summary_matrix.png",
     "fig13_severity.png",
-    "fig14_accuracy_vs_coherence.png"
+    "fig14_accuracy_vs_coherence.png",
+    "fig15_pipeline.png",
+    "fig16_worked_example.png"
   ]
 }

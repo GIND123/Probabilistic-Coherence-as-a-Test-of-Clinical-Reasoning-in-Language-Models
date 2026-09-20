@@ -1,2 +1,247 @@
 ==============================================================
 LOGPROB qwen3-4b-nothink   2026-09-19T08:48:33+05:30
+==============================================================
+LOGPROB qwen3-4b-nothink   2026-09-19T10:32:41+05:30
+model qwen3-4b-nothink  cases=1,956  candidates=49
+  17 chunks (12 already done)
+    chunk 13/17  120 cases  5,880 scored  185s
+    chunk 14/17  120 cases  5,880 scored  194s
+    chunk 15/17  120 cases  5,880 scored  187s
+    chunk 16/17  120 cases  5,880 scored  189s
+    chunk 17/17  36 cases  1,764 scored  56s
+  -> /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/qwen3-4b-nothink/logprob_baseline.parquet
+exit=0 for qwen3-4b-nothink at 2026-09-19T10:47:51+05:30
+==============================================================
+LOGPROB qwen3-4b-think   2026-09-19T10:47:51+05:30
+model qwen3-4b-think  cases=1,956  candidates=49
+  17 chunks (0 already done)
+    chunk 1/17  120 cases  5,880 scored  187s
+    chunk 2/17  120 cases  5,880 scored  189s
+    chunk 3/17  120 cases  5,880 scored  190s
+    chunk 4/17  120 cases  5,880 scored  190s
+    chunk 5/17  120 cases  5,880 scored  188s
+    chunk 6/17  120 cases  5,880 scored  187s
+    chunk 7/17  120 cases  5,880 scored  195s
+    chunk 8/17  120 cases  5,880 scored  189s
+    chunk 9/17  120 cases  5,880 scored  189s
+    chunk 10/17  120 cases  5,880 scored  184s
+    chunk 11/17  120 cases  5,880 scored  185s
+    chunk 12/17  120 cases  5,880 scored  188s
+    chunk 13/17  120 cases  5,880 scored  183s
+    chunk 14/17  120 cases  5,880 scored  191s
+    chunk 15/17  120 cases  5,880 scored  185s
+    chunk 16/17  120 cases  5,880 scored  188s
+    chunk 17/17  36 cases  1,764 scored  56s
+  -> /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/qwen3-4b-think/logprob_baseline.parquet
+exit=0 for qwen3-4b-think at 2026-09-19T11:39:37+05:30
+==============================================================
+LOGPROB qwen3-8b-nothink   2026-09-19T11:39:37+05:30
+model qwen3-8b-nothink  cases=1,956  candidates=49
+  17 chunks (0 already done)
+    chunk 1/17  120 cases  5,880 scored  345s
+    chunk 2/17  120 cases  5,880 scored  347s
+    chunk 3/17  120 cases  5,880 scored  349s
+    chunk 4/17  120 cases  5,880 scored  349s
+    chunk 5/17  120 cases  5,880 scored  345s
+    chunk 6/17  120 cases  5,880 scored  342s
+    chunk 7/17  120 cases  5,880 scored  357s
+    chunk 8/17  120 cases  5,880 scored  348s
+    chunk 9/17  120 cases  5,880 scored  349s
+    chunk 10/17  120 cases  5,880 scored  339s
+    chunk 11/17  120 cases  5,880 scored  340s
+    chunk 12/17  120 cases  5,880 scored  346s
+    chunk 13/17  120 cases  5,880 scored  338s
+    chunk 14/17  120 cases  5,880 scored  352s
+    chunk 15/17  120 cases  5,880 scored  343s
+    chunk 16/17  120 cases  5,880 scored  348s
+    chunk 17/17  36 cases  1,764 scored  103s
+  -> /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/qwen3-8b-nothink/logprob_baseline.parquet
+exit=0 for qwen3-8b-nothink at 2026-09-19T13:15:08+05:30
+==============================================================
+LOGPROB qwen3-8b-think   2026-09-19T13:15:08+05:30
+model qwen3-8b-think  cases=1,956  candidates=49
+  17 chunks (0 already done)
+    chunk 1/17  120 cases  5,880 scored  345s
+    chunk 2/17  120 cases  5,880 scored  347s
+    chunk 3/17  120 cases  5,880 scored  349s
+    chunk 4/17  120 cases  5,880 scored  349s
+    chunk 5/17  120 cases  5,880 scored  345s
+    chunk 6/17  120 cases  5,880 scored  342s
+    chunk 7/17  120 cases  5,880 scored  356s
+    chunk 8/17  120 cases  5,880 scored  348s
+    chunk 9/17  120 cases  5,880 scored  349s
+    chunk 10/17  120 cases  5,880 scored  339s
+    chunk 11/17  120 cases  5,880 scored  340s
+    chunk 12/17  120 cases  5,880 scored  346s
+    chunk 13/17  120 cases  5,880 scored  338s
+    chunk 14/17  120 cases  5,880 scored  352s
+    chunk 15/17  120 cases  5,880 scored  342s
+    chunk 16/17  120 cases  5,880 scored  348s
+    chunk 17/17  36 cases  1,764 scored  103s
+  -> /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/qwen3-8b-think/logprob_baseline.parquet
+exit=0 for qwen3-8b-think at 2026-09-19T14:49:48+05:30
+==============================================================
+LOGPROB medgemma-1.5-4b   2026-09-19T14:49:48+05:30
+model medgemma-1.5-4b  cases=1,956  candidates=49
+WARNING 09-19 14:49:54 [model.py:981] Model does not support mm_device_do_normalize, forcing mm_device_do_normalize = False.
+WARNING 09-19 14:49:58 [cuda.py:327] Forcing --disable_chunked_mm_input for models with multimodal-bidirectional attention.
+  17 chunks (0 already done)
+    chunk 1/17  120 cases  5,880 scored  174s
+    chunk 2/17  120 cases  5,880 scored  175s
+    chunk 3/17  120 cases  5,880 scored  177s
+    chunk 4/17  120 cases  5,880 scored  177s
+    chunk 5/17  120 cases  5,880 scored  174s
+    chunk 6/17  120 cases  5,880 scored  173s
+    chunk 7/17  120 cases  5,880 scored  181s
+    chunk 8/17  120 cases  5,880 scored  176s
+    chunk 9/17  120 cases  5,880 scored  176s
+    chunk 10/17  120 cases  5,880 scored  170s
+    chunk 11/17  120 cases  5,880 scored  171s
+    chunk 12/17  120 cases  5,880 scored  175s
+    chunk 13/17  120 cases  5,880 scored  170s
+    chunk 14/17  120 cases  5,880 scored  178s
+    chunk 15/17  120 cases  5,880 scored  173s
+    chunk 16/17  120 cases  5,880 scored  176s
+    chunk 17/17  36 cases  1,764 scored  52s
+  -> /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/medgemma-1.5-4b/logprob_baseline.parquet
+exit=0 for medgemma-1.5-4b at 2026-09-19T15:39:09+05:30
+==============================================================
+LOGPROB med42-8b   2026-09-19T15:39:09+05:30
+model med42-8b  cases=1,956  candidates=49
+[transformers] Ignoring clean_up_tokenization_spaces=True for BPE tokenizer CachedTokenizersBackend. The clean_up_tokenization post-processing step is designed for WordPiece tokenizers and is destructive for BPE (it strips spaces before punctuation). Set clean_up_tokenization_spaces=False to suppress this warning, or set clean_up_tokenization_spaces_for_bpe_even_though_it_will_corrupt_output=True to force cleanup anyway.
+  17 chunks (0 already done)
+    chunk 1/17  120 cases  5,880 scored  317s
+    chunk 2/17  120 cases  5,880 scored  318s
+    chunk 3/17  120 cases  5,880 scored  321s
+    chunk 4/17  120 cases  5,880 scored  321s
+    chunk 5/17  120 cases  5,880 scored  317s
+    chunk 6/17  120 cases  5,880 scored  314s
+    chunk 7/17  120 cases  5,880 scored  328s
+    chunk 8/17  120 cases  5,880 scored  320s
+    chunk 9/17  120 cases  5,880 scored  320s
+    chunk 10/17  120 cases  5,880 scored  311s
+    chunk 11/17  120 cases  5,880 scored  312s
+    chunk 12/17  120 cases  5,880 scored  318s
+    chunk 13/17  120 cases  5,880 scored  310s
+    chunk 14/17  120 cases  5,880 scored  323s
+    chunk 15/17  120 cases  5,880 scored  315s
+    chunk 16/17  120 cases  5,880 scored  319s
+    chunk 17/17  36 cases  1,764 scored  95s
+  -> /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/med42-8b/logprob_baseline.parquet
+exit=0 for med42-8b at 2026-09-19T17:07:05+05:30
+==============================================================
+LOGPROB gpt-oss-20b   2026-09-19T17:07:05+05:30
+model gpt-oss-20b  cases=1,956  candidates=49
+  17 chunks (0 already done)
+    chunk 1/17  120 cases  5,880 scored  174s
+    chunk 2/17  120 cases  5,880 scored  176s
+    chunk 3/17  120 cases  5,880 scored  177s
+    chunk 4/17  120 cases  5,880 scored  177s
+    chunk 5/17  120 cases  5,880 scored  174s
+    chunk 6/17  120 cases  5,880 scored  173s
+    chunk 7/17  120 cases  5,880 scored  181s
+    chunk 8/17  120 cases  5,880 scored  176s
+    chunk 9/17  120 cases  5,880 scored  177s
+    chunk 10/17  120 cases  5,880 scored  171s
+    chunk 11/17  120 cases  5,880 scored  172s
+    chunk 12/17  120 cases  5,880 scored  176s
+    chunk 13/17  120 cases  5,880 scored  171s
+    chunk 14/17  120 cases  5,880 scored  178s
+    chunk 15/17  120 cases  5,880 scored  173s
+    chunk 16/17  120 cases  5,880 scored  176s
+    chunk 17/17  36 cases  1,764 scored  52s
+  -> /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/gpt-oss-20b/logprob_baseline.parquet
+exit=0 for gpt-oss-20b at 2026-09-19T17:56:18+05:30
+==============================================================
+LOGPROB medgemma-27b   2026-09-19T17:56:18+05:30
+model medgemma-27b  cases=1,956  candidates=49
+  17 chunks (0 already done)
+    chunk 1/17  120 cases  5,880 scored  1200s
+    chunk 2/17  120 cases  5,880 scored  1206s
+    chunk 3/17  120 cases  5,880 scored  1217s
+    chunk 4/17  120 cases  5,880 scored  1216s
+    chunk 5/17  120 cases  5,880 scored  1196s
+    chunk 6/17  120 cases  5,880 scored  1188s
+    chunk 7/17  120 cases  5,880 scored  1270s
+    chunk 8/17  120 cases  5,880 scored  1259s
+    chunk 9/17  120 cases  5,880 scored  1258s
+    chunk 10/17  120 cases  5,880 scored  1175s
+    chunk 11/17  120 cases  5,880 scored  1195s
+    chunk 12/17  120 cases  5,880 scored  1220s
+    chunk 13/17  120 cases  5,880 scored  1173s
+    chunk 14/17  120 cases  5,880 scored  1228s
+    chunk 15/17  120 cases  5,880 scored  1194s
+    chunk 16/17  120 cases  5,880 scored  1209s
+    chunk 17/17  36 cases  1,764 scored  359s
+  -> /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/medgemma-27b/logprob_baseline.parquet
+exit=0 for medgemma-27b at 2026-09-19T23:27:32+05:30
+==============================================================
+LOGPROB qwen3-32b-nothink   2026-09-19T23:27:32+05:30
+model qwen3-32b-nothink  cases=1,956  candidates=49
+  17 chunks (0 already done)
+    chunk 1/17  120 cases  5,880 scored  1660s
+    chunk 2/17  120 cases  5,880 scored  1658s
+    chunk 3/17  120 cases  5,880 scored  1619s
+    chunk 4/17  120 cases  5,880 scored  1634s
+    chunk 5/17  120 cases  5,880 scored  1631s
+    chunk 6/17  120 cases  5,880 scored  1581s
+    chunk 7/17  120 cases  5,880 scored  1647s
+    chunk 8/17  120 cases  5,880 scored  1607s
+    chunk 9/17  120 cases  5,880 scored  1610s
+    chunk 10/17  120 cases  5,880 scored  1564s
+    chunk 11/17  120 cases  5,880 scored  1566s
+    chunk 12/17  120 cases  5,880 scored  1598s
+    chunk 13/17  120 cases  5,880 scored  1561s
+    chunk 14/17  120 cases  5,880 scored  1626s
+    chunk 15/17  120 cases  5,880 scored  1582s
+    chunk 16/17  120 cases  5,880 scored  1606s
+    chunk 17/17  36 cases  1,764 scored  476s
+  -> /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/qwen3-32b-nothink/logprob_baseline.parquet
+exit=0 for qwen3-32b-nothink at 2026-09-20T06:46:49+05:30
+==============================================================
+LOGPROB qwen3-32b-think   2026-09-20T06:46:49+05:30
+model qwen3-32b-think  cases=1,956  candidates=49
+  17 chunks (0 already done)
+    chunk 1/17  120 cases  5,880 scored  1595s
+    chunk 2/17  120 cases  5,880 scored  1603s
+    chunk 3/17  120 cases  5,880 scored  1614s
+    chunk 4/17  120 cases  5,880 scored  1615s
+    chunk 5/17  120 cases  5,880 scored  1597s
+    chunk 6/17  120 cases  5,880 scored  1582s
+    chunk 7/17  120 cases  5,880 scored  1647s
+    chunk 8/17  120 cases  5,880 scored  1608s
+    chunk 9/17  120 cases  5,880 scored  1611s
+    chunk 10/17  120 cases  5,880 scored  1566s
+    chunk 11/17  120 cases  5,880 scored  1569s
+    chunk 12/17  120 cases  5,880 scored  1598s
+    chunk 13/17  120 cases  5,880 scored  1560s
+    chunk 14/17  120 cases  5,880 scored  1624s
+    chunk 15/17  120 cases  5,880 scored  1584s
+    chunk 16/17  120 cases  5,880 scored  1607s
+    chunk 17/17  36 cases  1,764 scored  476s
+  -> /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/qwen3-32b-think/logprob_baseline.parquet
+exit=0 for qwen3-32b-think at 2026-09-20T14:02:29+05:30
+==============================================================
+LOGPROB r1-distill-32b   2026-09-20T14:02:29+05:30
+model r1-distill-32b  cases=1,956  candidates=49
+  17 chunks (0 already done)
+    chunk 1/17  120 cases  5,880 scored  1582s
+    chunk 2/17  120 cases  5,880 scored  1590s
+    chunk 3/17  120 cases  5,880 scored  1600s
+    chunk 4/17  120 cases  5,880 scored  1600s
+    chunk 5/17  120 cases  5,880 scored  1580s
+    chunk 6/17  120 cases  5,880 scored  1567s
+    chunk 7/17  120 cases  5,880 scored  1632s
+    chunk 8/17  120 cases  5,880 scored  1594s
+    chunk 9/17  120 cases  5,880 scored  1597s
+    chunk 10/17  120 cases  5,880 scored  1553s
+    chunk 11/17  120 cases  5,880 scored  1556s
+    chunk 12/17  120 cases  5,880 scored  1586s
+    chunk 13/17  120 cases  5,880 scored  1551s
+    chunk 14/17  120 cases  5,880 scored  1613s
+    chunk 15/17  120 cases  5,880 scored  1607s
+    chunk 16/17  120 cases  5,880 scored  1678s
+    chunk 17/17  36 cases  1,764 scored  525s
+  -> /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/results/raw/r1-distill-32b/logprob_baseline.parquet
+exit=0 for r1-distill-32b at 2026-09-20T21:18:23+05:30
+### LOGPROB SWEEP DONE 2026-09-20T21:18:23+05:30

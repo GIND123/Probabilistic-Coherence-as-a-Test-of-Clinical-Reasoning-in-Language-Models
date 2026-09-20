@@ -24,3 +24,911 @@
     model      GOVINDFROM/codx-elr-fusion
   manifest: 25 tables, 21 figures @ bc1ecb9
 === done 2026-09-19T08:39:37+05:30 ===
+=== archive 2026-09-19T10:32:41+05:30 ===
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/.venv/lib/python3.12/site-packages/huggingface_hub/hf_api.py:11708: UserWarning: Warnings while validating metadata in README.md:
+  - empty or missing yaml metadata in repo card
+    warnings.warn(f"Warnings while validating metadata in README.md:\n{message}")
+  No files have been modified since last commit. Skipping to prevent empty commit.
+    [guard] excluded 6 credentialed path(s) from results
+    card       GOVINDFROM/codx-clinical-coherence:README.md
+    battery    GOVINDFROM/codx-clinical-coherence:battery
+    kb         GOVINDFROM/codx-clinical-coherence:kb
+    parquet    GOVINDFROM/codx-clinical-coherence:ddxplus_parquet
+    reports    GOVINDFROM/codx-clinical-coherence:reports
+    train_data GOVINDFROM/codx-clinical-coherence:train_data
+    code       GOVINDFROM/codx-clinical-coherence:code
+    results    GOVINDFROM/codx-clinical-coherence:results
+    model      GOVINDFROM/codx-elr-fusion
+  No files have been modified since last commit. Skipping to prevent empty commit.
+    model      GOVINDFROM/codx-elr-fusion
+  manifest: 26 tables, 23 figures @ 9c9342e
+=== done 2026-09-19T10:32:41+05:30 ===
+=== archive 2026-09-19T11:07:51+05:30 ===
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/.venv/lib/python3.12/site-packages/huggingface_hub/hf_api.py:11708: UserWarning: Warnings while validating metadata in README.md:
+  - empty or missing yaml metadata in repo card
+    warnings.warn(f"Warnings while validating metadata in README.md:\n{message}")
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+    [guard] excluded 6 credentialed path(s) from results
+    card       GOVINDFROM/codx-clinical-coherence:README.md
+    battery    GOVINDFROM/codx-clinical-coherence:battery
+    kb         GOVINDFROM/codx-clinical-coherence:kb
+    parquet    GOVINDFROM/codx-clinical-coherence:ddxplus_parquet
+    reports    GOVINDFROM/codx-clinical-coherence:reports
+    train_data GOVINDFROM/codx-clinical-coherence:train_data
+    code       GOVINDFROM/codx-clinical-coherence:code
+    results    GOVINDFROM/codx-clinical-coherence:results
+    model      GOVINDFROM/codx-elr-fusion
+  No files have been modified since last commit. Skipping to prevent empty commit.
+    model      GOVINDFROM/codx-elr-fusion
+  manifest: 26 tables, 23 figures @ 9c9342e
+=== done 2026-09-19T11:07:51+05:30 ===
+=== archive 2026-09-19T12:08:19+05:30 ===
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/.venv/lib/python3.12/site-packages/huggingface_hub/hf_api.py:11708: UserWarning: Warnings while validating metadata in README.md:
+  - empty or missing yaml metadata in repo card
+    warnings.warn(f"Warnings while validating metadata in README.md:\n{message}")
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+    [guard] excluded 6 credentialed path(s) from results
+    card       GOVINDFROM/codx-clinical-coherence:README.md
+    battery    GOVINDFROM/codx-clinical-coherence:battery
+    kb         GOVINDFROM/codx-clinical-coherence:kb
+    parquet    GOVINDFROM/codx-clinical-coherence:ddxplus_parquet
+    reports    GOVINDFROM/codx-clinical-coherence:reports
+    train_data GOVINDFROM/codx-clinical-coherence:train_data
+    code       GOVINDFROM/codx-clinical-coherence:code
+    results    GOVINDFROM/codx-clinical-coherence:results
+    model      GOVINDFROM/codx-elr-fusion
+  No files have been modified since last commit. Skipping to prevent empty commit.
+    model      GOVINDFROM/codx-elr-fusion
+  manifest: 26 tables, 23 figures @ 9c9342e
+=== done 2026-09-19T12:08:19+05:30 ===
+=== archive 2026-09-19T13:09:01+05:30 ===
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/.venv/lib/python3.12/site-packages/huggingface_hub/hf_api.py:11708: UserWarning: Warnings while validating metadata in README.md:
+  - empty or missing yaml metadata in repo card
+    warnings.warn(f"Warnings while validating metadata in README.md:\n{message}")
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+    [guard] excluded 6 credentialed path(s) from results
+    card       GOVINDFROM/codx-clinical-coherence:README.md
+    battery    GOVINDFROM/codx-clinical-coherence:battery
+    kb         GOVINDFROM/codx-clinical-coherence:kb
+    parquet    GOVINDFROM/codx-clinical-coherence:ddxplus_parquet
+    reports    GOVINDFROM/codx-clinical-coherence:reports
+    train_data GOVINDFROM/codx-clinical-coherence:train_data
+    code       GOVINDFROM/codx-clinical-coherence:code
+    results    GOVINDFROM/codx-clinical-coherence:results
+    model      GOVINDFROM/codx-elr-fusion
+  No files have been modified since last commit. Skipping to prevent empty commit.
+    model      GOVINDFROM/codx-elr-fusion
+  manifest: 26 tables, 23 figures @ 9c9342e
+=== done 2026-09-19T13:09:01+05:30 ===
+=== archive 2026-09-19T14:09:38+05:30 ===
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/.venv/lib/python3.12/site-packages/huggingface_hub/hf_api.py:11708: UserWarning: Warnings while validating metadata in README.md:
+  - empty or missing yaml metadata in repo card
+    warnings.warn(f"Warnings while validating metadata in README.md:\n{message}")
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+    [guard] excluded 6 credentialed path(s) from results
+    card       GOVINDFROM/codx-clinical-coherence:README.md
+    battery    GOVINDFROM/codx-clinical-coherence:battery
+    kb         GOVINDFROM/codx-clinical-coherence:kb
+    parquet    GOVINDFROM/codx-clinical-coherence:ddxplus_parquet
+    reports    GOVINDFROM/codx-clinical-coherence:reports
+    train_data GOVINDFROM/codx-clinical-coherence:train_data
+    code       GOVINDFROM/codx-clinical-coherence:code
+    results    GOVINDFROM/codx-clinical-coherence:results
+    model      GOVINDFROM/codx-elr-fusion
+  No files have been modified since last commit. Skipping to prevent empty commit.
+    model      GOVINDFROM/codx-elr-fusion
+  manifest: 26 tables, 23 figures @ 9c9342e
+=== done 2026-09-19T14:09:38+05:30 ===
+=== archive 2026-09-19T15:10:21+05:30 ===
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/.venv/lib/python3.12/site-packages/huggingface_hub/hf_api.py:11708: UserWarning: Warnings while validating metadata in README.md:
+  - empty or missing yaml metadata in repo card
+    warnings.warn(f"Warnings while validating metadata in README.md:\n{message}")
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+    [guard] excluded 6 credentialed path(s) from results
+    card       GOVINDFROM/codx-clinical-coherence:README.md
+    battery    GOVINDFROM/codx-clinical-coherence:battery
+    kb         GOVINDFROM/codx-clinical-coherence:kb
+    parquet    GOVINDFROM/codx-clinical-coherence:ddxplus_parquet
+    reports    GOVINDFROM/codx-clinical-coherence:reports
+    train_data GOVINDFROM/codx-clinical-coherence:train_data
+    code       GOVINDFROM/codx-clinical-coherence:code
+    results    GOVINDFROM/codx-clinical-coherence:results
+    model      GOVINDFROM/codx-elr-fusion
+  No files have been modified since last commit. Skipping to prevent empty commit.
+    model      GOVINDFROM/codx-elr-fusion
+  manifest: 26 tables, 23 figures @ 9c9342e
+=== done 2026-09-19T15:10:21+05:30 ===
+=== archive 2026-09-19T16:11:04+05:30 ===
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/.venv/lib/python3.12/site-packages/huggingface_hub/hf_api.py:11708: UserWarning: Warnings while validating metadata in README.md:
+  - empty or missing yaml metadata in repo card
+    warnings.warn(f"Warnings while validating metadata in README.md:\n{message}")
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+    [guard] excluded 6 credentialed path(s) from results
+    card       GOVINDFROM/codx-clinical-coherence:README.md
+    battery    GOVINDFROM/codx-clinical-coherence:battery
+    kb         GOVINDFROM/codx-clinical-coherence:kb
+    parquet    GOVINDFROM/codx-clinical-coherence:ddxplus_parquet
+    reports    GOVINDFROM/codx-clinical-coherence:reports
+    train_data GOVINDFROM/codx-clinical-coherence:train_data
+    code       GOVINDFROM/codx-clinical-coherence:code
+    results    GOVINDFROM/codx-clinical-coherence:results
+    model      GOVINDFROM/codx-elr-fusion
+  No files have been modified since last commit. Skipping to prevent empty commit.
+    model      GOVINDFROM/codx-elr-fusion
+  manifest: 26 tables, 23 figures @ 9c9342e
+=== done 2026-09-19T16:11:04+05:30 ===
+=== archive 2026-09-19T17:11:47+05:30 ===
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/.venv/lib/python3.12/site-packages/huggingface_hub/hf_api.py:11708: UserWarning: Warnings while validating metadata in README.md:
+  - empty or missing yaml metadata in repo card
+    warnings.warn(f"Warnings while validating metadata in README.md:\n{message}")
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+    [guard] excluded 6 credentialed path(s) from results
+    card       GOVINDFROM/codx-clinical-coherence:README.md
+    battery    GOVINDFROM/codx-clinical-coherence:battery
+    kb         GOVINDFROM/codx-clinical-coherence:kb
+    parquet    GOVINDFROM/codx-clinical-coherence:ddxplus_parquet
+    reports    GOVINDFROM/codx-clinical-coherence:reports
+    train_data GOVINDFROM/codx-clinical-coherence:train_data
+    code       GOVINDFROM/codx-clinical-coherence:code
+    results    GOVINDFROM/codx-clinical-coherence:results
+    model      GOVINDFROM/codx-elr-fusion
+  No files have been modified since last commit. Skipping to prevent empty commit.
+    model      GOVINDFROM/codx-elr-fusion
+  manifest: 26 tables, 23 figures @ 9c9342e
+=== done 2026-09-19T17:11:47+05:30 ===
+=== archive 2026-09-19T18:12:28+05:30 ===
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/.venv/lib/python3.12/site-packages/huggingface_hub/hf_api.py:11708: UserWarning: Warnings while validating metadata in README.md:
+  - empty or missing yaml metadata in repo card
+    warnings.warn(f"Warnings while validating metadata in README.md:\n{message}")
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+    [guard] excluded 6 credentialed path(s) from results
+    card       GOVINDFROM/codx-clinical-coherence:README.md
+    battery    GOVINDFROM/codx-clinical-coherence:battery
+    kb         GOVINDFROM/codx-clinical-coherence:kb
+    parquet    GOVINDFROM/codx-clinical-coherence:ddxplus_parquet
+    reports    GOVINDFROM/codx-clinical-coherence:reports
+    train_data GOVINDFROM/codx-clinical-coherence:train_data
+    code       GOVINDFROM/codx-clinical-coherence:code
+    results    GOVINDFROM/codx-clinical-coherence:results
+    model      GOVINDFROM/codx-elr-fusion
+  No files have been modified since last commit. Skipping to prevent empty commit.
+    model      GOVINDFROM/codx-elr-fusion
+  manifest: 26 tables, 23 figures @ 9c9342e
+=== done 2026-09-19T18:12:28+05:30 ===
+=== archive 2026-09-19T19:13:12+05:30 ===
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/.venv/lib/python3.12/site-packages/huggingface_hub/hf_api.py:11708: UserWarning: Warnings while validating metadata in README.md:
+  - empty or missing yaml metadata in repo card
+    warnings.warn(f"Warnings while validating metadata in README.md:\n{message}")
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+    [guard] excluded 6 credentialed path(s) from results
+    card       GOVINDFROM/codx-clinical-coherence:README.md
+    battery    GOVINDFROM/codx-clinical-coherence:battery
+    kb         GOVINDFROM/codx-clinical-coherence:kb
+    parquet    GOVINDFROM/codx-clinical-coherence:ddxplus_parquet
+    reports    GOVINDFROM/codx-clinical-coherence:reports
+    train_data GOVINDFROM/codx-clinical-coherence:train_data
+    code       GOVINDFROM/codx-clinical-coherence:code
+    results    GOVINDFROM/codx-clinical-coherence:results
+    model      GOVINDFROM/codx-elr-fusion
+  No files have been modified since last commit. Skipping to prevent empty commit.
+    model      GOVINDFROM/codx-elr-fusion
+  manifest: 26 tables, 23 figures @ 9c9342e
+=== done 2026-09-19T19:13:12+05:30 ===
+=== archive 2026-09-19T20:13:48+05:30 ===
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/.venv/lib/python3.12/site-packages/huggingface_hub/hf_api.py:11708: UserWarning: Warnings while validating metadata in README.md:
+  - empty or missing yaml metadata in repo card
+    warnings.warn(f"Warnings while validating metadata in README.md:\n{message}")
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+    [guard] excluded 6 credentialed path(s) from results
+    card       GOVINDFROM/codx-clinical-coherence:README.md
+    battery    GOVINDFROM/codx-clinical-coherence:battery
+    kb         GOVINDFROM/codx-clinical-coherence:kb
+    parquet    GOVINDFROM/codx-clinical-coherence:ddxplus_parquet
+    reports    GOVINDFROM/codx-clinical-coherence:reports
+    train_data GOVINDFROM/codx-clinical-coherence:train_data
+    code       GOVINDFROM/codx-clinical-coherence:code
+    results    GOVINDFROM/codx-clinical-coherence:results
+    model      GOVINDFROM/codx-elr-fusion
+  No files have been modified since last commit. Skipping to prevent empty commit.
+    model      GOVINDFROM/codx-elr-fusion
+  manifest: 26 tables, 23 figures @ 9c9342e
+=== done 2026-09-19T20:13:48+05:30 ===
+=== archive 2026-09-19T21:14:22+05:30 ===
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/.venv/lib/python3.12/site-packages/huggingface_hub/hf_api.py:11708: UserWarning: Warnings while validating metadata in README.md:
+  - empty or missing yaml metadata in repo card
+    warnings.warn(f"Warnings while validating metadata in README.md:\n{message}")
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+    [guard] excluded 6 credentialed path(s) from results
+    card       GOVINDFROM/codx-clinical-coherence:README.md
+    battery    GOVINDFROM/codx-clinical-coherence:battery
+    kb         GOVINDFROM/codx-clinical-coherence:kb
+    parquet    GOVINDFROM/codx-clinical-coherence:ddxplus_parquet
+    reports    GOVINDFROM/codx-clinical-coherence:reports
+    train_data GOVINDFROM/codx-clinical-coherence:train_data
+    code       GOVINDFROM/codx-clinical-coherence:code
+    results    GOVINDFROM/codx-clinical-coherence:results
+    model      GOVINDFROM/codx-elr-fusion
+  No files have been modified since last commit. Skipping to prevent empty commit.
+    model      GOVINDFROM/codx-elr-fusion
+  manifest: 26 tables, 23 figures @ 9c9342e
+=== done 2026-09-19T21:14:22+05:30 ===
+=== archive 2026-09-19T22:14:57+05:30 ===
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/.venv/lib/python3.12/site-packages/huggingface_hub/hf_api.py:11708: UserWarning: Warnings while validating metadata in README.md:
+  - empty or missing yaml metadata in repo card
+    warnings.warn(f"Warnings while validating metadata in README.md:\n{message}")
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+    [guard] excluded 6 credentialed path(s) from results
+    card       GOVINDFROM/codx-clinical-coherence:README.md
+    battery    GOVINDFROM/codx-clinical-coherence:battery
+    kb         GOVINDFROM/codx-clinical-coherence:kb
+    parquet    GOVINDFROM/codx-clinical-coherence:ddxplus_parquet
+    reports    GOVINDFROM/codx-clinical-coherence:reports
+    train_data GOVINDFROM/codx-clinical-coherence:train_data
+    code       GOVINDFROM/codx-clinical-coherence:code
+    results    GOVINDFROM/codx-clinical-coherence:results
+    model      GOVINDFROM/codx-elr-fusion
+  No files have been modified since last commit. Skipping to prevent empty commit.
+    model      GOVINDFROM/codx-elr-fusion
+  manifest: 27 tables, 23 figures @ 9c9342e
+=== done 2026-09-19T22:14:57+05:30 ===
+=== archive 2026-09-19T23:15:33+05:30 ===
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/.venv/lib/python3.12/site-packages/huggingface_hub/hf_api.py:11708: UserWarning: Warnings while validating metadata in README.md:
+  - empty or missing yaml metadata in repo card
+    warnings.warn(f"Warnings while validating metadata in README.md:\n{message}")
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+    [guard] excluded 6 credentialed path(s) from results
+    card       GOVINDFROM/codx-clinical-coherence:README.md
+    battery    GOVINDFROM/codx-clinical-coherence:battery
+    kb         GOVINDFROM/codx-clinical-coherence:kb
+    parquet    GOVINDFROM/codx-clinical-coherence:ddxplus_parquet
+    reports    GOVINDFROM/codx-clinical-coherence:reports
+    train_data GOVINDFROM/codx-clinical-coherence:train_data
+    code       GOVINDFROM/codx-clinical-coherence:code
+    results    GOVINDFROM/codx-clinical-coherence:results
+    model      GOVINDFROM/codx-elr-fusion
+  No files have been modified since last commit. Skipping to prevent empty commit.
+    model      GOVINDFROM/codx-elr-fusion
+  manifest: 27 tables, 23 figures @ 9c9342e
+=== done 2026-09-19T23:15:33+05:30 ===
+=== archive 2026-09-20T00:16:08+05:30 ===
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/.venv/lib/python3.12/site-packages/huggingface_hub/hf_api.py:11708: UserWarning: Warnings while validating metadata in README.md:
+  - empty or missing yaml metadata in repo card
+    warnings.warn(f"Warnings while validating metadata in README.md:\n{message}")
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+    [guard] excluded 6 credentialed path(s) from results
+    card       GOVINDFROM/codx-clinical-coherence:README.md
+    battery    GOVINDFROM/codx-clinical-coherence:battery
+    kb         GOVINDFROM/codx-clinical-coherence:kb
+    parquet    GOVINDFROM/codx-clinical-coherence:ddxplus_parquet
+    reports    GOVINDFROM/codx-clinical-coherence:reports
+    train_data GOVINDFROM/codx-clinical-coherence:train_data
+    code       GOVINDFROM/codx-clinical-coherence:code
+    results    GOVINDFROM/codx-clinical-coherence:results
+    model      GOVINDFROM/codx-elr-fusion
+  No files have been modified since last commit. Skipping to prevent empty commit.
+    model      GOVINDFROM/codx-elr-fusion
+  manifest: 27 tables, 23 figures @ 9c9342e
+=== done 2026-09-20T00:16:08+05:30 ===
+=== archive 2026-09-20T01:16:56+05:30 ===
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/.venv/lib/python3.12/site-packages/huggingface_hub/hf_api.py:11708: UserWarning: Warnings while validating metadata in README.md:
+  - empty or missing yaml metadata in repo card
+    warnings.warn(f"Warnings while validating metadata in README.md:\n{message}")
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+    [guard] excluded 6 credentialed path(s) from results
+    card       GOVINDFROM/codx-clinical-coherence:README.md
+    battery    GOVINDFROM/codx-clinical-coherence:battery
+    kb         GOVINDFROM/codx-clinical-coherence:kb
+    parquet    GOVINDFROM/codx-clinical-coherence:ddxplus_parquet
+    reports    GOVINDFROM/codx-clinical-coherence:reports
+    train_data GOVINDFROM/codx-clinical-coherence:train_data
+    code       GOVINDFROM/codx-clinical-coherence:code
+    results    GOVINDFROM/codx-clinical-coherence:results
+    model      GOVINDFROM/codx-elr-fusion
+  No files have been modified since last commit. Skipping to prevent empty commit.
+    model      GOVINDFROM/codx-elr-fusion
+  manifest: 27 tables, 23 figures @ 9c9342e
+=== done 2026-09-20T01:16:56+05:30 ===
+=== archive 2026-09-20T02:17:29+05:30 ===
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/.venv/lib/python3.12/site-packages/huggingface_hub/hf_api.py:11708: UserWarning: Warnings while validating metadata in README.md:
+  - empty or missing yaml metadata in repo card
+    warnings.warn(f"Warnings while validating metadata in README.md:\n{message}")
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+    [guard] excluded 6 credentialed path(s) from results
+    card       GOVINDFROM/codx-clinical-coherence:README.md
+    battery    GOVINDFROM/codx-clinical-coherence:battery
+    kb         GOVINDFROM/codx-clinical-coherence:kb
+    parquet    GOVINDFROM/codx-clinical-coherence:ddxplus_parquet
+    reports    GOVINDFROM/codx-clinical-coherence:reports
+    train_data GOVINDFROM/codx-clinical-coherence:train_data
+    code       GOVINDFROM/codx-clinical-coherence:code
+    results    GOVINDFROM/codx-clinical-coherence:results
+    model      GOVINDFROM/codx-elr-fusion
+  No files have been modified since last commit. Skipping to prevent empty commit.
+    model      GOVINDFROM/codx-elr-fusion
+  manifest: 27 tables, 23 figures @ 9c9342e
+=== done 2026-09-20T02:17:29+05:30 ===
+=== archive 2026-09-20T03:18:03+05:30 ===
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/.venv/lib/python3.12/site-packages/huggingface_hub/hf_api.py:11708: UserWarning: Warnings while validating metadata in README.md:
+  - empty or missing yaml metadata in repo card
+    warnings.warn(f"Warnings while validating metadata in README.md:\n{message}")
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+    [guard] excluded 6 credentialed path(s) from results
+    card       GOVINDFROM/codx-clinical-coherence:README.md
+    battery    GOVINDFROM/codx-clinical-coherence:battery
+    kb         GOVINDFROM/codx-clinical-coherence:kb
+    parquet    GOVINDFROM/codx-clinical-coherence:ddxplus_parquet
+    reports    GOVINDFROM/codx-clinical-coherence:reports
+    train_data GOVINDFROM/codx-clinical-coherence:train_data
+    code       GOVINDFROM/codx-clinical-coherence:code
+    results    GOVINDFROM/codx-clinical-coherence:results
+    model      GOVINDFROM/codx-elr-fusion
+  No files have been modified since last commit. Skipping to prevent empty commit.
+    model      GOVINDFROM/codx-elr-fusion
+  manifest: 27 tables, 23 figures @ 9c9342e
+=== done 2026-09-20T03:18:03+05:30 ===
+=== archive 2026-09-20T04:18:39+05:30 ===
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/.venv/lib/python3.12/site-packages/huggingface_hub/hf_api.py:11708: UserWarning: Warnings while validating metadata in README.md:
+  - empty or missing yaml metadata in repo card
+    warnings.warn(f"Warnings while validating metadata in README.md:\n{message}")
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+    [guard] excluded 6 credentialed path(s) from results
+    card       GOVINDFROM/codx-clinical-coherence:README.md
+    battery    GOVINDFROM/codx-clinical-coherence:battery
+    kb         GOVINDFROM/codx-clinical-coherence:kb
+    parquet    GOVINDFROM/codx-clinical-coherence:ddxplus_parquet
+    reports    GOVINDFROM/codx-clinical-coherence:reports
+    train_data GOVINDFROM/codx-clinical-coherence:train_data
+    code       GOVINDFROM/codx-clinical-coherence:code
+    results    GOVINDFROM/codx-clinical-coherence:results
+    model      GOVINDFROM/codx-elr-fusion
+  No files have been modified since last commit. Skipping to prevent empty commit.
+    model      GOVINDFROM/codx-elr-fusion
+  manifest: 27 tables, 23 figures @ 9c9342e
+=== done 2026-09-20T04:18:39+05:30 ===
+=== archive 2026-09-20T05:19:14+05:30 ===
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/.venv/lib/python3.12/site-packages/huggingface_hub/hf_api.py:11708: UserWarning: Warnings while validating metadata in README.md:
+  - empty or missing yaml metadata in repo card
+    warnings.warn(f"Warnings while validating metadata in README.md:\n{message}")
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+    [guard] excluded 6 credentialed path(s) from results
+    card       GOVINDFROM/codx-clinical-coherence:README.md
+    battery    GOVINDFROM/codx-clinical-coherence:battery
+    kb         GOVINDFROM/codx-clinical-coherence:kb
+    parquet    GOVINDFROM/codx-clinical-coherence:ddxplus_parquet
+    reports    GOVINDFROM/codx-clinical-coherence:reports
+    train_data GOVINDFROM/codx-clinical-coherence:train_data
+    code       GOVINDFROM/codx-clinical-coherence:code
+    results    GOVINDFROM/codx-clinical-coherence:results
+    model      GOVINDFROM/codx-elr-fusion
+  No files have been modified since last commit. Skipping to prevent empty commit.
+    model      GOVINDFROM/codx-elr-fusion
+  manifest: 27 tables, 23 figures @ 9c9342e
+=== done 2026-09-20T05:19:14+05:30 ===
+=== archive 2026-09-20T06:19:50+05:30 ===
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/.venv/lib/python3.12/site-packages/huggingface_hub/hf_api.py:11708: UserWarning: Warnings while validating metadata in README.md:
+  - empty or missing yaml metadata in repo card
+    warnings.warn(f"Warnings while validating metadata in README.md:\n{message}")
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+    [guard] excluded 6 credentialed path(s) from results
+    card       GOVINDFROM/codx-clinical-coherence:README.md
+    battery    GOVINDFROM/codx-clinical-coherence:battery
+    kb         GOVINDFROM/codx-clinical-coherence:kb
+    parquet    GOVINDFROM/codx-clinical-coherence:ddxplus_parquet
+    reports    GOVINDFROM/codx-clinical-coherence:reports
+    train_data GOVINDFROM/codx-clinical-coherence:train_data
+    code       GOVINDFROM/codx-clinical-coherence:code
+    results    GOVINDFROM/codx-clinical-coherence:results
+    model      GOVINDFROM/codx-elr-fusion
+  No files have been modified since last commit. Skipping to prevent empty commit.
+    model      GOVINDFROM/codx-elr-fusion
+  manifest: 27 tables, 23 figures @ 9c9342e
+=== done 2026-09-20T06:19:50+05:30 ===
+=== archive 2026-09-20T07:20:23+05:30 ===
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/.venv/lib/python3.12/site-packages/huggingface_hub/hf_api.py:11708: UserWarning: Warnings while validating metadata in README.md:
+  - empty or missing yaml metadata in repo card
+    warnings.warn(f"Warnings while validating metadata in README.md:\n{message}")
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+    [guard] excluded 6 credentialed path(s) from results
+    card       GOVINDFROM/codx-clinical-coherence:README.md
+    battery    GOVINDFROM/codx-clinical-coherence:battery
+    kb         GOVINDFROM/codx-clinical-coherence:kb
+    parquet    GOVINDFROM/codx-clinical-coherence:ddxplus_parquet
+    reports    GOVINDFROM/codx-clinical-coherence:reports
+    train_data GOVINDFROM/codx-clinical-coherence:train_data
+    code       GOVINDFROM/codx-clinical-coherence:code
+    results    GOVINDFROM/codx-clinical-coherence:results
+    model      GOVINDFROM/codx-elr-fusion
+  No files have been modified since last commit. Skipping to prevent empty commit.
+    model      GOVINDFROM/codx-elr-fusion
+  manifest: 27 tables, 23 figures @ 9c9342e
+=== done 2026-09-20T07:20:23+05:30 ===
+=== archive 2026-09-20T08:21:01+05:30 ===
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/.venv/lib/python3.12/site-packages/huggingface_hub/hf_api.py:11708: UserWarning: Warnings while validating metadata in README.md:
+  - empty or missing yaml metadata in repo card
+    warnings.warn(f"Warnings while validating metadata in README.md:\n{message}")
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+    [guard] excluded 6 credentialed path(s) from results
+    card       GOVINDFROM/codx-clinical-coherence:README.md
+    battery    GOVINDFROM/codx-clinical-coherence:battery
+    kb         GOVINDFROM/codx-clinical-coherence:kb
+    parquet    GOVINDFROM/codx-clinical-coherence:ddxplus_parquet
+    reports    GOVINDFROM/codx-clinical-coherence:reports
+    train_data GOVINDFROM/codx-clinical-coherence:train_data
+    code       GOVINDFROM/codx-clinical-coherence:code
+    results    GOVINDFROM/codx-clinical-coherence:results
+    model      GOVINDFROM/codx-elr-fusion
+  No files have been modified since last commit. Skipping to prevent empty commit.
+    model      GOVINDFROM/codx-elr-fusion
+  manifest: 27 tables, 23 figures @ 9c9342e
+=== done 2026-09-20T08:21:01+05:30 ===
+=== archive 2026-09-20T09:21:36+05:30 ===
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/.venv/lib/python3.12/site-packages/huggingface_hub/hf_api.py:11708: UserWarning: Warnings while validating metadata in README.md:
+  - empty or missing yaml metadata in repo card
+    warnings.warn(f"Warnings while validating metadata in README.md:\n{message}")
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+    [guard] excluded 6 credentialed path(s) from results
+    card       GOVINDFROM/codx-clinical-coherence:README.md
+    battery    GOVINDFROM/codx-clinical-coherence:battery
+    kb         GOVINDFROM/codx-clinical-coherence:kb
+    parquet    GOVINDFROM/codx-clinical-coherence:ddxplus_parquet
+    reports    GOVINDFROM/codx-clinical-coherence:reports
+    train_data GOVINDFROM/codx-clinical-coherence:train_data
+    code       GOVINDFROM/codx-clinical-coherence:code
+    results    GOVINDFROM/codx-clinical-coherence:results
+    model      GOVINDFROM/codx-elr-fusion
+  No files have been modified since last commit. Skipping to prevent empty commit.
+    model      GOVINDFROM/codx-elr-fusion
+  manifest: 27 tables, 23 figures @ 9c9342e
+=== done 2026-09-20T09:21:36+05:30 ===
+=== archive 2026-09-20T10:22:11+05:30 ===
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/.venv/lib/python3.12/site-packages/huggingface_hub/hf_api.py:11708: UserWarning: Warnings while validating metadata in README.md:
+  - empty or missing yaml metadata in repo card
+    warnings.warn(f"Warnings while validating metadata in README.md:\n{message}")
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+    [guard] excluded 6 credentialed path(s) from results
+    card       GOVINDFROM/codx-clinical-coherence:README.md
+    battery    GOVINDFROM/codx-clinical-coherence:battery
+    kb         GOVINDFROM/codx-clinical-coherence:kb
+    parquet    GOVINDFROM/codx-clinical-coherence:ddxplus_parquet
+    reports    GOVINDFROM/codx-clinical-coherence:reports
+    train_data GOVINDFROM/codx-clinical-coherence:train_data
+    code       GOVINDFROM/codx-clinical-coherence:code
+    results    GOVINDFROM/codx-clinical-coherence:results
+    model      GOVINDFROM/codx-elr-fusion
+  No files have been modified since last commit. Skipping to prevent empty commit.
+    model      GOVINDFROM/codx-elr-fusion
+  manifest: 27 tables, 23 figures @ 9c9342e
+=== done 2026-09-20T10:22:11+05:30 ===
+=== archive 2026-09-20T11:22:43+05:30 ===
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/.venv/lib/python3.12/site-packages/huggingface_hub/hf_api.py:11708: UserWarning: Warnings while validating metadata in README.md:
+  - empty or missing yaml metadata in repo card
+    warnings.warn(f"Warnings while validating metadata in README.md:\n{message}")
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+    [guard] excluded 6 credentialed path(s) from results
+    card       GOVINDFROM/codx-clinical-coherence:README.md
+    battery    GOVINDFROM/codx-clinical-coherence:battery
+    kb         GOVINDFROM/codx-clinical-coherence:kb
+    parquet    GOVINDFROM/codx-clinical-coherence:ddxplus_parquet
+    reports    GOVINDFROM/codx-clinical-coherence:reports
+    train_data GOVINDFROM/codx-clinical-coherence:train_data
+    code       GOVINDFROM/codx-clinical-coherence:code
+    results    GOVINDFROM/codx-clinical-coherence:results
+    model      GOVINDFROM/codx-elr-fusion
+  No files have been modified since last commit. Skipping to prevent empty commit.
+    model      GOVINDFROM/codx-elr-fusion
+  manifest: 27 tables, 23 figures @ 9c9342e
+=== done 2026-09-20T11:22:43+05:30 ===
+=== archive 2026-09-20T12:23:17+05:30 ===
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/.venv/lib/python3.12/site-packages/huggingface_hub/hf_api.py:11708: UserWarning: Warnings while validating metadata in README.md:
+  - empty or missing yaml metadata in repo card
+    warnings.warn(f"Warnings while validating metadata in README.md:\n{message}")
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+    [guard] excluded 6 credentialed path(s) from results
+    card       GOVINDFROM/codx-clinical-coherence:README.md
+    battery    GOVINDFROM/codx-clinical-coherence:battery
+    kb         GOVINDFROM/codx-clinical-coherence:kb
+    parquet    GOVINDFROM/codx-clinical-coherence:ddxplus_parquet
+    reports    GOVINDFROM/codx-clinical-coherence:reports
+    train_data GOVINDFROM/codx-clinical-coherence:train_data
+    code       GOVINDFROM/codx-clinical-coherence:code
+    results    GOVINDFROM/codx-clinical-coherence:results
+    model      GOVINDFROM/codx-elr-fusion
+  No files have been modified since last commit. Skipping to prevent empty commit.
+    model      GOVINDFROM/codx-elr-fusion
+  manifest: 27 tables, 23 figures @ 9c9342e
+=== done 2026-09-20T12:23:17+05:30 ===
+=== archive 2026-09-20T13:23:50+05:30 ===
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/.venv/lib/python3.12/site-packages/huggingface_hub/hf_api.py:11708: UserWarning: Warnings while validating metadata in README.md:
+  - empty or missing yaml metadata in repo card
+    warnings.warn(f"Warnings while validating metadata in README.md:\n{message}")
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+    [guard] excluded 6 credentialed path(s) from results
+    card       GOVINDFROM/codx-clinical-coherence:README.md
+    battery    GOVINDFROM/codx-clinical-coherence:battery
+    kb         GOVINDFROM/codx-clinical-coherence:kb
+    parquet    GOVINDFROM/codx-clinical-coherence:ddxplus_parquet
+    reports    GOVINDFROM/codx-clinical-coherence:reports
+    train_data GOVINDFROM/codx-clinical-coherence:train_data
+    code       GOVINDFROM/codx-clinical-coherence:code
+    results    GOVINDFROM/codx-clinical-coherence:results
+    model      GOVINDFROM/codx-elr-fusion
+  No files have been modified since last commit. Skipping to prevent empty commit.
+    model      GOVINDFROM/codx-elr-fusion
+  manifest: 27 tables, 23 figures @ 9c9342e
+=== done 2026-09-20T13:23:50+05:30 ===
+=== archive 2026-09-20T14:24:22+05:30 ===
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/.venv/lib/python3.12/site-packages/huggingface_hub/hf_api.py:11708: UserWarning: Warnings while validating metadata in README.md:
+  - empty or missing yaml metadata in repo card
+    warnings.warn(f"Warnings while validating metadata in README.md:\n{message}")
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+    [guard] excluded 6 credentialed path(s) from results
+    card       GOVINDFROM/codx-clinical-coherence:README.md
+    battery    GOVINDFROM/codx-clinical-coherence:battery
+    kb         GOVINDFROM/codx-clinical-coherence:kb
+    parquet    GOVINDFROM/codx-clinical-coherence:ddxplus_parquet
+    reports    GOVINDFROM/codx-clinical-coherence:reports
+    train_data GOVINDFROM/codx-clinical-coherence:train_data
+    code       GOVINDFROM/codx-clinical-coherence:code
+    results    GOVINDFROM/codx-clinical-coherence:results
+    model      GOVINDFROM/codx-elr-fusion
+  No files have been modified since last commit. Skipping to prevent empty commit.
+    model      GOVINDFROM/codx-elr-fusion
+  manifest: 27 tables, 23 figures @ 9c9342e
+=== done 2026-09-20T14:24:22+05:30 ===
+=== archive 2026-09-20T15:25:01+05:30 ===
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/.venv/lib/python3.12/site-packages/huggingface_hub/hf_api.py:11708: UserWarning: Warnings while validating metadata in README.md:
+  - empty or missing yaml metadata in repo card
+    warnings.warn(f"Warnings while validating metadata in README.md:\n{message}")
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+    [guard] excluded 6 credentialed path(s) from results
+    card       GOVINDFROM/codx-clinical-coherence:README.md
+    battery    GOVINDFROM/codx-clinical-coherence:battery
+    kb         GOVINDFROM/codx-clinical-coherence:kb
+    parquet    GOVINDFROM/codx-clinical-coherence:ddxplus_parquet
+    reports    GOVINDFROM/codx-clinical-coherence:reports
+    train_data GOVINDFROM/codx-clinical-coherence:train_data
+    code       GOVINDFROM/codx-clinical-coherence:code
+    results    GOVINDFROM/codx-clinical-coherence:results
+    model      GOVINDFROM/codx-elr-fusion
+  No files have been modified since last commit. Skipping to prevent empty commit.
+    model      GOVINDFROM/codx-elr-fusion
+  manifest: 27 tables, 23 figures @ 9c9342e
+=== done 2026-09-20T15:25:01+05:30 ===
+=== archive 2026-09-20T16:25:33+05:30 ===
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/.venv/lib/python3.12/site-packages/huggingface_hub/hf_api.py:11708: UserWarning: Warnings while validating metadata in README.md:
+  - empty or missing yaml metadata in repo card
+    warnings.warn(f"Warnings while validating metadata in README.md:\n{message}")
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+    [guard] excluded 6 credentialed path(s) from results
+    card       GOVINDFROM/codx-clinical-coherence:README.md
+    battery    GOVINDFROM/codx-clinical-coherence:battery
+    kb         GOVINDFROM/codx-clinical-coherence:kb
+    parquet    GOVINDFROM/codx-clinical-coherence:ddxplus_parquet
+    reports    GOVINDFROM/codx-clinical-coherence:reports
+    train_data GOVINDFROM/codx-clinical-coherence:train_data
+    code       GOVINDFROM/codx-clinical-coherence:code
+    results    GOVINDFROM/codx-clinical-coherence:results
+    model      GOVINDFROM/codx-elr-fusion
+  No files have been modified since last commit. Skipping to prevent empty commit.
+    model      GOVINDFROM/codx-elr-fusion
+  manifest: 27 tables, 23 figures @ 9c9342e
+=== done 2026-09-20T16:25:33+05:30 ===
+=== archive 2026-09-20T17:26:05+05:30 ===
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/.venv/lib/python3.12/site-packages/huggingface_hub/hf_api.py:11708: UserWarning: Warnings while validating metadata in README.md:
+  - empty or missing yaml metadata in repo card
+    warnings.warn(f"Warnings while validating metadata in README.md:\n{message}")
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+    [guard] excluded 6 credentialed path(s) from results
+    card       GOVINDFROM/codx-clinical-coherence:README.md
+    battery    GOVINDFROM/codx-clinical-coherence:battery
+    kb         GOVINDFROM/codx-clinical-coherence:kb
+    parquet    GOVINDFROM/codx-clinical-coherence:ddxplus_parquet
+    reports    GOVINDFROM/codx-clinical-coherence:reports
+    train_data GOVINDFROM/codx-clinical-coherence:train_data
+    code       GOVINDFROM/codx-clinical-coherence:code
+    results    GOVINDFROM/codx-clinical-coherence:results
+    model      GOVINDFROM/codx-elr-fusion
+  No files have been modified since last commit. Skipping to prevent empty commit.
+    model      GOVINDFROM/codx-elr-fusion
+  manifest: 27 tables, 23 figures @ 9c9342e
+=== done 2026-09-20T17:26:05+05:30 ===
+=== archive 2026-09-20T18:26:37+05:30 ===
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/.venv/lib/python3.12/site-packages/huggingface_hub/hf_api.py:11708: UserWarning: Warnings while validating metadata in README.md:
+  - empty or missing yaml metadata in repo card
+    warnings.warn(f"Warnings while validating metadata in README.md:\n{message}")
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+    [guard] excluded 6 credentialed path(s) from results
+    card       GOVINDFROM/codx-clinical-coherence:README.md
+    battery    GOVINDFROM/codx-clinical-coherence:battery
+    kb         GOVINDFROM/codx-clinical-coherence:kb
+    parquet    GOVINDFROM/codx-clinical-coherence:ddxplus_parquet
+    reports    GOVINDFROM/codx-clinical-coherence:reports
+    train_data GOVINDFROM/codx-clinical-coherence:train_data
+    code       GOVINDFROM/codx-clinical-coherence:code
+    results    GOVINDFROM/codx-clinical-coherence:results
+    model      GOVINDFROM/codx-elr-fusion
+  No files have been modified since last commit. Skipping to prevent empty commit.
+    model      GOVINDFROM/codx-elr-fusion
+  manifest: 27 tables, 23 figures @ 9c9342e
+=== done 2026-09-20T18:26:37+05:30 ===
+=== archive 2026-09-20T19:27:12+05:30 ===
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/.venv/lib/python3.12/site-packages/huggingface_hub/hf_api.py:11708: UserWarning: Warnings while validating metadata in README.md:
+  - empty or missing yaml metadata in repo card
+    warnings.warn(f"Warnings while validating metadata in README.md:\n{message}")
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+    [guard] excluded 6 credentialed path(s) from results
+    card       GOVINDFROM/codx-clinical-coherence:README.md
+    battery    GOVINDFROM/codx-clinical-coherence:battery
+    kb         GOVINDFROM/codx-clinical-coherence:kb
+    parquet    GOVINDFROM/codx-clinical-coherence:ddxplus_parquet
+    reports    GOVINDFROM/codx-clinical-coherence:reports
+    train_data GOVINDFROM/codx-clinical-coherence:train_data
+    code       GOVINDFROM/codx-clinical-coherence:code
+    results    GOVINDFROM/codx-clinical-coherence:results
+    model      GOVINDFROM/codx-elr-fusion
+  No files have been modified since last commit. Skipping to prevent empty commit.
+    model      GOVINDFROM/codx-elr-fusion
+  manifest: 27 tables, 23 figures @ 9c9342e
+=== done 2026-09-20T19:27:12+05:30 ===
+=== archive 2026-09-20T20:27:44+05:30 ===
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  /mnt/5385e3d3-fb4b-4846-8f72-55998fc781fb/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models/.venv/lib/python3.12/site-packages/huggingface_hub/hf_api.py:11708: UserWarning: Warnings while validating metadata in README.md:
+  - empty or missing yaml metadata in repo card
+    warnings.warn(f"Warnings while validating metadata in README.md:\n{message}")
+  No files have been modified since last commit. Skipping to prevent empty commit.
+  No files have been modified since last commit. Skipping to prevent empty commit.
+    [guard] excluded 6 credentialed path(s) from results
+    card       GOVINDFROM/codx-clinical-coherence:README.md
+    battery    GOVINDFROM/codx-clinical-coherence:battery
+    kb         GOVINDFROM/codx-clinical-coherence:kb
+    parquet    GOVINDFROM/codx-clinical-coherence:ddxplus_parquet
+    reports    GOVINDFROM/codx-clinical-coherence:reports
+    train_data GOVINDFROM/codx-clinical-coherence:train_data
+    code       GOVINDFROM/codx-clinical-coherence:code
+    results    GOVINDFROM/codx-clinical-coherence:results
+    model      GOVINDFROM/codx-elr-fusion
+  No files have been modified since last commit. Skipping to prevent empty commit.
+    model      GOVINDFROM/codx-elr-fusion
+  manifest: 27 tables, 23 figures @ 9c9342e
+=== done 2026-09-20T20:27:44+05:30 ===

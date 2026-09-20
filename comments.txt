@@ -12,7 +12,6 @@ Every numbered item below carries one of:
   ACCEPTED - FIXED      a defect was found and corrected
   CORRECTION            the comment's factual premise does not hold; evidence given
   PARTIAL               partly answered; what remains is stated
-  IN PROGRESS           running now, with an ETA
   PENDING               not started, with a plan
 
 Every new number is reproducible from a named CSV in reports/tables/ and a
@@ -162,22 +161,68 @@ MAJOR COMMENTS
    alongside, as requested.
 
 6. TOKEN-LOGPROB BASELINE
-   IN PROGRESS. Implemented and running across all 11 models.
-   [coherence/run/logprob_baseline.py]
-   Each of the 49 candidate names is scored as a continuation by summed token
-   log-probability (length-normalised variant also stored), softmaxed to a
-   distribution that never passes through verbalized numbers. The 49-line
-   candidate list is deliberately omitted from this prompt so that list
-   position cannot influence the score (see comment 8).
+   ACCEPTED - MEASURED. Complete for all 11 models, 1,956 patients each.
+   [coherence/run/logprob_baseline.py, coherence/analysis/logprob_compare.py
+    -> reports/tables/rev_logprob_baseline.csv]
 
-   Pilot, Qwen3-8B, 120 cases, same cases both paths:
-     token-logprob (summed)   top-1 0.200   top-5 0.408
-     stated 49-way posterior  top-1 0.093
-     chance                          0.020
+   Method. Each of the 49 candidate names is scored as a continuation of the
+   vignette by its token log-probability, softmaxed over the 49 to give a
+   distribution that never passes through a verbalized number. The 49-line
+   candidate list is deliberately OMITTED from this prompt, so list position
+   cannot influence the score (comment 8). Both scoring rules are reported,
+   because they disagree and choosing per model would be selection on the
+   outcome. All intervals are patient-level cluster bootstraps.
 
-   The logprob path is 2.1x the verbalized path on identical patients, which
-   is direct support for "expression, not knowledge". Full sweep ETA ~17 GPU-
-   hours; the table will be rev_logprob_baseline.csv.
+     model              logprob   logprob    stated      named
+                        (summed)  (len-norm) posterior
+     qwen3-4b-nothink    0.1973    0.1237     0.0552     0.2664
+     qwen3-4b-think      0.2004    0.1227     0.0459     0.2333
+     qwen3-8b-nothink    0.1697    0.1380     0.1003     0.2812
+     qwen3-8b-think      0.1708    0.1375     0.0897     0.2516
+     qwen3-32b-nothink   0.5102    0.3241     0.1691     0.5373
+     qwen3-32b-think     0.5107    0.3241     0.1428     0.5119
+     medgemma-1.5-4b     0.0204    0.1339     0.0229     0.0805
+     medgemma-27b        0.0220    0.1253     0.0935     0.5204
+     med42-8b            0.0204    0.1237     0.0735     0.3092
+     gpt-oss-20b         0.1304    0.0680     0.3563     0.6532
+     r1-distill-32b      0.0204    0.2653     0.1020     0.3078
+
+   Counts against the stated posterior:
+     named diagnosis              beats it for  11 / 11 models
+     logprob, length-normalised   beats it for  10 / 11 models
+     logprob, summed              beats it for   6 / 11 models
+     named beats BOTH logprob variants for      10 / 11 models
+
+   What this does and does not support.
+
+   SUPPORTED: the deficit is specific to the verbalized distribution. Asking
+   the same weights for a NAME outperforms asking them for a 49-way
+   distribution on every model without exception, by 0.058 to 0.427 top-1.
+   That is the robust form of the "expression, not knowledge" claim and it no
+   longer rests on the logprob path at all.
+
+   PARTIALLY SUPPORTED: token scoring also beats the stated posterior, but
+   only under length-normalisation (10/11), not under summed log-probability
+   (6/11). We report both rather than the flattering one.
+
+   NOT SUPPORTED - one clear counterexample: GPT-OSS-20B. Its stated posterior
+   (0.3563) beats both logprob variants (0.1304 summed, 0.0680 normalised).
+   It is also the one model decoded free-form rather than grammar-constrained
+   (comment 7, C11), so the elicitation path that was broken before the fix is
+   now its strongest. We state this rather than exclude it.
+
+   A caveat on the summed rule, which the data exposes. Summed log-probability
+   favours SHORT diagnosis names, so for several models one short label wins
+   top-1 almost always while the true label still ranks top-5. The signature
+   is a large top5-minus-top1 gap: R1-Distill-32B 0.619, Med42-8B 0.544,
+   MedGemma-27B 0.510, against 0.089 for GPT-OSS-20B. Length-normalisation
+   removes that bias (Med42-8B 0.0204 -> 0.1237) but discards the genuine
+   prior that longer names are less likely. Neither rule is uniquely correct,
+   which is why both are in the table.
+
+   The earlier 120-case pilot (Qwen3-8B, 2.1x) overstated the effect. The
+   full-sweep figure for that model is 1.38x under length-normalisation. The
+   pilot number is withdrawn.
 
 7. DECODING REGIME FOR NAMING VS SCORING
    ACCEPTED - STATED. Both tasks use identical decoding within a model:
@@ -221,9 +266,15 @@ MAJOR COMMENTS
    A model that reaches 55-67% of a bound attainable by counting
    co-occurrences in the training corpus has a knowledge gap as well as an
    expression gap. The paper will claim only the narrower, supported point:
-   the expression gap is REAL AND SEPARABLE (the same model's own named
-   answer, and its own token logprobs, both beat its stated posterior), not
-   that knowledge is intact.
+   the expression gap is REAL AND SEPARABLE, not that knowledge is intact.
+
+   The separability now rests on the NAMED path, which beats the stated
+   posterior for 11 of 11 models (comment 6). The token-logprob path also
+   beats it, but for 10 of 11 under length-normalisation and only 6 of 11
+   under summed scoring, with GPT-OSS-20B a clear counterexample under both.
+   An earlier draft of this reply asserted that both paths beat the stated
+   posterior; that was written from a 120-case pilot and the full sweep does
+   not support it for logprobs. Corrected here.
 
    On "32x chance": qualified. It is driven by GPT-OSS-20B (0.653); the
    median model is 13.8x, and MedGemma-1.5-4B is 3.9x. Chance (1/49) is also
@@ -590,18 +641,18 @@ MINOR COMMENTS
 ==========================================================================
 SUMMARY OF STATUS
 ==========================================================================
-  ACCEPTED - MEASURED / FIXED / STATED   : 1,2,3,5,7,8,9,10,11,13,14,15,17,
-                                           18,20,21,22,23,25,26,28,31
+  ACCEPTED - MEASURED / FIXED / STATED   : 1,2,3,5,6,7,8,9,10,11,13,14,15,
+                                           17,18,20,21,22,23,25,26,28,31
                                            + minor 1,3,5,7,8,10-16
   CORRECTION (with evidence)             : 24  (and the premise of 28)
   PARTIAL                                : 12,16,19,29,32  + minor 2,4,6,9
-  IN PROGRESS                            : 6   (~17 GPU-hours)
   PENDING                                : 4,27,30,33,34
 
 New artifacts:
   coherence/analysis/reviewer_response.py     comments 1,3,5,11,13,18,20,21,25,26
   coherence/analysis/corpus_lr_ablation.py    comments 2,9
-  coherence/run/logprob_baseline.py           comment 6
+  coherence/run/logprob_baseline.py           comment 6 (all 11 models)
+  coherence/analysis/logprob_compare.py       comment 6 comparison table
   scripts/archive_hf.sh                       comment 32 (hourly Hub archival)
   reports/tables/rev_*.csv                    all new numbers
 
