@@ -56,11 +56,16 @@ eleven models. Most consequentially, every model names the correct diagnosis two
 often than its own stated posterior ranks it first, and agrees with the top entry of its own
 distribution on only 3 to 12 percent of items. The deficit is therefore in the probabilistic
 interface rather than in the clinical knowledge, which motivates ELR Fusion, a symbolic combination
-layer attaining an exactly zero order effect at zero marginal query cost in all 132 configurations
-tested.
+layer that is order invariant by construction, exactly and at zero marginal query cost, in all 132
+configurations tested. We report the baseline that bounds that claim. Presenting every case in one
+fixed canonical order reaches the same exact zero at an accuracy cost between $-0.012$ and $+0.021$
+top 1, so a zero order effect is obtainable for free and is not on its own a contribution. What the
+symbolic layer adds is invariance to which order is chosen, since posteriors under two different
+fixed orders sit 0.120 to 0.258 divergence apart, together with a per finding audit trail.
 \small
 
 \section{Methodology}
+
 
 \subsection{Coherence axioms}
 The instrument tests four properties of belief revision, each with an exact target and none
@@ -125,6 +130,16 @@ coefficient is the log odds form of temperature scaling [6] applied to the evide
 the prior is untouched, correcting the overcounting that arises because correlated findings are
 summed as though independent. It is fitted by cross fitting over two folds, so the coefficient
 applied to a case is never fitted on that case.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.87\textwidth]{fig15_pipeline.pdf}
+\caption{The measurement pipeline. Every box is a measured quantity from this study rather than a
+schematic placeholder. A patient is drawn from the corpus, and the evidence set that patient
+supplies is then held fixed: the four arms vary its order, vary nothing, fix one released order, or
+vary the patient. The same model is asked in three ways on every arm, and the three disagree
+sharply. Each axiom is a comparison between two of these quantities.}
+\end{figure}
 
 \section{Results}
 
@@ -249,15 +264,29 @@ Self consistency        & 0.1244 & 6 & 0.2265 & 0.4346 & 4.50 & no \\
 Permutation ensemble K5 & 0.1038 & 5 & 0.2377 & 0.4443 & 4.53 & approximate \\
 ELR Fusion              & 0.0000 & 0 & 0.1334 & 0.2480 & 0.86 & yes \\
 ELR Fusion calibrated   & 0.0000 & 0 & 0.0997 & 0.2393 & 5.25 & yes \\
+Fixed canonical order   & 0.0000 & 1 & 0.1915 & ---    & ---  & yes \\
 \bottomrule
 \end{tabular}
 \end{center}
 
-ELR Fusion is the only method reaching an exactly zero order effect, at zero marginal query cost,
-because the weight table is elicited once for the whole corpus rather than once per case. The result
-generalises: residual order sensitivity is exactly zero for all eleven models at all twelve values
-of $\tau$, that is 132 of 132 configurations. Permutation ensembling buys its residual with queries,
-decays only as $O(1/\sqrt{K})$, and no value of $K$ reaches zero.
+Permutation ensembling buys its residual with queries, decays only as $O(1/\sqrt{K})$, and no value
+of $K$ reaches zero. ELR Fusion reaches zero exactly, and does so for all eleven models at all
+twelve values of $\tau$, that is 132 of 132 configurations, because the weight table is elicited
+once for the whole corpus rather than once per case.
+
+A fixed canonical order reaches the same exact zero, and it is free. Presenting every case in one
+deterministic order removes the order effect by construction, at an accuracy cost between $-0.012$
+and $+0.021$ top 1 against a randomly chosen fixed order, and the canonical order is the better of
+the two for nine of eleven models. ELR Fusion attains the identical zero and pays 5.6 top 1 points.
+A zero order effect is therefore obtainable for free, and reporting one is not on its own a
+contribution.
+
+What a fixed order does not do is remove the dependence. It conceals it by freezing one arbitrary
+choice. The separating quantity is not the residual but the spread across fixed orders: the
+canonical order posterior sits 0.120 to 0.258 divergence from the posterior under a different fixed
+order, a distance that is zero by construction for an order invariant method and is the price of the
+arbitrary choice for a fixed one. That spread, together with the per finding audit trail, is what
+the symbolic layer buys, and it is a narrower claim than the one an exact zero alone would support.
 
 The honest cost is accuracy, and it is model dependent rather than fixed. Across the eleven models
 ELR Fusion retains between 0.30 and 1.06 of direct elicitation accuracy, median 0.71, and for two
@@ -277,13 +306,18 @@ distribution, and they agree with themselves on fewer than one item in eight. Th
 probabilistic interface. Third, because the deficit is one of representation rather than knowledge,
 moving the probability arithmetic into a symbolic layer is the structurally indicated fix, and ELR
 Fusion attains an exactly zero order effect at zero marginal query cost in every configuration
-tested, at an accuracy cost reported in full rather than concealed.
+tested, at an accuracy cost reported in full rather than concealed. That third claim is deliberately
+narrow. A fixed canonical order reaches the same zero at no accuracy cost, so what the symbolic
+layer contributes is invariance to which order is chosen and auditability per finding, not the zero
+itself.
 
-Two limitations are stated plainly. DDXPlus is synthetic, which is what makes an exact reference
+Three limitations are stated plainly. DDXPlus is synthetic, which is what makes an exact reference
 possible for A2 and A3, but an external validity arm on real clinical narratives is required before
 these magnitudes are claimed for deployed settings. The elicited likelihood ratios, rather than the
 fusion rule, set the accuracy ceiling of the method, and improving that elicitation is where the
-remaining accuracy lies.
+remaining accuracy lies. Zero marginal query cost is marginal only: the likelihood ratio table costs
+497 elicitation queries per model to build, which amortises over a corpus but not over a small
+deployment, and it assumes a closed finding vocabulary.
 
 \vspace{2pt}
 \footnotesize

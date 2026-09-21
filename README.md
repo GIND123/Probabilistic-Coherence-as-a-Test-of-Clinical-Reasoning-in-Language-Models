@@ -29,10 +29,12 @@ the Qwen3 4B/8B/32B ladder) while the normalised order effect falls
 (0.215 → 0.127). Second, and more seriously, **belief updates do not track the
 evidence at all**: direction agreement with an assumption-free empirical oracle
 is 0.454–0.549 across all eleven models, straddling chance, with r² never
-exceeding 0.021. Third, **ELR-Fusion** attains an exactly zero order effect —
-verified numerically at 5.55 × 10⁻¹⁶ — at zero marginal query cost, where
-permutation ensembling decays only as O(1/√K) and still leaves 0.104 at five
-queries per case; we report its accuracy cost rather than conceal it.
+exceeding 0.021. Third, an exactly zero order effect is **obtainable for free**
+by presenting every case in one fixed canonical order (−0.012 to +0.021 top-1),
+so the zero is not itself a contribution: what **ELR-Fusion** adds over a fixed
+order is invariance to *which* order is chosen — fixed orders sit 0.120–0.258
+JSD apart — and a per-finding audit trail, at a cost of 5.6 top-1 points we
+report rather than conceal.
 
 We release eleven documented instrument-calibration steps as a first-class
 artifact. Several would each have produced a plausible but wrong headline —
@@ -68,7 +70,10 @@ applies to any work on this corpus, not only ours.
 **C4. A remedy whose guarantee is a theorem, not a result.** ELR-Fusion is
 exactly order-invariant by construction at any evidence budget, verified at
 machine epsilon, against ensembling whose residual decays as O(1/√K) and which
-yields no per-finding explanation. We add a shrinkage coefficient τ that
+yields no per-finding explanation. A fixed canonical order reaches the same
+zero at no accuracy cost, so the claim we make is narrower: ELR-Fusion is
+invariant to *which* fixed order is chosen (those differ by 0.120–0.258 JSD)
+and is auditable per finding. We add a shrinkage coefficient τ that
 **preserves the guarantee exactly for every τ** and exposes an
 accuracy–calibration frontier (§4.5).
 
@@ -377,16 +382,28 @@ Paired over the cases every method produced, for `qwen3-32b-nothink`:
 | perm-ensemble K=5 | 0.1038 | 5 | **0.2377** | **0.4443** | 4.53 | approx | no |
 | **ELR-Fusion (τ=1)** | **0.0000** | **0** | 0.1334 | 0.2480 | 0.86 | **exact** | **yes** |
 | **ELR-Fusion (calibrated)** | **0.0000** | **0** | 0.0997 | 0.2393 | 5.25 | **exact** | **yes** |
+| **fixed canonical order** | **0.0000** | **1** | 0.1915 | — | — | **exact** | no |
 
-ELR-Fusion is the only method reaching an exactly zero order effect, at zero
-marginal query cost. Permutation ensembling buys its residual with queries and
-decays only as O(1/√K): five queries per case still leaves 0.1038, and no K
-reaches zero.
+Permutation ensembling buys its residual with queries and decays only as
+O(1/√K): five queries per case still leaves 0.1038, and no K reaches zero.
+
+**A fixed canonical order reaches the same exact zero, and it is free.**
+Presenting every case in one deterministic order removes the order effect by
+construction, at an accuracy cost of −0.012 to +0.021 top-1 against a randomly
+chosen fixed order — and it is the *better* of the two for 9 of 11 models. ELR-
+Fusion attains the identical zero and pays 5.6 top-1 points (0.189 → 0.133),
+so "exactly zero order effect" is not on its own a contribution.
+
+What a fixed order does not do is remove the dependence; it conceals it by
+freezing one arbitrary choice. **The separating quantity is not the residual
+but the spread across fixed orders:** the canonical-order posterior sits 0.120
+to 0.258 JSD from the posterior under a different fixed order, a distance that
+is zero by construction for an order-invariant method. That, together with
+per-finding auditability, is what ELR-Fusion buys — not the zero itself.
 
 **The honest cost is accuracy.** ELR-Fusion trades 5.6 top-1 points against
-direct elicitation (0.189 → 0.133) and 10.4 against a five-query ensemble. The
-guarantee is not free, and reporting it as free would be the easy dishonesty
-here.
+direct elicitation and 10.4 against a five-query ensemble. The guarantee is not
+free, and reporting it as free would be the easy dishonesty here.
 
 ### 4.6 The shrinkage coefficient is a frontier, not a fitted constant
 
