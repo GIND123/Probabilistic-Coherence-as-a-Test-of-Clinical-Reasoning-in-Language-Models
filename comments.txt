@@ -3,6 +3,12 @@ Probabilistic Coherence as a Test of Clinical Reasoning in Language Models
 Target venue: Machine Learning and Knowledge Extraction (MDPI, MAKE)
 Prepared 2026-09-19
 
+This file answers ROUND 1 (the external review). Round 2 -- the PI's comments
+of 2026-09-23 on the abstract and on DDXPlus construct validity -- is recorded
+separately in reports/review/pi_comments_2026-09-23.md and is NOT answered
+here. Keep them apart: round 1 asked for measurements, round 2 asks for
+framing and a construct-validity argument.
+
 --------------------------------------------------------------------------
 HOW TO READ THIS
 --------------------------------------------------------------------------

@@ -79,4 +79,13 @@ $PY -m coherence.analysis.run_analysis
 
 echo "### STAGE 5  final sync  $(date -Is)"
 hf_sync
+
+# STAGE 6  Pin and verify the release. Cheap (two Hub listings, no download),
+# and it is the only step that checks the artifacts a reader is told to fetch
+# actually exist. A non-zero exit here means the paper cites something the
+# release does not contain.
+echo "### STAGE 6  pin + verify the release  $(date -Is)"
+$PY -m coherence.hub.manifest || echo "  [hf] manifest failed (non-fatal)"
+$PY -m coherence.hub.hf_pull verify || echo "  [hf] RELEASE INCOMPLETE -- see above"
+
 echo "### DONE  $(date -Is)"

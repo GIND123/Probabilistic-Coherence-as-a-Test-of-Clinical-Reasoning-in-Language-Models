@@ -137,24 +137,65 @@ tags:
 Artifacts for *Probabilistic Coherence as a Test of Clinical Reasoning in
 Large Language Models: Measurement and Neuro-Symbolic Correction*.
 
-The instrument tests four coherence axioms, each with an exact zero and none
-requiring human annotation:
+Code: <https://github.com/GIND123/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models>
 
-| axiom | property | needs ground truth |
-|---|---|---|
-| A1 | order invariance | no |
-| A2 | update fidelity | yes (empirical-posterior oracle) |
-| A3 | redundancy insensitivity | yes (empirical-posterior oracle) |
-| A4 | positional anchoring | no |
+The instrument tests four coherence axioms. None of them uses a human
+annotator or a judge model, and none assumes conditional independence — but
+they are **not equally assumption-free**, and the difference matters when
+reading the results:
+
+| axiom | property | scoring target | does the corpus oracle enter? |
+|---|---|---|---|
+| A1 | order invariance | **zero, by theorem** | no |
+| A2 | update fidelity | a corpus-derived log-odds change | **yes — as the target** |
+| A3 | redundancy insensitivity | **zero, by construction** | yes — to *select* items certified uninformative |
+| A4 | positional anchoring | **zero, by theorem** | no |
+
+So A1 and A4 are absolute. A3 is scored against an exact zero, but the corpus
+is what licenses the claim that the correct update is zero. **A2 is the
+genuinely oracle-dependent axiom**: its target is estimated from the 1.29M
+released DDXPlus patients, and therefore inherits the priors of the rule-based
+simulator that generated them. An A2 result is evidence about a model's
+agreement with *that generator*, which is not the same thing as agreement with
+clinical epidemiology.
 
 ## Contents
 
-| path | what |
-|---|---|
-| `battery/` | the CoDx battery: cases and A1-A4 items, versioned |
-| `kb/` | reconstructed likelihood tables and the packed evidence matrix |
-| `reports/` | the data-audit report, instrument calibration, figures |
-| `results/` | raw elicitation outputs and analysed results, per model |
+| path | what | size |
+|---|---|---|
+| `battery/` | the CoDx battery: cases and A1–A4 items, versioned | 23 MB |
+| `kb/` | reconstructed likelihood table and packed evidence matrix | 641 MB |
+| `ddxplus_parquet/` | the typed DDXPlus corpus, all three splits | 128 MB |
+| `train_data/` | the likelihood-ratio SFT set for the adapter | 15 MB |
+| `reports/` | tables, figures, data audit, instrument calibration | 5 MB |
+| `results/` | raw elicitation outputs and analysed results, per model arm | 69 MB |
+| `code/` | the full source tree that produced all of the above | 406 KB |
+
+The companion adapter is at `GOVINDFROM/codx-elr-fusion`.
+
+## Reuse
+
+```bash
+git clone https://github.com/GIND123/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models
+cd Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models
+pip install -e .
+
+python -m coherence.hub.hf_pull verify            # is the release complete?
+python -m coherence.hub.hf_pull groups            # what can be pulled
+python -m coherence.hub.hf_pull pull battery reports
+python -m coherence.hub.hf_pull pull --all --adapter
+```
+
+Pulled files land in the layout `coherence.config` expects, so the analysis
+runs unmodified afterwards. `ARTIFACTS.md` in the source tree pins every
+evaluated checkpoint to the exact Hub revision the sweep ran against; pass
+`--revision` to pin this repo too.
+
+The raw patient text of the MIMIC-IV external-validity arm is **not** here and
+never will be: MIMIC-IV-Note is PhysioNet credentialed data under a use
+agreement that forbids redistribution. Only aggregate divergence statistics are
+shared, and the sync refuses any data path matching `mimic`, `physionet`,
+`discharge.csv` or `radiology.csv`.
 
 ## Two findings from the data audit that matter beyond this paper
 
@@ -239,14 +280,38 @@ ablation #7 of the paper.
 from peft import PeftModel
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
-base = AutoModelForCausalLM.from_pretrained("Qwen/Qwen3-8B", dtype="bfloat16")
+# The base revision is pinned: `main` moves, and the adapter was trained
+# against this commit. See ARTIFACTS.md in the source tree.
+BASE, REV = "Qwen/Qwen3-8B", "{base_rev}"
+
+base = AutoModelForCausalLM.from_pretrained(BASE, revision=REV, dtype="bfloat16")
 model = PeftModel.from_pretrained(base, "{repo}")
-tok = AutoTokenizer.from_pretrained("{repo}")
+tok = AutoTokenizer.from_pretrained(BASE, revision=REV)
 ```
 
-Prompt construction and the symbolic fusion step are in
-`coherence/elicit/prompts.py` and `coherence/methods/elr_fusion.py` of the
-companion dataset repository.
+The adapter alone is not the method. ELR-Fusion is the adapter *plus* the
+symbolic recombination step, and the order-invariance guarantee comes from the
+latter — summing log-LRs over a set cannot depend on their order. Prompt
+construction and the fusion step are in `coherence/elicit/prompts.py` and
+`coherence/methods/elr_fusion.py`.
+
+## Reproducing
+
+- Code: <https://github.com/GIND123/Probabilistic-Coherence-as-a-Test-of-Clinical-Reasoning-in-Language-Models>
+- Artifacts, battery and training set: `GOVINDFROM/codx-clinical-coherence`
+- `python -m coherence.hub.hf_pull pull train --adapter` fetches the SFT set
+  and this adapter into the layout the training and analysis code expects.
+
+## Honest limits
+
+Measured accuracy cost is real: ELR-Fusion pays 5.6 top-1 points against direct
+prompting, and a fixed canonical presentation order reaches the same exact zero
+order effect at no accuracy cost. What this adapter buys over a canonical order
+is invariance to *which* order is chosen — different fixed orders sit
+0.120–0.258 JSD apart — and a per-finding audit trail. Replacing the elicited
+log-LR table with one estimated from the corpus moves top-1 from 0.133 to
+0.9765, which locates the remaining deficit in the elicited weights rather than
+in the fusion rule.
 """
 
 
@@ -297,8 +362,12 @@ def sync_model(adapter_dir: Path | None = None, private: bool = True) -> str:
     if not (adapter_dir / "adapter_model.safetensors").exists():
         return f"skip (no adapter yet): {adapter_dir}"
     rid = ensure_repo("model", private=private)
+    # The base revision is read from the Hub cache, so the card states the
+    # commit the adapter was actually trained against rather than "main".
+    from coherence.hub.manifest import cached_revision
+    base_rev = cached_revision("Qwen/Qwen3-8B") or "main"
     card = adapter_dir / "README.md"
-    card.write_text(MODEL_CARD.replace("{repo}", rid))
+    card.write_text(MODEL_CARD.replace("{repo}", rid).replace("{base_rev}", base_rev))
     _api().upload_folder(
         repo_id=rid, repo_type="model", folder_path=str(adapter_dir),
         ignore_patterns=["checkpoint-*/**", "**/optimizer.pt", "**/scheduler.pt",

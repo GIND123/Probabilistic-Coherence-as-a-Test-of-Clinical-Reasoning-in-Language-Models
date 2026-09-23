@@ -505,7 +505,42 @@ about one model, re-measure the same items.
 
 ---
 
-## 6. Reproducing
+## 6. Artifacts
+
+Everything the paper rests on is published to the Hugging Face Hub and pinned.
+[`ARTIFACTS.md`](ARTIFACTS.md) is generated, not hand-written, and records the
+exact Hub revision of **every evaluated checkpoint** — a model id alone does not
+reproduce anything, because `main` moves.
+
+| repo | what | size |
+|---|---|---|
+| [`GOVINDFROM/codx-clinical-coherence`](https://huggingface.co/datasets/GOVINDFROM/codx-clinical-coherence) (dataset) | battery, oracle tables, corpus parquet, results, reports, full source tree | ~880 MB |
+| [`GOVINDFROM/codx-elr-fusion`](https://huggingface.co/GOVINDFROM/codx-elr-fusion) (model) | the ELR-Fusion likelihood-ratio LoRA adapter | 344 MB |
+
+> Both repos are **private** pending submission. The commands below work once
+> you have access; `--public` on the sync flips them when the paper lands.
+
+```bash
+python -m coherence.hub.hf_pull verify     # is the release complete?
+python -m coherence.hub.hf_pull groups     # what can be pulled, and why
+python -m coherence.hub.hf_pull pull battery reports
+python -m coherence.hub.hf_pull pull --all --adapter
+python -m coherence.hub.manifest --drift   # has any checkpoint moved since?
+```
+
+Pulled files land in the layout [`coherence/config.py`](coherence/config.py)
+expects, so the analysis runs unmodified afterwards.
+
+**What is deliberately not published.** MIMIC-IV-Note is PhysioNet credentialed
+data; patient text and per-case results never leave the machine. The sync
+refuses any *data* path matching `mimic`, `physionet`, `discharge.csv` or
+`radiology.csv`, while the MIMIC *source* modules do ship so the
+external-validity arm stays reproducible. `hf_pull verify` re-checks both
+halves of that policy against the live Hub listing.
+
+---
+
+## 7. Reproducing
 
 ```bash
 source scripts/env.sh          # HF_HOME redirect, Blackwell sm_120 flags
@@ -517,15 +552,30 @@ bash scripts/run_all.sh        # sweep → sync → LoRA → analysis → sync
 Every stage is resumable at task granularity; rerunning skips completed work.
 Tables land in `reports/tables/`, figures in `reports/figures/`.
 
+To rebuild the submission PDF (CPU-only, reads the committed CSVs; needs
+`pdflatex`, or TinyTeX in `$HOME`):
+
+```bash
+bash scripts/build_paper.sh
+```
+
+`writeup.tex` takes three of its figures from
+[`reports/mkfigs.py`](reports/mkfigs.py) rather than from `reports/figures/`;
+those are derived and not committed, which is why the tex needs the script
+rather than a bare `pdflatex`.
+
 | path | contents |
 |---|---|
 | [`coherence/axioms/`](coherence/axioms/) | A1–A4 estimators |
 | [`coherence/data/empirical_oracle.py`](coherence/data/empirical_oracle.py) | assumption-free posterior oracle |
 | [`coherence/methods/elr_fusion.py`](coherence/methods/elr_fusion.py) | ELR-Fusion, τ shrinkage, invariance proof |
 | [`coherence/analysis/competence.py`](coherence/analysis/competence.py) | the C11 competence gate |
+| [`coherence/hub/hf_sync.py`](coherence/hub/hf_sync.py) · [`hf_pull.py`](coherence/hub/hf_pull.py) · [`manifest.py`](coherence/hub/manifest.py) | publish, fetch back, pin |
 | [`reports/data_audit_report.md`](reports/data_audit_report.md) | 19 audit findings |
 | [`reports/instrument_calibration.md`](reports/instrument_calibration.md) | C1–C11 |
 | [`reports/paper/`](reports/paper/) | related work, methodology, results |
+| [`comments.txt`](comments.txt) | round-1 review response, point by point |
+| [`reports/review/`](reports/review/) | round-2 PI comments, recorded and triaged |
 
 ---
 
